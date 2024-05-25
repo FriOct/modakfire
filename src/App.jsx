@@ -7,6 +7,8 @@ import Footer from "./layouts/Footer"
 import Main from "./layouts/Main"
 import { Route, Routes } from "react-router-dom"
 import Home from "./pages/Home"
+import Login from "./pages/Login"
+import CenterHome from "./pages/CenterHome"
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
           <Main>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/center/:centerId" element={<CenterHome />} />
             </Routes>
           </Main>
         <Footer />
