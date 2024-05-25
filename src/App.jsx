@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import CenterHome from "./pages/CenterHome"
+import MyPage from "./pages/MyPage"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/mypage" element={<MyPage />} />
               <Route path="/center/:centerId" element={<CenterHome />} />
             </Routes>
           </Main>
