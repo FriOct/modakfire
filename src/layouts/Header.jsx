@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Logo from '../assets/logo.png'
 
 const HeaderWrapper = styled.header`
-    height: 5vh;
+    height: min(11vw, 55px);
     display: flex;
     justify-content: center;
     background-color: #ffffff;
@@ -12,15 +12,15 @@ const HeaderWrapper = styled.header`
 const LogoWrapper = styled.div`
     display: flex;
     align-items: center;
-    gap: 1vh;
+    gap: min(2vw, 10px);
     font-weight: bold;
     font-size: ${({theme}) => theme.fontSize.large};
     color: ${({theme}) => theme.fontColor.brown};
 `
 
 const LogoImage = styled.img`
-    height: 4vh;
-    width: 4vh;
+    height: min(7vw, 35px);
+    width: min(7vw, 35px);
 `
 
 const Header = () => {
