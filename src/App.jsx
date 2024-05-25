@@ -10,6 +10,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import CenterHome from "./pages/CenterHome"
 import MyPage from "./pages/MyPage"
+import Payment from "./pages/Payment"
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/payment" element={<Payment />} />
               <Route path="/center/:centerId" element={<CenterHome />} />
             </Routes>
           </Main>
