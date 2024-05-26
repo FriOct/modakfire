@@ -1,5 +1,7 @@
 const fontSize = {
     large: "min(6vw, 30px)",
+    semiLarge: "min(5vw, 25px)",
+    medium: "min(4vw, 20px)",
     base: "min(3vw, 15px)"
 }
 
