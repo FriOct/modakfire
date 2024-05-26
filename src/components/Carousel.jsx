@@ -29,7 +29,7 @@ const Carousel = (props) => {
     useEffect(() => {
         const timer = setInterval(() => {
             moveCarousel();
-        }, 7000);
+        }, 10000);
         return () => clearInterval(timer);
     }, [CarouselIndex]);
 
