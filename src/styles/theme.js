@@ -1,8 +1,7 @@
 const fontSize = {
     large: "min(6vw, 30px)",
-    semiLarge: "min(5vw, 25px)",
-    medium: "min(4vw, 20px)",
-    base: "min(3vw, 15px)"
+    medium: "min(5vw, 25px)",
+    base: "min(4vw, 20px)"
 }
 
 const fontColor = {
@@ -18,7 +17,9 @@ const color = {
     black: "#000000",
     lightgray: "#D7D7D7",
     gray: "#B5B5B5",
-    drakgray: "#AAAAAA"
+    drakgray: "#AAAAAA",
+    shadow: "#00000040",
+    highlight: "#FF8B3D80"
 }
  
 const theme = {
