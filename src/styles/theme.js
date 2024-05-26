@@ -1,7 +1,7 @@
 const fontSize = {
     large: "min(6vw, 30px)",
-    medium: "min(5vw, 25px)",
-    base: "min(4vw, 20px)"
+    medium: "min(4vw, 20px)",
+    base: "min(3vw, 15px)"
 }
 
 const fontColor = {

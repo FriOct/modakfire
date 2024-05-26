@@ -32,7 +32,7 @@ const SearchSectionWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: min(2vw, 10px) min(3vw, 15px);
+    padding: min(3vw, 15px);
 `
 
 const SearchMenuWrapper = styled.div`
@@ -54,7 +54,7 @@ const SearchMenuWrapper = styled.div`
         }
     }
     div:last-child {
-        width: min(22vw, 110px);
+        width: min(18vw, 90px);
         border: none;
     }
 `
@@ -132,7 +132,7 @@ const CenterImage = (props) => {
 const CenterStyledWrapper = styled.div`
     display: flex;
     align-items: center;
-    gap: min(3vw, 15px);
+    gap: min(4vw, 15px);
     padding: min(3vw, 15px);
     border-top: 1px solid ${({theme}) => theme.color.gray};
 `
@@ -140,7 +140,7 @@ const CenterStyledWrapper = styled.div`
 const CenterInfowrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: min(1vw, 5px);
+    gap: min(2vw, 10px);
 `
 
 const HashtagWrapper = styled.div`
@@ -152,8 +152,8 @@ const HashtagWrapper = styled.div`
     border-radius: min(3vw, 15px);
 
     img{
-        width: min(4vw, 20px);
-        height: min(4vw, 20px);
+        width: min(3vw, 15px);
+        height: min(3vw, 15px);
     }
 `
 
@@ -229,7 +229,6 @@ const exampleCenterJSON = [{
 ]
 
 const CenterWrapper = ({data}) => {
-    console.log(data);
     return (
     <CenterStyledWrapper>
         <CenterImage src={data.imageUrl} />
@@ -254,7 +253,7 @@ const Home = () => {
             <Seperator />
             <SearchResult />
             {
-                exampleCenterJSON.map((props, index) => <CenterWrapper data={props}/>)
+                exampleCenterJSON.map((props, index) => <CenterWrapper key={index} data={props}/>)
             }
         </HomeWrapper>
     )
