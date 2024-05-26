@@ -10,7 +10,7 @@ const CarouselMovingContainer = styled.div`
     display: flex;
     width: min(100%, 500px);
     background-size: cover;
-    transform: translate(max(${(props) => props.index * -100}vw, ${(props) => props.index * -500}px));
+    transform: translate(max(${($index) => $index * -100}vw, ${($index) => $index * -500}px));
     transition-duration: 1s;
 `
 const CarouselItemImage = styled.img`
@@ -35,7 +35,7 @@ const Carousel = (props) => {
 
     return (
         <CarouselWrapper>
-            <CarouselMovingContainer index={CarouselIndex}>
+            <CarouselMovingContainer $index={CarouselIndex}>
                 {props.items.map((item, index) => <CarouselItem key={index} item={item}/>)}
             </CarouselMovingContainer>
         </CarouselWrapper>
