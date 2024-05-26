@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LightTitleWrapper = styled.h1`
-    font-size: ${({theme}) => theme.fontSize.semiLarge};
+    font-size: ${({theme}) => theme.fontSize.medium};
     font-weight: normal;
 `
 
