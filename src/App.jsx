@@ -11,6 +11,7 @@ import Login from "./pages/Login"
 import CenterHome from "./pages/CenterHome"
 import MyPage from "./pages/MyPage"
 import Payment from "./pages/Payment"
+import PaymentFinish from "./pages/PaymentFinish"
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/payment" element={<Payment />} />
               <Route path="/center/:centerId" element={<CenterHome />} />
+              <Route path="/payment/paymentfinish" element={<PaymentFinish/>} />
             </Routes>
           </Main>
         <Footer />
