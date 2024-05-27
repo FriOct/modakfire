@@ -1,23 +1,18 @@
-import styled from "styled-components"
 
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    background: #ffffff;
-`;
-
+import { useParams } from "react-router-dom"
+import HeaderBack from "../layouts/HeaderBack";
 
 
 const PaymentDetail = () => {
-  return (
-    <div>PaymentDetail</div>
-  )
+    const { inputValue } = useParams();
+
+    return (
+        <>
+            <HeaderBack></HeaderBack>
+            <div>{inputValue}</div>
+        </>
+        
+    )
 }
 
 export default PaymentDetail
