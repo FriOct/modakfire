@@ -42,7 +42,7 @@ const SearchMenuWrapper = styled.div`
     border-radius: 20px;
     gap: min(2vw, 10px);
     div {
-        width: min(15vw, 75px);
+        width: min(17vw, 85px);
         display: flex;
         justify-content: space-between;
         gap: min(1vw, 5px);
@@ -54,7 +54,7 @@ const SearchMenuWrapper = styled.div`
         }
     }
     div:last-child {
-        width: min(18vw, 90px);
+        width: min(20vw, 100px);
         border: none;
     }
 `
@@ -62,7 +62,7 @@ const SearchMenuWrapper = styled.div`
 const SearchSelector = (props) => {
     return(
         <div>
-            <Paragraph>{props.data}</Paragraph>
+            <LightTitle>{props.data}</LightTitle>
             <img src={downLine}/>
         </div>
     )
@@ -81,7 +81,7 @@ const SearchMenu = () => {
 const SearchSection = () => {
     return(
         <SearchSectionWrapper>
-            <LightTitle>센터 검색</LightTitle>
+            <LightTitle><strong>센터 검색</strong></LightTitle>
             <SearchMenu />
         </SearchSectionWrapper>
     )
@@ -227,7 +227,6 @@ const exampleCenterJSON = [{
     likeCount: 3036
 },
 ]
-
 const CenterWrapper = ({data}) => {
     return (
     <CenterStyledWrapper>
