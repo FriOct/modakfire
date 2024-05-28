@@ -1,54 +1,19 @@
 import styled from "styled-components";
-import EnterLogo from "../assets/EnterLogo.svg";
 import Person from "../assets/Person.svg";
 import Back from "../assets/Back.svg";
+
+import HeaderSetting from "../layouts/HeaderSetting";
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0;
     position: relative;
     width: 100%;
     height: 100vh;
     background: #ffffff;
     overflow-y: auto;
     overflow-x: hidden;
-`;
-
-const AppBar = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.56vh 3.13vw; /* 15px 30px */
-    width: 100%;
-    height: 6.67vh; /* 60px */
-`;
-
-const LeftButtonWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.04vw; /* 10px */
-    width: 1.04vw; /* 10px */
-    height: 2.08vh; /* 20px */
-`;
-
-const Vector = styled.img`
-    width: 1vw; /* 10px */
-    height: 3.75vh; /* 20px */
-`;
-
-const Title = styled.div`
-    margin: 0 auto;
-    width: 6.25vw; /* 30px */
-    height: 3.96vh; /* 23px */
-    font-family: "Noto Sans KR";
-    font-weight: 900;
-    font-size: 1.67vh; /* 16px */
-    line-height: 3.96vh; /* 23px */
-    color: #000000;
 `;
 
 const UserSection = styled.div`
@@ -126,12 +91,13 @@ const MenuText = styled.div`
 const VectorSmall = styled.img`
     width: 3.33vw; /* 5px */
     height: 1.04vh; /* 10px */
+    transform: rotate(180deg);
 `;
 
 const Seperator = styled.div`
     width: 100%;
-    height: 0.9375rem; /* 15px */
-    background: #ffddc5;
+    height: 1.56vh; /* 15px */
+    background-color: ${({theme}) => theme.color.secondary};
 `;
 
 const AppVersionSection = styled.div`
@@ -162,13 +128,12 @@ const LatestVersion = styled.div`
 
 const Footer = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 6.67vh; /* 60px */
-    background: #ffddc5;
+    background-color: ${({theme}) => theme.color.secondary};
+    flex:auto;
 `;
 
 const FooterText = styled.div`
@@ -178,15 +143,10 @@ const FooterText = styled.div`
     line-height: 1.46vh; /* 14px */
     color: #ff9c56;
 `;
+
 const Settings = () => (
     <Container>
-        <AppBar>
-            <LeftButtonWrapper>
-                <Vector src={Back}/>
-            </LeftButtonWrapper>
-            <Title>설정</Title>
-            <LeftButtonWrapper />
-        </AppBar>
+        <HeaderSetting/>
         <UserSection>
             <UserInfo>
                 <Avatar src={Person}/>
@@ -195,56 +155,56 @@ const Settings = () => (
                     <EditInfo>내 정보 수정하기</EditInfo>
                 </UserDetails>
             </UserInfo>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </UserSection>
         <Seperator />
         <MenuItem>
             <MenuText>알림</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <MenuItem>
             <MenuText>테마 설정</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <Seperator />
         <MenuItem>
             <MenuText>정기 기부 관리</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <MenuItem>
             <MenuText>증명서 발급</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <MenuItem>
             <MenuText>계좌 관리</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <Seperator />
         <MenuItem>
             <MenuText>홈 화면 설정</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <MenuItem>
             <MenuText>보안</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <MenuItem>
             <MenuText>일반</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <Seperator />
         <MenuItem>
             <MenuText>약관 및 개인정보 처리 동의</MenuText>
-            <VectorSmall src={EnterLogo}/>
+            <VectorSmall src={Back}/>
         </MenuItem>
         <Seperator />
         <AppVersionSection>
             <AppVersionText>앱 버전</AppVersionText>
             <LatestVersion>최신 버전</LatestVersion>
         </AppVersionSection>
-        <Seperator />
         <Footer>
-            <FooterText>앱 버전 1.1.0</FooterText>
+            <FooterText>앱 버전 0.1.0</FooterText>
+            <FooterText>오픈소스 라이선스 보기</FooterText>
         </Footer>
     </Container>
 );
