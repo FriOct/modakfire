@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import EnterLogo from "../assets/EnterLogo.svg";
 import Person from "../assets/Person.svg";
+import Back from "../assets/Back.svg";
 
 const Container = styled.div`
     display: flex;
@@ -11,7 +12,6 @@ const Container = styled.div`
     width: 100%;
     height: 100vh;
     background: #ffffff;
-
     overflow-y: auto;
     overflow-x: hidden;
 `;
@@ -21,34 +21,33 @@ const AppBar = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9375rem 1.875rem; /* 15px 30px */
+    padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 3.75rem; /* 60px */
+    height: 6.67vh; /* 60px */
 `;
 
 const LeftButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.625rem; /* 10px */
-    width: 0.625rem; /* 10px */
-    height: 1.25rem; /* 20px */
+    gap: 1.04vw; /* 10px */
+    width: 1.04vw; /* 10px */
+    height: 2.08vh; /* 20px */
 `;
 
-const Vector = styled.div`
-    width: 0.625rem; /* 10px */
-    height: 1.25rem; /* 20px */
-    border: 0.125rem solid #000000; /* 2px */
+const Vector = styled.img`
+    width: 1vw; /* 10px */
+    height: 3.75vh; /* 20px */
 `;
 
 const Title = styled.div`
     margin: 0 auto;
-    width: 1.875rem; /* 30px */
-    height: 1.4375rem; /* 23px */
+    width: 6.25vw; /* 30px */
+    height: 3.96vh; /* 23px */
     font-family: "Noto Sans KR";
     font-weight: 900;
-    font-size: 1rem; /* 16px */
-    line-height: 1.4375rem; /* 23px */
+    font-size: 1.67vh; /* 16px */
+    line-height: 3.96vh; /* 23px */
     color: #000000;
 `;
 
@@ -57,25 +56,25 @@ const UserSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9375rem 1.875rem; /* 15px 30px */
+    padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 3.75rem; /* 60px */
+    height: 6.67vh; /* 60px */
 `;
 
 const UserInfo = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem; /* 8px */
-    width: 20.166875rem; /* 322.67px / 16 */
-    height: 2.3125rem; /* 37px */
+    gap: 0.83vw; /* 8px */
+    width: 52.36vw; /* 322.67px / 16 */
+    height: 6.46vh; /* 37px */
 `;
 
 const Avatar = styled.img`
-    width: 1.875rem; /* 30px */
-    height: 1.875rem; /* 30px */
+    width: 4vw; /* 30px */
+    height: 4vw; /* 30px */
     background: #ffddc5;
-    border-radius: 0.875rem; /* 14px */
+    border-radius: 2.92vh; /* 14px */
     position: relative;
 `;
 
@@ -84,35 +83,24 @@ const UserDetails = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 0.125rem; /* 2px */
-    width: 15.646875rem; /* 250.33px / 16 */
-    height: 2.3125rem; /* 37px */
+    width: 100%; /* 250.33px / 16 */
+    height: 6.46vh; /* 37px */
 `;
 
 const UserId = styled.div`
-    width: 3.25rem; /* 52px */
-    height: 1.4375rem; /* 23px */
     font-family: "Noto Sans KR";
     font-weight: 700;
-    font-size: 1rem; /* 16px */
-    line-height: 1.4375rem; /* 23px */
+    font-size: 1.67vh; /* 16px */
     color: #000000;
 `;
 
 const EditInfo = styled.div`
-    width: 3.5rem; /* 56px */
-    height: 0.75rem; /* 12px */
+    width: 11.67vw; /* 56px */
+    height: 1vh; /* 12px */
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: 0.5rem; /* 8px */
-    line-height: 0.75rem; /* 12px */
+    font-size: 1vh; /* 8px */
     color: #b3b3b3;
-`;
-
-const MenuSection = styled.div`
-    width: 100%;
-    height: 0.9375rem; /* 15px */
-    background: #ffddc5;
 `;
 
 const MenuItem = styled.div`
@@ -120,25 +108,24 @@ const MenuItem = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9375rem 1.875rem; /* 15px 30px */
+    padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 3.75rem; /* 60px */
+    height: 6.67vh; /* 60px */
 `;
 
 const MenuText = styled.div`
     width: auto;
-    height: 1.4375rem; /* 23px */
+    height: 3.96vh; /* 23px */
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: 1rem; /* 16px */
-    line-height: 1.4375rem; /* 23px */
+    font-size: 1.67vh; /* 16px */
+    line-height: 3.96vh; /* 23px */
     color: #000000;
 `;
 
 const VectorSmall = styled.img`
-    width: 2rem; /* 5px */
-    height: 0.625rem; /* 10px */
-    
+    width: 3.33vw; /* 5px */
+    height: 1.04vh; /* 10px */
 `;
 
 const Seperator = styled.div`
@@ -152,24 +139,24 @@ const AppVersionSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9375rem 1.875rem; /* 15px 30px */
+    padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 3.75rem; /* 60px */
+    height: 6.67vh; /* 60px */
 `;
 
 const AppVersionText = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: 1rem; /* 16px */
-    line-height: 1.4375rem; /* 23px */
+    font-size: 1.67vh; /* 16px */
+    line-height: 3.96vh; /* 23px */
     color: #000000;
 `;
 
 const LatestVersion = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: 1rem; /* 16px */
-    line-height: 1.4375rem; /* 23px */
+    font-size: 1.67vh; /* 16px */
+    line-height: 3.96vh; /* 23px */
     color: #ffa464;
 `;
 
@@ -178,25 +165,24 @@ const Footer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9375rem 1.875rem; /* 15px 30px */
+    padding: 1.56vh 3.13vw; /* 15px 30px */
     width: 100%;
-    height: 3.75rem; /* 60px */
+    height: 6.67vh; /* 60px */
     background: #ffddc5;
 `;
 
 const FooterText = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: 0.625rem; /* 10px */
-    line-height: 0.875rem; /* 14px */
+    font-size: 1.04vh; /* 10px */
+    line-height: 1.46vh; /* 14px */
     color: #ff9c56;
 `;
-
 const Settings = () => (
     <Container>
         <AppBar>
             <LeftButtonWrapper>
-                <Vector />
+                <Vector src={Back}/>
             </LeftButtonWrapper>
             <Title>설정</Title>
             <LeftButtonWrapper />
