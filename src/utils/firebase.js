@@ -17,19 +17,19 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-function googleLogin() {
+function googleLogin(setLogged) {
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
       console.log(user);
-      return true;
+      setLogged(true);
     })
     .catch((error) => {
       console.error("code: " + error.code);
       console.error("msg: " + error.message);
-      return false;
+      setLogged(false);
     });
-  return false;
+  setLogged(false);
 }
 
 function googleLogout() {
