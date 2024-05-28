@@ -125,7 +125,8 @@ function Payment() {
                         최대 3천만원까지 가능합니다.
                     </PaymentSubTitle>
                 ) : null}
-                <PaymentButton onClick={navigateToPaymentDetail(inputValue)}>기부하기</PaymentButton>
+                <PaymentButton onClick={() => navigateToPaymentDetail(inputValue)}>기부하기</PaymentButton>
+
 
                 <Keypad>
                     {Array.from({ length: 9 }, (_, i) => (
