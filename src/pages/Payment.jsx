@@ -1,9 +1,149 @@
-const Payment = () => {
+import styled from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import HeaderBack from "../layouts/HeaderBack";
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    //align-items: center;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #ffffff;
+`;
+
+
+const Middle = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 532px;
+`;
+
+const PaymentSubTitle = styled.div`
+    font-family: "Noto Sans KR";
+    font-weight: 400;
+    font-size: 16px;
+    color: ${(props) => (props.color ? props.color : "black")};
+    width: 100%;
+    padding-left: 30px;
+`;
+
+const PaymentTitle = styled.div`
+    font-family: "Noto Sans KR";
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 46px;
+    text-decoration-line: ${(props) => (props.hasInput ? "none" : "underline")};
+    color: ${(props) => (props.hasInput ? "black" : "gray")};
+    width: 100%;
+    height: 54px;
+    padding-left: 30px;
+`;
+
+const PaymentButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+    width: 100%;
+    height: 67px;
+    background: #ff8a3d;
+    color: #ffffff;
+    font-family: "Noto Sans KR";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 35px;
+    margin-top: 160px;
+`;
+
+const Keypad = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 3개의 열
+    gap: 30px; // 각 키 사이의 간격을 자동으로 조정
+    width: 100%; // 부모 컨테이너에 맞춰 자동 조정
+    height: 100%; // 전체 높이의 60%
+    align-items: center;
+    justify-content: center;
+`;
+
+const Key = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+    font-family: "Noto Sans KR";
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 35px;
+    color: #000000;
+`;
+
+function Payment() {
+    const [inputValue, setInputValue] = useState(0);
+    let navigate = useNavigate();
+
+    const navigateToPaymentDetail = (inputValue) => {
+        navigate(`/paymentDetail/${inputValue}`);
+    };
+
+    const handleButtonClick = (value) => {
+        inputValue > 29999999
+            ? setInputValue(30000000)
+            : setInputValue(inputValue * 10 + value);
+    };
+
+    const handleDelete = () => {
+        setInputValue((prev) => Math.floor(prev / 10));
+    };
+
+    const fromatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
+
     return (
-        <>
-            This is payment
-        </>
-    )
+        <Container>
+            <HeaderBack></HeaderBack>
+            <Middle>
+                <PaymentSubTitle>기부할 금액을 입력해주세요</PaymentSubTitle>
+                <PaymentTitle hasInput={inputValue}>
+                    {inputValue
+                        ? fromatNumber(inputValue) + "원"
+                        : "얼마를 기부 할까요?"}
+                </PaymentTitle>
+                {inputValue > 29999999 ? (
+                    <PaymentSubTitle color="red">
+                        최대 3천만원까지 가능합니다.
+                    </PaymentSubTitle>
+                ) : null}
+                <PaymentButton onClick={() => navigateToPaymentDetail(inputValue)}>기부하기</PaymentButton>
+
+
+                <Keypad>
+                    {Array.from({ length: 9 }, (_, i) => (
+                        <Key
+                            key={i + 1}
+                            onClick={() => handleButtonClick(i + 1)}
+                        >
+                            {i + 1}
+                        </Key>
+                    ))}
+                    <Key onClick={() => handleButtonClick("00")}>00</Key>
+                    <Key onClick={() => handleButtonClick("0")}>0</Key>
+                    <Key onClick={handleDelete}>{"<"}</Key>
+                </Keypad>
+            </Middle>
+        </Container>
+    );
 }
 
-export default Payment
+export default Payment;
