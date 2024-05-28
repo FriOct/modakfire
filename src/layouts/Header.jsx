@@ -6,7 +6,7 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: center;
     background-color: #ffffff;
-    border-bottom: 1px solid #A9A9A9;
+    border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
 `
 
 const LogoWrapper = styled.div`
