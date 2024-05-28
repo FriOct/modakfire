@@ -19,7 +19,8 @@ const color = {
     gray: "#B5B5B5",
     drakgray: "#AAAAAA",
     shadow: "#00000040",
-    highlight: "#FF8B3D80"
+    highlight: "#FF8B3D80",
+    centerBoxBg: "#FF8A3D19"
 }
  
 const theme = {
