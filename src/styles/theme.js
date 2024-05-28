@@ -12,17 +12,17 @@ const fontColor = {
 };
 
 const color = {
-  bg: "#FFFFFF",
-  primary: "#FF8A3D",
-  secondary: "#FFF2D7",
-  black: "#000000",
-  lightgray: "#D7D7D7",
-  gray: "#B5B5B5",
-  drakgray: "#AAAAAA",
-  shadow: "#00000040",
-  highlight: "#FF8B3D80",
-};
-
+    bg: "#FFFFFF",
+    primary: "#FF8A3D",
+    secondary: "#FFF2D7",
+    black: "#000000",
+    lightgray: "#D7D7D7",
+    gray: "#B5B5B5",
+    drakgray: "#AAAAAA",
+    shadow: "#00000040",
+    highlight: "#FF8B3D80",
+    centerBoxBg: "#FF8A3D19"
+}
 const theme = {
   fontSize,
   fontColor,

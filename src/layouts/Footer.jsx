@@ -4,7 +4,7 @@ const FooterWrapper = styled.footer`
     display: flex;
     padding: 2vh;
     color: ${({theme}) => theme.fontColor.secondary};
-    border-top: 1px solid #000000;
+    border-top: 1px solid ${({theme}) => theme.color.lightgray};
 `
 
 const Footer = () => {

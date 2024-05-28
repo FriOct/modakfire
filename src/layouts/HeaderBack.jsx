@@ -1,12 +1,15 @@
 import styled from "styled-components";
-import Logo from '../assets/logo.png'
+import Back from '../assets/Back.svg';
+import { useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
+    weight: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; 
     background-color: #ffffff;
-    border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
+    padding: 8px;
+    border-bottom: 1px solid #A9A9A9;
 `
 
 const LogoWrapper = styled.div`
@@ -19,18 +22,24 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled.img`
-    height: min(7vw, 35px);
-    width: min(7vw, 35px);
+    height: min(7vw, 24px);
+    width: min(7vw, 24px);
 `
 
-const Header = () => {
+const HeaderBack = () => {
+
+    let navigate = useNavigate();
+
+    const goBack = () => {
+        navigate(-1);
+    };
+
     return (
         <HeaderWrapper>
-            <LogoWrapper>
-                <LogoImage src={Logo}/>
-                모닥불
+            <LogoWrapper onClick={goBack}>
+                <LogoImage src={Back}/>
             </LogoWrapper>
         </HeaderWrapper>
     );
 }
-export default Header
+export default HeaderBack
