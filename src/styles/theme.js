@@ -1,14 +1,15 @@
 const fontSize = {
-    large: "min(6vw, 30px)",
-    medium: "min(4vw, 20px)",
-    base: "min(3vw, 15px)"
-}
+  xlarge: "min(8vw, 40px)",
+  large: "min(6vw, 30px)",
+  medium: "min(4vw, 20px)",
+  base: "min(3vw, 15px)",
+};
 
 const fontColor = {
-    brown: "#721B00",
-    primary: "#000000",
-    secondary: "#888888"
-}
+  brown: "#721B00",
+  primary: "#000000",
+  secondary: "#888888",
+};
 
 const color = {
     bg: "#FFFFFF",
@@ -22,11 +23,10 @@ const color = {
     highlight: "#FF8B3D80",
     centerBoxBg: "#FF8A3D19"
 }
- 
 const theme = {
-    fontSize,
-    fontColor,
-    color
-}
+  fontSize,
+  fontColor,
+  color,
+};
 
 export default theme;
