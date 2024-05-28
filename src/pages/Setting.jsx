@@ -136,10 +136,9 @@ const MenuText = styled.div`
 `;
 
 const VectorSmall = styled.img`
-    width: 0.3125rem; /* 5px */
+    width: 2rem; /* 5px */
     height: 0.625rem; /* 10px */
-    border: 0.125rem solid #ffddc5; /* 2px */
-    transform: rotate(-180deg);
+    
 `;
 
 const Seperator = styled.div`
