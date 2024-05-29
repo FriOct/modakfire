@@ -14,6 +14,8 @@ import Payment from "./pages/Payment"
 import Setting from "./pages/Setting"
 import PaymentFinish from "./pages/PaymentFinish"
 import PaymentDetail from "./pages/PaymentDetail"
+import User from "./pages/User"
+import UserEdit from "./pages/UserEdit"
 
 const App = () => {
   return (
@@ -31,6 +33,8 @@ const App = () => {
               <Route path="/setting" element={<Setting />} />
               <Route path="/payment/paymentfinish" element={<PaymentFinish/>} />
               <Route path="/paymentDetail/:inputValue" element={<PaymentDetail />} />
+              <Route path="/setting/user" element={<User />} />
+              <Route path="/setting/user/useredit" element={<UserEdit />} />
             </Routes>
           </Main>
         <Footer />

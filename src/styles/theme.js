@@ -24,9 +24,17 @@ const color = {
     shadow: "#00000040",
     highlight: "#FF8B3D80",
     centerBoxBg: "#FF8A3D19"
-}
+};
+
+const padding = {
+  primary: "2vh 7vw", //User page에서 쓸 각 요소의 padding값
+  medium: "min(3vw, 15px)",
+  large: "min(6vw, 30px)",
+};
+
 const theme = {
   fontSize,
+  padding,
   fontColor,
   color,
 };

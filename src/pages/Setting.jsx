@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Person from "../assets/Person.svg";
 import Back from "../assets/Back.svg";
-
 import HeaderSetting from "../layouts/HeaderSetting";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
@@ -21,7 +21,7 @@ const UserSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.56vh 3.13vw; /* 15px 30px */
+    padding: 2vh 7vw;
     width: 100%;
     height: 6.67vh; /* 60px */
 `;
@@ -55,14 +55,14 @@ const UserDetails = styled.div`
 const UserId = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 700;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     color: #000000;
 `;
 
 const EditInfo = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     color: #b3b3b3;
 `;
 
@@ -71,7 +71,7 @@ const MenuItem = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.56vh 3.13vw; /* 15px 30px */
+    padding: 2vh 7vw;
     width: 100%;
     height: 6.67vh; /* 60px */
 `;
@@ -81,7 +81,7 @@ const MenuText = styled.div`
     height: 3.96vh; /* 23px */
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 3.96vh; /* 23px */
     color: #000000;
 `;
@@ -103,7 +103,7 @@ const AppVersionSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.56vh 3.13vw; /* 15px 30px */
+    padding: 2vh 7vw;
     width: 100%;
     height: 6.67vh; /* 60px */
 `;
@@ -111,7 +111,7 @@ const AppVersionSection = styled.div`
 const AppVersionText = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 3.96vh; /* 23px */
     color: #000000;
 `;
@@ -119,7 +119,7 @@ const AppVersionText = styled.div`
 const LatestVersion = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 3.96vh; /* 23px */
     color: #ffa464;
 `;
@@ -128,7 +128,7 @@ const Footer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 1.56vh 3.13vw; /* 15px 30px */
+    padding: 2vh 7vw;
     width: 100%;
     background-color: ${({ theme }) => theme.color.secondary};
     flex: auto;
@@ -137,74 +137,95 @@ const Footer = styled.div`
 const FooterText = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 1.46vh; /* 14px */
     color: #ff9c56;
 `;
 
-const Settings = () => (
-    <Container>
-        <HeaderSetting />
-        <UserSection>
-            <UserInfo>
-                <Avatar src={Person} />
-                <UserDetails>
-                    <UserId>UserId</UserId>
-                    <EditInfo>내 정보 수정하기</EditInfo>
-                </UserDetails>
-            </UserInfo>
-            <VectorSmall src={Back} />
-        </UserSection>
-        <Seperator />
-        <MenuItem>
-            <MenuText>알림</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <MenuItem>
-            <MenuText>테마 설정</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <Seperator />
-        <MenuItem>
-            <MenuText>정기 기부 관리</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <MenuItem>
-            <MenuText>증명서 발급</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <MenuItem>
-            <MenuText>계좌 관리</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <Seperator />
-        <MenuItem>
-            <MenuText>홈 화면 설정</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <MenuItem>
-            <MenuText>보안</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <MenuItem>
-            <MenuText>일반</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <Seperator />
-        <MenuItem>
-            <MenuText>약관 및 개인정보 처리 동의</MenuText>
-            <VectorSmall src={Back} />
-        </MenuItem>
-        <Seperator />
-        <AppVersionSection>
-            <AppVersionText>앱 버전</AppVersionText>
-            <LatestVersion>최신 버전</LatestVersion>
-        </AppVersionSection>
-        <Footer>
-            <FooterText>앱 버전 0.1.0</FooterText>
-            <FooterText>오픈소스 라이선스 보기</FooterText>
-        </Footer>
-    </Container>
-);
+const Settings = () => {
+    const demoData = {
+        User:
+        {
+            member_id: "12345",
+            name: "심준성",
+            email : "modak@knu.ac.kr",
+            member_rank: "작은 불씨",
+            register_date: "2024-05-25",
+        },
+    };
+
+    const user = demoData.User;
+
+    let navigate = useNavigate();
+
+    const navigateToUser = () => {
+        navigate("/setting/user");
+    };
+
+    return (
+        <Container>
+            <HeaderSetting />
+            <UserSection onClick={() => navigateToUser()}>
+                <UserInfo >
+                    <Avatar src={Person} />
+                    <UserDetails>
+                        <UserId>{user.member_id}</UserId>
+                        <EditInfo>내 정보 수정하기</EditInfo>
+                    </UserDetails>
+                </UserInfo>
+                <VectorSmall src={Back} />
+            </UserSection>
+            <Seperator />
+            <MenuItem>
+                <MenuText>알림</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <MenuItem>
+                <MenuText>테마 설정</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <Seperator />
+            <MenuItem>
+                <MenuText>정기 기부 관리</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <MenuItem>
+                <MenuText>증명서 발급</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <MenuItem>
+                <MenuText>계좌 관리</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <Seperator />
+            <MenuItem>
+                <MenuText>홈 화면 설정</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <MenuItem>
+                <MenuText>보안</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <MenuItem>
+                <MenuText>일반</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <Seperator />
+            <MenuItem>
+                <MenuText>약관 및 개인정보 처리 동의</MenuText>
+                <VectorSmall src={Back} />
+            </MenuItem>
+            <Seperator />
+            <AppVersionSection>
+                <AppVersionText>앱 버전</AppVersionText>
+                <LatestVersion>최신 버전</LatestVersion>
+            </AppVersionSection>
+            <Footer>
+                <FooterText>앱 버전 0.1.0</FooterText>
+                <FooterText>오픈소스 라이선스 보기</FooterText>
+            </Footer>
+        </Container>
+    );
+};
 
 export default Settings;
