@@ -3,6 +3,8 @@ import CenterContent from "./CenterContent"
 import CenterIntroBox from "./CenterIntroBox"
 import Seperator from "../../components/Separator"
 import ItemList from "./ItemList"
+import { Route, Routes } from "react-router-dom"
+import CenterItemDetail from "./CenterItemDetail/CenterItemDetail"
 
 const exampleJSON = {
     imageUrl: "https://cdn.ilyoseoul.co.kr/news/photo/201903/292124_211207_332.jpg",
@@ -23,12 +25,17 @@ const CenterWrapper = styled.div`
 
 const CenterHome = () => {
     return(
-        <CenterWrapper>
-            <CenterContent data={exampleJSON} />
-            <CenterIntroBox data={CenterIntro.Intro} />
-            <Seperator />
-            <ItemList />
-        </CenterWrapper>
+        <Routes>
+            <Route path="/" element={
+                <CenterWrapper>
+                    <CenterContent data={exampleJSON} />
+                    <CenterIntroBox data={CenterIntro.Intro} />
+                    <Seperator />
+                    <ItemList />
+                 </CenterWrapper>}/>
+            <Route path="/item/:itemId" element={<CenterItemDetail />}/>
+        </Routes>
+        
     )
 }
 
