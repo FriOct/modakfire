@@ -30,11 +30,6 @@ const LogoImage = styled.img`
     width: min(7vw, 35px);
 `
 
-const LogoImage2 = styled.img`
-    height: min(2.5vw, 35px);
-    width: min(7vw, 35px);
-`
-
 const HeaderMyPage = () => {
 
     let navigate = useNavigate();
@@ -49,12 +44,12 @@ const HeaderMyPage = () => {
 
     return (
         <HeaderWrapper>
-            <LogoImage2 src={Back} onClick={() => navigateToBack()}/>
+            <LogoImage src={Back} onClick={() => navigateToBack()}/>
             <LogoWrapper>
                 <LogoImage src={Logo}/>
                 모닥불
             </LogoWrapper>
-            <LogoImage2 src={gear} onClick={() => navigateToSetting()}/>
+            <LogoImage src={gear} onClick={() => navigateToSetting()}/>
         </HeaderWrapper>
     );
 }

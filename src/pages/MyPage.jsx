@@ -48,7 +48,7 @@ const TitleButtonWrapper = styled.div`
 `;
 
 const Title = styled.div`
-    width: 100%;
+    width: fit-content;
     height: 3.43vh;
     font-family: "Noto Sans KR";
     font-style: normal;
@@ -66,7 +66,6 @@ const ButtonWrapper = styled.div`
     justify-content: center;
     gap: 2.34vh;
     height: 2.57vh;
-    width: 7vw;
     background: #ebebeb;
     border: 0.13vh solid #cdcdcd;
     box-shadow: 0 0 0.47vh rgba(0, 0, 0, 0.25);
@@ -86,6 +85,7 @@ const Button = styled.div`
     font-size: ${({theme}) => theme.fontSize.base};
     line-height: 2.34vh;
     color: #000000;
+    padding:2vw;
 `;
 
 const DonationHistoryList = styled.div`
@@ -181,7 +181,6 @@ const DonationStateIcon = styled.img`
 `;
 
 const DonationStateText = styled.div`
-    width: 9.07vw;
     height: 2.34vh;
     font-family: "Noto Sans KR";
     font-style: normal;
@@ -210,7 +209,7 @@ const RegularDonationWrapper = styled.div`
     padding: 0 2.34vh;
     gap: 0.13vh;
     width: 100%;
-    height: 33.35vh;
+    height: 36.56vh;
 `;
 
 const MyPage = () => {
