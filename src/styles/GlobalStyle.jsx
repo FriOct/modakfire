@@ -15,6 +15,12 @@ const GlobalStyle = createGlobalStyle`
         margin-right: auto;
         background-color: #f2f2f2;
     }
+    ::-webkit-scrollbar {
+	    display: none;
+    }
+    .clickable{
+        cursor: pointer;
+    }
 `
 
 export default GlobalStyle;
