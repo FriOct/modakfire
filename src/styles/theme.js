@@ -1,12 +1,14 @@
 const fontSize = {
   xlarge: "min(8vw, 40px)",
   large: "min(6vw, 30px)",
+  semilarge: "min(5vw, 25px)",
   medium: "min(4vw, 20px)",
   base: "min(3vw, 15px)",
 };
 
 const fontColor = {
   brown: "#721B00",
+  white: "#FFFFFF",
   primary: "#000000",
   secondary: "#888888",
 };
