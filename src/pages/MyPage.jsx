@@ -83,7 +83,7 @@ const Button = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: 1.63vh;
+    font-size: ${({theme}) => theme.fontSize.base};
     line-height: 2.34vh;
     color: #000000;
 `;
@@ -139,7 +139,7 @@ const DateText = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: 1.63vh;
+    font-size: ${({theme}) => theme.fontSize.base};
     line-height: 2.34vh;
     color: ${({theme}) => theme.fontColor.secondary};
 `;
@@ -150,7 +150,7 @@ const ItemName = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: 1.63vh;
+    font-size: ${({theme}) => theme.fontSize.base};
     line-height: 2.34vh;
     color: ${({theme}) => theme.fontColor.secondary};
 `;
@@ -176,8 +176,8 @@ const CenterNameDateWrapper = styled.div`
 `;
 
 const DonationStateIcon = styled.img`
-    width: 2vw;
-    height: 2vw;
+    width: ${({theme}) => theme.fontSize.medium};
+    height: ${({theme}) => theme.fontSize.medium};
 `;
 
 const DonationStateText = styled.div`
@@ -186,7 +186,7 @@ const DonationStateText = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 500;
-    font-size: 1.63vh;
+    font-size: ${({theme}) => theme.fontSize.base};
     line-height: 2.34vh;
     color: #000000;
 `;
