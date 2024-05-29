@@ -2,6 +2,7 @@ import styled from "styled-components";
 import LightTitle from "../../components/Text/LightTitle";
 import SecondaryParagraph from "../../components/Text/SecondaryParagraph";
 import Paragraph from "../../components/Text/Paragraph";
+import { useNavigate } from "react-router-dom";
 
 const ItemWrapper = styled.div`
     display: flex;
@@ -14,6 +15,8 @@ const ItemWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     overflow: hidden;
     img{
@@ -65,16 +68,29 @@ const ProgressInfo = (props) => {
     )
 }
 
+
+const ProgressWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    justify-content: flex-end;
+`
+
 const Item = ({data}) => {
+    const navigate = useNavigate();
+    const percent = Math.ceil(data.raisedAmount/data.price*100);
     return (
-        <ItemWrapper>
+        <ItemWrapper className="clickable" onClick={() => navigate(window.location.pathname + "/item/" + data.id)}>
             <ImageWrapper>
                 <img src={data.imageUrl}/>
             </ImageWrapper>
-            <LightTitle><strong>{data.itemName}</strong></LightTitle>
-            <SecondaryParagraph>{data.sellorName}</SecondaryParagraph>
-            <ProgressBar percent={data.percent}/>
-            <ProgressInfo total={data.totalPrice} percent={data.percent} />
+            <LightTitle><strong>{data.name}</strong></LightTitle>
+            <SecondaryParagraph>{data.marketName}</SecondaryParagraph>
+            <ProgressWrapper>
+                <ProgressBar percent={percent}/>
+                <ProgressInfo total={data.raisedAmount} percent={percent} />
+            </ProgressWrapper>
         </ItemWrapper>
     )
 }
