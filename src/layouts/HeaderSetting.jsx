@@ -25,7 +25,7 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled.img`
-    height: min(2.5vw, 35px);
+    height: min(7vw, 35px);
     width: min(7vw, 35px);
 `
 
