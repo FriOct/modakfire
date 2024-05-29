@@ -23,14 +23,28 @@ const LogoImage = styled.img`
     width: min(7vw, 35px);
 `
 
+const ignorePageRegexList = ["^/payment$", "^/paymentdetail/\\d$", "^/paymentfinish$", "^/setting$", "^/mypage$"];
+
+
+
 const Header = () => {
-    return (
-        <HeaderWrapper>
-            <LogoWrapper>
-                <LogoImage src={Logo}/>
-                모닥불
-            </LogoWrapper>
-        </HeaderWrapper>
-    );
+    const currentPath = window.location.pathname;
+    let isIgnore = false;
+    ignorePageRegexList.forEach(Regex => {
+        if(currentPath.search(Regex) != -1)
+            isIgnore = true;
+    });
+    if(isIgnore){
+        return null;
+    }
+    else
+        return (
+            <HeaderWrapper>
+                <LogoWrapper>
+                    <LogoImage src={Logo}/>
+                    모닥불
+                </LogoWrapper>
+            </HeaderWrapper>
+        );
 }
 export default Header

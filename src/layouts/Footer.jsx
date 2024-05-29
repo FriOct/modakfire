@@ -7,12 +7,24 @@ const FooterWrapper = styled.footer`
     border-top: 1px solid ${({theme}) => theme.color.lightgray};
 `
 
+const ignorePageRegexList = ["^/center/\\d+/item/\\d+$", "^/payment$", "^/paymentdetail/\\d$", "^/paymentfinish$", "^/setting$", "^/mypage$"];
+
 const Footer = () => {
-    return(
-        <FooterWrapper>
-            모닥불: 이웃을 위한 작은 불씨
-        </FooterWrapper>
-    )
+    const currentPath = window.location.pathname;
+    let isIgnore = false;
+    ignorePageRegexList.forEach(Regex => {
+        if(currentPath.search(Regex) != -1)
+            isIgnore = true;
+    });
+    if(isIgnore){
+        return null;
+    }
+    else
+        return( 
+            <FooterWrapper>
+                모닥불: 이웃을 위한 작은 불씨
+            </FooterWrapper>
+        );
 }
 
 export default Footer;
