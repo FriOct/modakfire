@@ -7,14 +7,15 @@ import SecondaryParagraph from "../../../components/Text/SecondaryParagraph";
 import Paragraph from "../../../components/Text/Paragraph";
 import lightbulb from "../../../assets/icons/lightbulb.svg"
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CenterItemDetailWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: min(3vw, 15px);
     width: 100vw;
-    /* height: calc(100vh - min(11vw, 55px));  */
-    /* overflow-y: scroll; */
+    height: max(calc(min(100vw, 500px) * 2), calc(100vh - min(15vw, 75px))); 
+    overflow-y: scroll;
     padding: min(3vw, 15px);
 `
 
@@ -202,7 +203,7 @@ const DonateButtonWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    right: max(calc((100vw - 500px)/2), 0px);
+    left: max(calc((100vw - 500px)/2), 0px);
     bottom: 0;
     z-index: 2;
     color: ${({theme}) => theme.fontColor.white};
@@ -212,14 +213,55 @@ const DonateButtonWrapper = styled.div`
 `
 
 
-const CenterItemDetail = () => {
-    const exampleJson = {
-        name: "대구농산 더담은 우리쌀 10kg",
-        imageUrl: "https://thumbnail6.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/4444095662923187-47c3ecef-b9f7-4405-8618-b1149fcb4654.png",
-        marketName: "㈜대구농산",
-        price: 30000,
-        raisedAmount: 15000,
-    }
+const itemJsonList = [{
+    id: 1,
+    imageUrl: "https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/ce838711-86c1-4eb7-8de1-996dfa55d6907310471040280954698.png",
+    name: "대구농산 강낭콩 3kg",
+    price: 13900,
+    raisedAmount: 10425,
+    marketName: "㈜대구농산",
+},
+{
+    id: 2,
+    imageUrl: "https://thumbnail9.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2623270551134611-ba87cfad-b0eb-4817-8c9b-edd78669f137.png",
+    name: "대구농산 더담은 우리쌀 20kg",
+    price: 57900,
+    raisedAmount: 16200,
+    marketName: "㈜대구농산",
+},
+{
+    id: 3,
+    imageUrl: "https://www.busan.com/nas/data/content/image/2014/09/12/20140912000057_0.jpg",
+    name: "냉동 순살고등어 3kg",
+    price: 39000,
+    raisedAmount: 4200,
+    marketName: "대구신화수산㈜"
+},
+{
+    id: 4,
+    imageUrl: "https://m.art-on.co.kr/web/product/big/201910/64da19866f902e62be63c40f1f43ddc6.jpg",
+    name: "향기 사인펜 16색 10개",
+    price: 27000,
+    raisedAmount: 25000,
+    marketName: "㈜협신"
+},
+{
+    id: 5,
+    imageUrl: "https://www.lego.com/cdn/cs/set/assets/blta9e2bb2199eed6d4/43242.png",
+    name: "레고 5종",
+    price: 45000,
+    raisedAmount: 30000,
+    marketName: "우일완구",
+}
+
+]
+
+
+const CenterItemDetail = ({match, location}) => {
+    const navigate = useNavigate();
+
+    const itemId = parseInt(useParams().itemId);
+    const exampleJson = itemJsonList[itemId-1];
 
     const totalPercent = Math.ceil(exampleJson.raisedAmount/exampleJson.price*100);
 
@@ -230,8 +272,8 @@ const CenterItemDetail = () => {
     const frame = 50;
 
     useEffect(() => {
-        let currentPercent = 0;
         let actualPercent = 0;
+
         const counter = setInterval(() => {
             actualPercent += totalPercent / frame * (-1.9 * (actualPercent/totalPercent) + 1.95);
             setPercent(Math.ceil(actualPercent));
@@ -254,7 +296,7 @@ const CenterItemDetail = () => {
             <ProgressBar percent={percent}/>
             <ProgressInfo now={exampleJson.raisedAmount} goal={exampleJson.price}/>
             <HowToUse sellorName={exampleJson.marketName}/>
-            <DonateButtonWrapper>
+            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment")}>
                 <Title>기부하기</Title>
             </DonateButtonWrapper>
         </CenterItemDetailWrapper>
