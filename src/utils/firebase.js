@@ -17,11 +17,52 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
+const baseURL = "http://localhost:8080";
+
+async function createUser({
+  id: id,
+  email: email,
+  name: name,
+  registerDate: registerDate,
+}) {
+  const url = baseURL + "/members";
+  const data = {
+    id: id,
+    email: email,
+    name: name,
+    registerDate: registerDate,
+  };
+  const response = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    contentType: "application/json",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const jsonData = await response.json();
+  // console.log(jsonData);
+}
+
+function getUserData(id) {}
+
+function getCurrentTime() {
+  var now = new Date();
+  now.setHours(now.getHours() + 9);
+  return now.toISOString().replace("T", " ").substring(0, 19);
+}
+
 function googleLogin(setLogged) {
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      console.log(user);
+      createUser({
+        id: user.uid,
+        email: user.email,
+        name: user.reloadUserInfo.displayName,
+        registerDate: getCurrentTime(),
+      });
       setLogged(true);
     })
     .catch((error) => {
@@ -45,4 +86,4 @@ function googleLogout() {
   return false;
 }
 
-export { googleLogin, googleLogout };
+export { googleLogin, googleLogout, getUserData };
