@@ -9,6 +9,7 @@ import LightTitle from "../../components/Text/LightTitle";
 
 const CenterImageWrapper = styled.div`
     display: block;
+    flex: none;
     overflow: hidden;
     width: min(40vw, 200px);
     height: min(40vw, 200px);
@@ -31,6 +32,7 @@ const CenterImage = (props) => {
 const CenterContentWrapper = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: min(4vw, 20px);
     gap: min(2vw, 10px);
 `
@@ -130,16 +132,32 @@ const LikeShare = (props) => {
     )
 }
 
+// {
+//     center_id: 1,
+//     imageUrl: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
+//     city: "대구",
+//     gu: "북구",
+//     location: "대구광역시 북구 동북로 57",
+//     type: 2,
+//     info: "",
+//     name: "천광보육원",
+//     donor_num: 2130,
+//     like_num: 4217
+// }
+
+const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원", "종합 센터", "커뮤니티"];
+
 const CenterInfo = ({data}) => {
+    const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]];
     return(
         <CenterInfoWrapper>
-            <Title>{data.centerName}</Title>
-            <SecondaryParagraph>{data.centerLocation}</SecondaryParagraph>
+            <Title>{data.name}</Title>
+            <SecondaryParagraph>{data.location}</SecondaryParagraph>
             <HashtagTable>
-                {data.hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
+                {hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
             </HashtagTable>
-            <DonatorCount data={data.donatorCount}/>
-            <LikeShare data={data.likeCount}/>
+            <DonatorCount data={data.donor_num}/>
+            <LikeShare data={data.like_num}/>
         </CenterInfoWrapper>
        
     )

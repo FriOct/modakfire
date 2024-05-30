@@ -10,6 +10,7 @@ import star from "../assets/icons/star.svg";
 import Seperator from "../components/Separator";
 import HighlightWrapper from "../components/Text/HighlightWrapper";
 import Title from "../components/Text/Title";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const BannerDataList = [
     {
@@ -97,12 +98,12 @@ const SearchResultWrapper = styled.div`
     }
     
 `
-const SearchResult = () => {
+const SearchResult = (props) => {
     return(
         <SearchResultWrapper>
             <img src={search}/>
             <HighlightWrapper>
-                <LightTitle>12개의 <strong>검색 결과</strong></LightTitle>
+                <LightTitle>{props.count}개의 <strong>검색 결과</strong></LightTitle>
             </HighlightWrapper>
         </SearchResultWrapper>
     )
@@ -206,38 +207,55 @@ const LikeCount = (props) => {
 }
 
 const exampleCenterJSON = [{
+    center_id: 1,
     imageUrl: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
-    hashtagList: ["대구", "북구", "보육원"],
-    centerName: "천광보육원",
-    donatorCount: 2130,
-    likeCount: 4238
+    city: "대구",
+    gu: "북구",
+    type: 2,
+    info: "",
+    name: "천광보육원",
+    donor_num: 2130,
+    like_num: 4217
 },
 {
+    center_id: 2,
     imageUrl: "https://www.grandculture.net/Image?localName=daegu&id=GC400P10111&t=middle",
-    hashtagList: ["대구", "북구", "보육원"],
-    centerName: "새볕원",
-    donatorCount: 1783,
-    likeCount: 2236
+    city: "대구",
+    gu: "북구",
+    type: 2,
+    info: "",
+    name: "새볕원",
+    donor_num: 1783,
+    like_num: 2236
 },
 {
+    center_id: 3,
     imageUrl: "https://cdn.ilyoseoul.co.kr/news/photo/201903/292124_211207_332.jpg",
-    hashtagList: ["대구", "북구", "보육원"],
-    centerName: "북구어린이집",
-    donatorCount: 1942,
-    likeCount: 3036
+    city: "대구",
+    gu: "북구",
+    type: 2,
+    info: "",
+    name: "북구어린이집",
+    donor_num: 1942,
+    like_num: 3036
 },
 ]
+
+const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원", "종합 센터", "커뮤니티"];
+
 const CenterWrapper = ({data}) => {
+    const navigate = useNavigate();
+    const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]]
     return (
-    <CenterStyledWrapper>
+    <CenterStyledWrapper className="clickable" onClick={() => navigate("/center/" + data.center_id)}>
         <CenterImage src={data.imageUrl} />
         <CenterInfowrapper>
-            <LightTitle><strong>{data.centerName}</strong></LightTitle>
+            <LightTitle><strong>{data.name}</strong></LightTitle>
             <HashtagTable>
-                {data.hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
+                {hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
             </HashtagTable>
-            <DonatorCount data={data.donatorCount} />
-            <LikeCount data={data.likeCount} />
+            <DonatorCount data={data.donor_num} />
+            <LikeCount data={data.like_num} />
         </CenterInfowrapper>
     </CenterStyledWrapper>
     )
@@ -245,14 +263,15 @@ const CenterWrapper = ({data}) => {
 
 
 const Home = () => {
+
     return(
         <HomeWrapper>
             <Carousel items={BannerDataList} />
             <SearchSection />
             <Seperator />
-            <SearchResult />
+            <SearchResult count={exampleCenterJSON.length}/>
             {
-                exampleCenterJSON.map((props, index) => <CenterWrapper key={index} data={props}/>)
+                exampleCenterJSON.map((props, index) => <CenterWrapper key={index} data={props} />)
             }
         </HomeWrapper>
     )
