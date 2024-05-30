@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createUser } from "../api";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,63 +18,36 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-const baseURL = "http://localhost:8080";
-
-async function createUser({
-  id: id,
-  email: email,
-  name: name,
-  registerDate: registerDate,
-}) {
-  const url = baseURL + "/members";
-  const data = {
-    id: id,
-    email: email,
-    name: name,
-    registerDate: registerDate,
-  };
-  const response = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    contentType: "application/json",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const jsonData = await response.json();
-  // console.log(jsonData);
-}
-
-function getUserData(id) {}
-
 function getCurrentTime() {
   var now = new Date();
   now.setHours(now.getHours() + 9);
-  return now.toISOString().replace("T", " ").substring(0, 19);
+  const res = now.toISOString().replace("T", " ").substring(0, 19);
+  return res;
 }
 
-function googleLogin(setLogged) {
-  signInWithPopup(auth, provider)
-    .then((result) => {
+export async function googleLogin() {
+  let res;
+  await signInWithPopup(auth, provider)
+    .then(async (result) => {
       const user = result.user;
-      createUser({
+      const newUserData = {
         id: user.uid,
         email: user.email,
         name: user.reloadUserInfo.displayName,
         registerDate: getCurrentTime(),
-      });
-      setLogged(true);
+      };
+      res = await createUser(newUserData);
     })
     .catch((error) => {
       console.error("code: " + error.code);
       console.error("msg: " + error.message);
-      setLogged(false);
+      return null;
     });
-  setLogged(false);
+  console.log(res);
+  return res;
 }
 
-function googleLogout() {
+export function googleLogout() {
   signOut(auth)
     .then(() => {
       // Sign-out successful.
@@ -85,5 +59,3 @@ function googleLogout() {
     });
   return false;
 }
-
-export { googleLogin, googleLogout, getUserData };
