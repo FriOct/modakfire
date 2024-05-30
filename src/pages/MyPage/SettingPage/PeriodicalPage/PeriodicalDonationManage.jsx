@@ -4,6 +4,7 @@ import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonation from "../../../../layouts/HeaderPeriodicalDonation";
 import Back from "../../../../assets/Back.svg";
+import { useState } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -92,7 +93,7 @@ const EditButton = styled.button`
 `;
 
 const PeriodicalDonationManage = () => {
-    const [user, setUser] = useRecoilState(userState);
+    const [user, setUser] = useRecoilState(userState);    
 
     let navigate = useNavigate();
 

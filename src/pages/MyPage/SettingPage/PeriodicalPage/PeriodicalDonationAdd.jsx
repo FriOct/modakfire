@@ -4,6 +4,7 @@ import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderBack from "../../../../layouts/HeaderBack";
 import { useState } from "react";
+import Back from "../../../../assets/Back.svg";
 
 const Container = styled.div`
     display: flex;
@@ -44,6 +45,7 @@ const InputBoxWrapper = styled.div`
     justify-content: start;
     align-items: center;
     width: 100%;
+    height:min(10vw, 40px);
     padding: min(2vw, 8px);
     border-radius: min(4vw, 16px);
     background: ${({ theme }) => theme.color.secondary};
@@ -87,28 +89,57 @@ const EditInfo = styled.div`
 `;
 
 const InfoText = styled.div`
-
     font-family: "Noto Sans KR, sans-serif";
     font-size: ${({ theme }) => theme.fontSize.medium};
     color: ${({ theme }) => theme.fontColor.primary};
 `;
 
+const VectorSmall = styled.img`
+    height: 1.5vh; /* 10px */
+    transform: rotate(180deg);
+`;
+
+const CenterWrapper = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    gap:3vw;
+    align-items: center;
+    width: 100%;
+`;
+
 function PeriodicalDonationAdd() {
     const [user, setUser] = useRecoilState(userState);
+
     const [pd, setPd] = useState({
-        center_name: null,
+        center_name: "센터",
         start_date: null,
         end_date: null,
         donation_date: 0,
         amount: 0,
     });
     let navigate = useNavigate();
+
     const formatNumber = (number) => {
         return number.toLocaleString("ko-KR");
     };
 
     //post로 값 올려야함
     const handleSave = () => {
+        setPd({...pd,start_date: new Date(), end_date: new Date()});
+        setUser((prev) => ({
+            ...prev,
+            
+        }));
+
+        setUser((prev) => ({
+            ...prev,
+            User: {
+                ...prev.User,
+                name: newName,
+                email: newEmail,
+            },
+        }));
+        console.log(pd);
         navigate(-1);
     };
 
@@ -133,8 +164,8 @@ function PeriodicalDonationAdd() {
         <Container>
             <HeaderBack />
             <InputField>
-                <Label>센터 선택</Label>
-                <InputBox id="nameInput" defaultValue={user.User.name} />
+                <CenterWrapper><Label>센터 선택</Label><VectorSmall src={Back} /></CenterWrapper>
+                <InputBoxWrapper>{pd.center_name}</InputBoxWrapper>
             </InputField>
             <InputField>
                 <Label>금액</Label>
@@ -142,9 +173,12 @@ function PeriodicalDonationAdd() {
                     <InputBox
                         value={pd.amount ? `${formatNumber(pd.amount)}` : ""}
                         onChange={handleChangeAmount}
-                        style={{width: pd.amount<=0?"100%":null}}
+                        size={
+                            pd.amount <= 0 ? null : pd.amount.toString().length+1
+                        }
+                        style={{ width: pd.amount <= 0 ? "100%" : null }}
                     />
-                    {pd.amount > 0 ?<InfoText>일</InfoText> : null}
+                    {pd.amount > 0 ? <InfoText>원</InfoText> : null}
                 </InputBoxWrapper>
 
                 {pd.amount > 29999999 ? (
@@ -154,29 +188,26 @@ function PeriodicalDonationAdd() {
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? <InfoText>매달</InfoText> : null}
+                    {pd.donation_date > 0 ? <InfoText>매달&nbsp;</InfoText> : null}
                     <InputBox
                         value={
                             pd.donation_date
-                                ? ` ${formatNumber(pd.donation_date)}`
+                                ? `${formatNumber(pd.donation_date)}`
                                 : ""
                         }
                         onChange={handleChangeDonationDate}
                         size={
-                            pd.donation_date<=0?null:
-                            pd.donation_date >= 10
-                                    ? 2
-                                    : 1
+                            pd.donation_date <= 0
+                                ? null
+                                : pd.donation_date.toString().length
                         }
-                        style={{width: pd.donation_date<=0?"100%":null}}
-                        
+                        style={{ width: pd.donation_date <= 0 ? "100%" : null }}
                     />
                     {pd.donation_date > 0 ? <InfoText>일</InfoText> : null}
-                    
                 </InputBoxWrapper>
                 {pd.donation_date > 30 ? (
-                        <EditInfo>최대 31일까지 설정할 수 있습니다.</EditInfo>
-                    ) : null}
+                    <EditInfo>최대 31일까지 설정할 수 있습니다.</EditInfo>
+                ) : null}
             </InputField>
             <ButtonWrapper>
                 <EditButton onClick={handleSave}>추가 완료</EditButton>
