@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonation from "../../../../layouts/HeaderPeriodicalDonation";
 import Back from "../../../../assets/Back.svg";
 import { useState } from "react";
+import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 
 const Container = styled.div`
     display: flex;
@@ -14,7 +14,6 @@ const Container = styled.div`
     height: 100vh;
     background: ${({ theme }) => theme.color.bg};
 `;
-
 
 const Seperator = styled.div`
     width: 100vw;
@@ -35,7 +34,8 @@ const DonationCenter = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: ${({ theme }) => theme.padding.primary};gap: 3vw;
+    padding: ${({ theme }) => theme.padding.primary};
+    gap: 3vw;
     width: 100vw;
     height: 10vh;
 `;
@@ -93,32 +93,46 @@ const EditButton = styled.button`
 `;
 
 const PeriodicalDonationManage = () => {
-    const [user, setUser] = useRecoilState(userState);    
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
+        periodicalDonationState
+    );
 
     let navigate = useNavigate();
 
     const fromatNumber = (number) => {
-      return number.toLocaleString("ko-KR");
-  };
+        return number.toLocaleString("ko-KR");
+    };
 
     return (
         <Container>
-            <HeaderPeriodicalDonation/>
+            <HeaderPeriodicalDonation />
             <Seperator />
             <DonationList>
-                {user.PeriodicalDonation.map((donation, index) => (
-                    <DonationCenter key={index}>
-                        <Info>
-                            <CenterName>{donation.center_name}</CenterName>
-                            <Amount>₩{fromatNumber(donation.amount)}</Amount>
-                        </Info>
-                        <VectorSmall src={Back} />
-                    </DonationCenter>
-                ))}
+                {periodicalDonation
+                    ? periodicalDonation.map((donation, index) => (
+                          <DonationCenter key={index} onClick={()=>{navigate("/new-route", { state: { key: `${donation.}` } });}}>
+                              <Info>
+                                  <CenterName>
+                                      {donation.center_name}
+                                  </CenterName>
+                                  <Amount>
+                                      ₩{fromatNumber(donation.amount)}
+                                  </Amount>
+                              </Info>
+                              <VectorSmall src={Back} />
+                          </DonationCenter>
+                      ))
+                    : null}
             </DonationList>
             <Seperator />
             <ButtonWrapper>
-                <EditButton onClick={() => {navigate('/setting/periodicaldonation/add');}}>정기기부 추가하기</EditButton>
+                <EditButton
+                    onClick={() => {
+                        navigate("/setting/periodicaldonation/add");
+                    }}
+                >
+                    정기기부 추가하기
+                </EditButton>
             </ButtonWrapper>
         </Container>
     );

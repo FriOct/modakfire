@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
+import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderBack from "../../../../layouts/HeaderBack";
 import { useState } from "react";
@@ -109,8 +110,10 @@ const CenterWrapper = styled.div`
 
 function PeriodicalDonationAdd() {
     const [user, setUser] = useRecoilState(userState);
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(periodicalDonationState);
 
     const [pd, setPd] = useState({
+        periodical_donation_id: 0,
         center_name: "센터",
         start_date: null,
         end_date: null,
@@ -125,21 +128,7 @@ function PeriodicalDonationAdd() {
 
     //post로 값 올려야함
     const handleSave = () => {
-        setPd({...pd,start_date: new Date(), end_date: new Date()});
-        setUser((prev) => ({
-            ...prev,
-            
-        }));
-
-        setUser((prev) => ({
-            ...prev,
-            User: {
-                ...prev.User,
-                name: newName,
-                email: newEmail,
-            },
-        }));
-        console.log(pd);
+        setPeriodicalDonation((prev) => prev?[...prev, pd]:[pd]);
         navigate(-1);
     };
 
