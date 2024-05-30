@@ -17,6 +17,7 @@ import Payment from "./pages/Payment"
 import Setting from "./pages/MyPage/SettingPage/Setting"
 import PaymentFinish from "./pages/PaymentFinish"
 import PaymentDetail from "./pages/PaymentDetail"
+import ItemState from "./pages/ItemState"
 import User from "./pages/MyPage/SettingPage/UserPage/User"
 import UserEdit from "./pages/MyPage/SettingPage/UserPage/UserEdit"
 import PeriodicalDonationManage from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationManage"
@@ -38,6 +39,7 @@ const App = () => {
               <Route path="/setting" element={<Setting />} />
               <Route path="/payment/paymentfinish" element={<PaymentFinish/>} />
               <Route path="/paymentDetail/:inputValue" element={<PaymentDetail />} />
+              <Route path="/itemstate/:itemId" element={<ItemState />} />
               <Route path="/setting/user" element={<User />} />
               <Route path="/setting/user/useredit" element={<UserEdit />} />
               <Route path="/setting/periodicaldonation" element={<PeriodicalDonationManage/>}/>
