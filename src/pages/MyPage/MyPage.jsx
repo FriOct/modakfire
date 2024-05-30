@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import HighlightWrapper from "../components/Text/HighlightWrapper";
-import box from "../assets/box.svg";
-import delivery from "../assets/delevery.svg";
-import donation from "../assets/donation.svg";
-import HeaderMyPage from "../layouts/HeaderMyPage";
-import Seperator from "../components/Separator";
+import HighlightWrapper from "../../components/Text/HighlightWrapper";
+import box from "../../assets/box.svg";
+import delivery from "../../assets/delevery.svg";
+import donation from "../../assets/donation.svg";
+import HeaderMyPage from "../../layouts/HeaderMyPage";
+import Seperator from "../../components/Separator";
 
 const Container = styled.div`
     display: flex;
@@ -214,12 +214,14 @@ const RegularDonationWrapper = styled.div`
 
 const MyPage = () => {
     const demoData = {
-        User: [
+        User:
             {
+                member_id: "12345",
                 name: "심준성",
-                grade: "작은 불씨",
+                email : "modak@knu.ac.kr",
+                member_rank: "작은 불씨",
+                register_date: "2024-05-25",
             },
-        ],
         donationHistory: [
             {
                 centerName: "천광보육원",
@@ -265,15 +267,15 @@ const MyPage = () => {
         ],
     };
 
-    const user = demoData.User[0];
+    const user = demoData.User;
 
     return (
         <Container>
-            <HeaderMyPage />
+            <HeaderMyPage member={user}/>
             <GradeFrame>
                 <Grade>
                     {user.name}님은 현재{" "}
-                    <HighlightWrapper>{user.grade}</HighlightWrapper>{" "}
+                    <HighlightWrapper>{user.member_rank}</HighlightWrapper>{" "}
                     등급입니다.
                 </Grade>
             </GradeFrame>
