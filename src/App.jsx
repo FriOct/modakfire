@@ -1,23 +1,30 @@
-import Header from "./layouts/Header"
+import { Route, Routes } from "react-router-dom"
+import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from "styled-components"
+
 import GlobalStyle from "./styles/GlobalStyle"
 import './App.css'
+
+import Header from "./layouts/Header"
 import theme from "./styles/theme"
-import { ThemeProvider } from "styled-components"
 import Footer from "./layouts/Footer"
 import Main from "./layouts/Main"
-import { Route, Routes } from "react-router-dom"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import CenterHome from "./pages/CenterHome/CenterHome"
-import MyPage from "./pages/MyPage"
+import MyPage from "./pages/MyPage/MyPage"
 import Payment from "./pages/Payment"
-import Setting from "./pages/Setting"
+import Setting from "./pages/MyPage/SettingPage/Setting"
 import PaymentFinish from "./pages/PaymentFinish"
 import PaymentDetail from "./pages/PaymentDetail"
+import User from "./pages/MyPage/SettingPage/UserPage/User"
+import UserEdit from "./pages/MyPage/SettingPage/UserPage/UserEdit"
+import PeriodicalDonationManage from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationManage"
+import PeriodicalDonationAdd from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationAdd";
 
 const App = () => {
   return (
-    <>
+    <RecoilRoot>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Header />
@@ -31,11 +38,15 @@ const App = () => {
               <Route path="/setting" element={<Setting />} />
               <Route path="/payment/paymentfinish" element={<PaymentFinish/>} />
               <Route path="/paymentDetail/:inputValue" element={<PaymentDetail />} />
+              <Route path="/setting/user" element={<User />} />
+              <Route path="/setting/user/useredit" element={<UserEdit />} />
+              <Route path="/setting/periodicaldonation" element={<PeriodicalDonationManage/>}/>
+              <Route path="/setting/periodicaldonation/add" element={<PeriodicalDonationAdd/>}/>
             </Routes>
           </Main>
         <Footer />
       </ThemeProvider>
-    </>
+    </RecoilRoot>
   )
 }
 
