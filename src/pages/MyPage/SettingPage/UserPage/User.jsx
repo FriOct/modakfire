@@ -19,7 +19,7 @@ const UserProfile = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1.5vh 0;
+    padding: ${({ theme }) => theme.padding.primary};
     width: 100%;
 `;
 

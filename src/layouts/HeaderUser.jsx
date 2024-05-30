@@ -23,8 +23,8 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoImage = styled.img`
-    height: min(5vw, 35px);
-    width: min(5vw, 35px);
+    height: min(4vw, 35px);
+    width: min(4vw, 35px);
 `;
 
 const HeaderSetting = ({ member_id }) => {

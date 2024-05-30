@@ -24,8 +24,8 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled.img`
-    height: min(7vw, 35px);
-    width: min(7vw, 35px);
+    height: min(4vw, 35px);
+    width: min(4vw, 35px);
 `
 
 const HeaderSetting = () => {
