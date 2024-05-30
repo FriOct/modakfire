@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import HighlightWrapper from "../components/Text/HighlightWrapper";
-import box from "../assets/box.svg";
-import delivery from "../assets/delevery.svg";
-import donation from "../assets/donation.svg";
-import HeaderMyPage from "../layouts/HeaderMyPage";
-import Seperator from "../components/Separator";
+import HighlightWrapper from "../../components/Text/HighlightWrapper";
+import box from "../../assets/box.svg";
+import delivery from "../../assets/delevery.svg";
+import donation from "../../assets/donation.svg";
+import HeaderMyPage from "../../layouts/HeaderMyPage";
+import Seperator from "../../components/Separator";
 
 const Container = styled.div`
     display: flex;

@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import HearderUser from "../layouts/HeaderUser";
-import Seperator from "../components/Separator";
-import Person from "../assets/Person.svg";
-import Back from "../assets/Back.svg";
+import HearderUser from "../../../../layouts/HeaderUser";
+import Seperator from "../../../../components/Separator";
+import Person from "../../../../assets/Person.svg";
+import Back from "../../../../assets/Back.svg";
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../../recoil/atoms/userAtom';
 
 const Container = styled.div`
     display: flex;
@@ -32,7 +34,7 @@ const InfoSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 2vh 7vw;
+    padding: ${({ theme }) => theme.fontColor.primary};
     width: 100%;
 `;
 
@@ -96,18 +98,7 @@ const FooterText = styled.div`
 
 const User = () => {
 
-    const demoData = {
-        User:
-        {
-            member_id: "12345",
-            name: "심준성",
-            email : "modak@knu.ac.kr",
-            member_rank: "작은 불씨",
-            register_date: "2024-05-25",
-        },
-    };
-
-    const user = demoData.User;
+    const user = useRecoilValue(userState).User;
 
     return (
         <Container>

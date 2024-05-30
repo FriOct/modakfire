@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import Person from "../assets/Person.svg";
-import Back from "../assets/Back.svg";
-import HeaderSetting from "../layouts/HeaderSetting";
+import Person from "../../../assets/Person.svg";
+import Back from "../../../assets/Back.svg";
+import HeaderSetting from "../../../layouts/HeaderSetting";
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../recoil/atoms/userAtom';
 import { useNavigate } from "react-router-dom";
+
 
 const Container = styled.div`
     display: flex;
@@ -143,23 +146,17 @@ const FooterText = styled.div`
 `;
 
 const Settings = () => {
-    const demoData = {
-        User:
-        {
-            member_id: "12345",
-            name: "심준성",
-            email : "modak@knu.ac.kr",
-            member_rank: "작은 불씨",
-            register_date: "2024-05-25",
-        },
-    };
 
-    const user = demoData.User;
+    const user = useRecoilValue(userState).User;
 
     let navigate = useNavigate();
 
     const navigateToUser = () => {
         navigate("/setting/user");
+    };
+
+    const navigateToPeriodicalDonation = () => {
+        navigate("/setting/peridicaldonation");
     };
 
     return (
@@ -185,7 +182,7 @@ const Settings = () => {
                 <VectorSmall src={Back} />
             </MenuItem>
             <Seperator />
-            <MenuItem>
+            <MenuItem onClick={() => navigateToPeriodicalDonation()}>
                 <MenuText>정기 기부 관리</MenuText>
                 <VectorSmall src={Back} />
             </MenuItem>
