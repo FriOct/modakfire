@@ -14,6 +14,7 @@ import Payment from "./pages/Payment"
 import Setting from "./pages/Setting"
 import PaymentFinish from "./pages/PaymentFinish"
 import PaymentDetail from "./pages/PaymentDetail"
+import ItemState from "./pages/ItemState"
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/setting" element={<Setting />} />
               <Route path="/payment/paymentfinish" element={<PaymentFinish/>} />
               <Route path="/paymentDetail/:inputValue" element={<PaymentDetail />} />
+              <Route path="/itemstate/:itemId" element={<ItemState />} />
             </Routes>
           </Main>
         <Footer />
