@@ -94,31 +94,7 @@ const EditButton = styled.button`
 const PeriodicalDonationManage = () => {
     const [user, setUser] = useRecoilState(userState);
 
-    const updateUserInfo = (newName, newEmail) => {
-        setUser((prev) => ({
-            ...prev,
-            User: {
-                ...prev.User,
-                name: newName,
-                email: newEmail,
-            },
-        }));
-    };
-
-    const handleAdd = () => {
-        const newName = document.getElementById("nameInput").value;
-        const newEmail = document.getElementById("emailInput").value;
-        updateUserInfo(newName, newEmail);
-        console.log("Updated Data:", user);
-        navigateToBack();
-        // Here you would handle the API call or other actions to save the data
-    };
-
     let navigate = useNavigate();
-
-    const navigateToBack = () => {
-        navigate(-1);
-    };
 
     const fromatNumber = (number) => {
       return number.toLocaleString("ko-KR");
@@ -141,7 +117,7 @@ const PeriodicalDonationManage = () => {
             </DonationList>
             <Seperator />
             <ButtonWrapper>
-                <EditButton onClick={handleAdd}>정기기부 추가하기</EditButton>
+                <EditButton onClick={() => {navigate('/setting/periodicaldonation/add');}}>정기기부 추가하기</EditButton>
             </ButtonWrapper>
         </Container>
     );

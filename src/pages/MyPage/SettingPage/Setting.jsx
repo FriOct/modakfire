@@ -156,7 +156,7 @@ const Settings = () => {
     };
 
     const navigateToPeriodicalDonation = () => {
-        navigate("/setting/peridicaldonation");
+        navigate("/setting/periodicaldonation");
     };
 
     return (
