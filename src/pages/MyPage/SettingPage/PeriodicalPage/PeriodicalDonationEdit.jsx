@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
-import { useLocation, useNavigate } from "react-router-dom";
-import HeaderPeriodicalDonationDetail from "../../../../layouts/HeaderPeriodicalDonationDetail";
+import { useNavigate } from "react-router-dom";
+import Header from "../../../../layouts/HeaderBack";
 import { useState } from "react";
 import Back from "../../../../assets/Back.svg";
 
@@ -108,27 +108,71 @@ const CenterWrapper = styled.div`
     width: 100%;
 `;
 
-function PeriodicalDonationDetail() {
+function PeriodicalDonationEdit() {
     const [user, setUser] = useRecoilState(userState);
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(periodicalDonationState);
 
-    const location = useLocation();
+    const [pd, setPd] = useState({
+        periodical_donation_id: 0,
+        center_name: "센터",
+        start_date: null,
+        end_date: null,
+        donation_date: 0,
+        amount: 0,
+    });
+    let navigate = useNavigate();
 
-    const pd = periodicalDonation.find(donation => donation.periodical_donation_id === location.state?.periodical_donation_id);
+    const formatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
 
-    console.log(pd);
+    //post로 값 올려야함
+    const handleSave = () => {
+        setPeriodicalDonation((prev) => prev?[...prev, pd]:[pd]);
+        navigate(-1);
+    };
+
+    const handleChangeAmount = (e) => {
+        let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+        if (value > 30000000) value = 30000000;
+        setPd({
+            ...pd,
+            amount: value ? parseInt(value, 10) : null, // Convert to integer or set to 0
+        });
+    };
+    const handleChangeDonationDate = (e) => {
+        let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+        if (value > 31) value = 31;
+        setPd({
+            ...pd,
+            donation_date: value ? parseInt(value, 10) : null, // Convert to integer or set to 0
+        });
+    };
 
     return (
         <Container>
-            <HeaderPeriodicalDonationDetail />
+            <HeaderBack />
             <InputField>
-                <Label>센터</Label>
+                <CenterWrapper><Label>센터 선택</Label><VectorSmall src={Back} /></CenterWrapper>
+                <InputBoxWrapper>{pd.center_name}</InputBoxWrapper>
             </InputField>
             <InputField>
                 <Label>금액</Label>
                 <InputBoxWrapper>
-                     <InfoText>{pd.amount}원</InfoText>
+                    <InputBox
+                        value={pd.amount ? `${formatNumber(pd.amount)}` : ""}
+                        onChange={handleChangeAmount}
+                        size={
+                            pd.amount <= 0 ? null : pd.amount.toString().length+1
+                        }
+                        style={{ width: pd.amount <= 0 ? "100%" : null }}
+                    />
+                    {pd.amount > 0 ? <InfoText>원</InfoText> : null}
                 </InputBoxWrapper>
+
+                {pd.amount > 29999999 ? (
+                    <EditInfo>최대 3,000만원까지 설정할 수 있습니다.</EditInfo>
+                ) : null}
             </InputField>
             <InputField>
                 <Label>정기 기부일</Label>
@@ -161,4 +205,4 @@ function PeriodicalDonationDetail() {
     );
 }
 
-export default PeriodicalDonationDetail;
+export default PeriodicalDonationEdit;
