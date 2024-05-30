@@ -34,7 +34,7 @@ const InfoSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: ${({ theme }) => theme.fontColor.primary};
+    padding: ${({ theme }) => theme.padding.primary};
     width: 100%;
 `;
 
@@ -56,7 +56,7 @@ const Exit = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 2vh 7vw;
+    padding: ${({ theme }) => theme.padding.primary};
     width: 100%;
     height: 6.67vh; /* 60px */
 `;

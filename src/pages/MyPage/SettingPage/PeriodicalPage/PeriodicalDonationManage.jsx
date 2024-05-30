@@ -2,48 +2,18 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
+import HeaderPeriodicalDonation from "../../../../layouts/HeaderPeriodicalDonation";
+import Back from "../../../../assets/Back.svg";
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 0;
     width: 100%;
     height: 100vh;
     background: ${({ theme }) => theme.color.bg};
 `;
 
-const AppBar = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: ${({ theme }) => theme.padding.large};
-    width: 100vw;
-    height: 6vh;
-`;
-
-const LeftButtonWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1vw;
-    width: 2vw;
-    height: 4vh;
-`;
-
-const BackIcon = styled.div`
-    width: 2vw;
-    height: 4vh;
-    border: 0.2vw solid ${({ theme }) => theme.color.black};
-`;
-
-const Title = styled.div`
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSize.medium};
-    color: ${({ theme }) => theme.fontColor.primary};
-`;
 
 const Seperator = styled.div`
     width: 100vw;
@@ -56,7 +26,7 @@ const DonationList = styled.div`
     flex-direction: column;
     align-items: flex-start;
     padding: 0;
-    width: 100vw;
+    width: 100100;
     flex-grow: 1;
 `;
 
@@ -74,9 +44,6 @@ const Info = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    gap: 0.2vh;
-    width: 20vw;
-    height: 5vh;
 `;
 
 const CenterName = styled.div`
@@ -95,29 +62,28 @@ const Amount = styled.div`
     color: #ffddc5;
 `;
 
-const RightButtonWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1vw;
-    width: 1vw;
-    height: 2vh;
-`;
-
-const RightIcon = styled.div`
-    width: 1vw;
-    height: 2vh;
-    border: 0.2vw solid ${({ theme }) => theme.color.black};
-    transform: rotate(-180deg);
-`;
-
 const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: ${({ theme }) => theme.padding.primary};
+    width: 100%;
+`;
+const VectorSmall = styled.img`
+    height: 1.5vh; /* 10px */
+    transform: rotate(180deg);
+`;
+
+const MenuItem = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding: 2vh 7vw;
     width: 100%;
+    font-size: ${({ theme }) => theme.fontSize.medium};
+    font-weight: 700;
 `;
 
 const EditButton = styled.button`
@@ -165,25 +131,22 @@ const PeriodicalDonationManage = () => {
         navigate(-1);
     };
 
+    const fromatNumber = (number) => {
+      return number.toLocaleString("ko-KR");
+  };
+
     return (
         <Container>
-            <AppBar>
-                <LeftButtonWrapper>
-                    <BackIcon />
-                </LeftButtonWrapper>
-                <Title>정기 기부</Title>
-            </AppBar>
+            <HeaderPeriodicalDonation/>
             <Seperator />
             <DonationList>
                 {user.PeriodicalDonation.map((donation, index) => (
                     <DonationCenter key={index}>
                         <Info>
                             <CenterName>{donation.center_name}</CenterName>
-                            <Amount>₩{donation.amount}</Amount>
+                            <Amount>₩{fromatNumber(donation.amount)}</Amount>
                         </Info>
-                        <RightButtonWrapper>
-                            <RightIcon />
-                        </RightButtonWrapper>
+                        <VectorSmall src={Back} />
                     </DonationCenter>
                 ))}
             </DonationList>
