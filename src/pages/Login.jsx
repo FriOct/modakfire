@@ -5,7 +5,9 @@ import googleLogo from "../assets/images/google_logo.png";
 import LightTitle from "../components/Text/LightTitle";
 import { useNavigate } from "react-router-dom";
 import { googleLogin } from "../utils/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { userState } from "../recoil/atoms/userAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -85,9 +87,12 @@ const AnonymousLoginText = styled.p`
 `;
 
 // TODO 로그인상태 유지하는 기능 추가하기
-const GoogleLoginBtn = ({ setLogged }) => {
+const GoogleLoginBtn = () => {
+  const setUser = useSetRecoilState(userState);
+
   async function login() {
-    googleLogin(setLogged);
+    const res = await googleLogin();
+    setUser(res);
   }
 
   return (
@@ -101,9 +106,10 @@ const GoogleLoginBtn = ({ setLogged }) => {
 };
 
 const Login = () => {
-  const [logged, setLogged] = useState(false);
+  const navigate = useNavigate();
+  const user = useRecoilValue(userState);
 
-  return logged ? (
+  return user != null ? (
     <FirstLoggedIn />
   ) : (
     <PageWrapper>
@@ -111,8 +117,10 @@ const Login = () => {
       <MainTitleText>모닥불</MainTitleText>
       <SubTitleText>지역사회 기부 플랫폼</SubTitleText>
       <Seperator />
-      <GoogleLoginBtn setLogged={setLogged} />
-      <AnonymousLoginText>로그인 없이 계속하기</AnonymousLoginText>
+      <GoogleLoginBtn />
+      <AnonymousLoginText onClick={() => navigate(`/`)}>
+        로그인 없이 계속하기
+      </AnonymousLoginText>
     </PageWrapper>
   );
 };
@@ -130,7 +138,7 @@ const FirstLoggedIn = () => {
         style={{ backgroundColor: "#FF8A3D" }}
         onClick={() => navigate(`/`)}
       >
-        <ButtonWhiteText>곧장 기부하러 가기</ButtonWhiteText>
+        <ButtonWhiteText>기부하러 가기</ButtonWhiteText>
       </ButtonWrapper>
     </PageWrapper>
   );
