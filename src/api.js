@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import { userState } from "./recoil/atoms/userAtom";
 
-const baseURL = "http://localhost:8080";
+const baseURL = "https://port-0-modakfire-be-1272llwutmz86.sel5.cloudtype.app/api";
 
 export async function createUser({
   id: id,
