@@ -253,9 +253,21 @@ const MyPage = () => {
     const periodicaldonation = useRecoilValue(periodicalDonationState);
     let navigate = useNavigate();
 
-    const fromatNumber = (number) => {
+    const formatNumber = (number) => {
         return number.toLocaleString("ko-KR");
     };
+
+    const formatRank = (rank) =>{
+        if(rank === 'EMBER'){
+            return '장작'
+        }
+        else if(rank === 'FIREWOOD'){
+            return '불씨'
+        }
+        else if(rank === 'BONFIRE'){
+            return '모닥불'
+        }
+    }
 
     return (
         <Container>
@@ -263,7 +275,7 @@ const MyPage = () => {
             <GradeFrame>
                 <Grade>
                     {user.name}님은 현재{" "}
-                    <HighlightWrapper>{user.member_rank}</HighlightWrapper>{" "}
+                    <HighlightWrapper>{formatRank(user.memberRank)}</HighlightWrapper>{" "}
                     등급입니다.
                 </Grade>
             </GradeFrame>
@@ -324,7 +336,7 @@ const MyPage = () => {
                             </CenterNameDateWrapper>
                             <CenterNameDateWrapper>
                                 <RegularDonationText>
-                                    {fromatNumber(donation.amount)}원
+                                    {formatNumber(donation.amount)}원
                                 </RegularDonationText>
                                 <DateText>
                                     매달 {donation.donation_date}일

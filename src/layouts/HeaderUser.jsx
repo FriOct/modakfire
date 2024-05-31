@@ -27,7 +27,7 @@ height: min(4vw, 25px);
 width: min(6vw, 30px);
 `
 
-const HeaderSetting = ({ member_id }) => {
+const HeaderSetting = ({ name }) => {
     let navigate = useNavigate();
 
     const navigateToBack = () => {
@@ -42,7 +42,7 @@ const HeaderSetting = ({ member_id }) => {
         <HeaderWrapper>
             <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()} />
             <LogoWrapper>
-                {member_id ? `${member_id}님의 정보` : "로그인이 필요합니다"}
+                {name ? `${name}님의 정보` : "로그인이 필요합니다"}
             </LogoWrapper>
             <LogoWrapper className="clickable" onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
         </HeaderWrapper>
