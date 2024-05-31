@@ -31,8 +31,8 @@ const HeaderSetting = ({periodical_donation_id}) => {
 
     return (
         <HeaderWrapper>
-            <LogoImage src={Back} onClick={() => {navigate(-1);}} />
-            <LogoWrapper onClick={ ()=>{navigate("/setting/periodicaldonation/edit", { state: { periodical_donation_id: periodical_donation_id } });}}>수정</LogoWrapper>
+            <LogoImage className="clickable" src={Back} onClick={() => {navigate(-1);}} />
+            <LogoWrapper className="clickable" onClick={ ()=>{navigate("/setting/periodicaldonation/edit", { state: { periodical_donation_id: periodical_donation_id } });}}>수정</LogoWrapper>
         </HeaderWrapper>
     );
 };

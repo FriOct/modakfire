@@ -45,7 +45,7 @@ const HeaderBack = () => {
 
     return (
         <HeaderWrapper>
-            <LogoWrapper onClick={goBack}>
+            <LogoWrapper className="clickable" onClick={goBack}>
                 <LogoImage src={Back} />
             </LogoWrapper>
             <Text>정기기부</Text>

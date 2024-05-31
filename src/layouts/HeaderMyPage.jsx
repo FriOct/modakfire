@@ -52,18 +52,14 @@ const HeaderMyPage = () => {
                 onClick={() => navigate(-1)}
                 src={Back}
             />
-            <LogoWrapper>
-                <LogoImage
-                    className="clickable"
-                    onClick={() => navigate("/")}
-                    src={Logo}
-                />
+            <LogoWrapper className="clickable" onClick={() => navigate("/")}>
+                <LogoImage src={Logo} />
                 모닥불
             </LogoWrapper>
             <IconWrapper
                 className="clickable"
                 onClick={() => navigate("/setting")}
-                style={user?null:{ visibility: "hidden" }}
+                style={user ? null : { visibility: "hidden" }}
                 src={gear}
             />
         </HeaderWrapper>

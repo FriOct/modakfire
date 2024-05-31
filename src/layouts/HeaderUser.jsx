@@ -40,11 +40,11 @@ const HeaderSetting = ({ member_id }) => {
 
     return (
         <HeaderWrapper>
-            <LogoImage src={Back} onClick={() => navigateToBack()} />
+            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()} />
             <LogoWrapper>
                 {member_id ? `${member_id}님의 정보` : "로그인이 필요합니다"}
             </LogoWrapper>
-            <LogoWrapper onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
+            <LogoWrapper className="clickable" onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
         </HeaderWrapper>
     );
 };

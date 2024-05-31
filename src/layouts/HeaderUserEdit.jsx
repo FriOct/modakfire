@@ -37,11 +37,11 @@ const HeaderUserEdit = () => {
 
     return (
         <HeaderWrapper>
-            <LogoImage src={Back} onClick={() => navigateToBack()}/>
+            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()}/>
             <LogoWrapper>
                 내 정보 수정
             </LogoWrapper>
-            <LogoImage style={{visibility:"hidden"}}/>
+            <LogoImage className="clickable" style={{visibility:"hidden"}}/>
         </HeaderWrapper>
     );
 };

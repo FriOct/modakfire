@@ -39,7 +39,7 @@ const HeaderBack = ({
 
     return (
         <HeaderWrapper>
-            <LogoWrapper onClick={()=>{setCenter(!center)}}>
+            <LogoWrapper className="clickable" onClick={()=>{setCenter(!center)}}>
                 <LogoImage src={Back}/>
             </LogoWrapper>
         </HeaderWrapper>

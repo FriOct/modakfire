@@ -38,11 +38,11 @@ const HeaderSetting = () => {
 
     return (
         <HeaderWrapper>
-            <LogoImage src={Back} onClick={() => navigateToBack()}/>
+            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()}/>
             <LogoWrapper>
                 설정
             </LogoWrapper>
-            <LogoImage style={{visibility:"hidden"}}/>
+            <LogoImage className="clickable" style={{visibility:"hidden"}}/>
         </HeaderWrapper>
     );
 }
