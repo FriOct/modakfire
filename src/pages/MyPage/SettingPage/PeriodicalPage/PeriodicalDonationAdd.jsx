@@ -46,7 +46,7 @@ const InputBoxWrapper = styled.div`
     justify-content: start;
     align-items: center;
     width: 100%;
-    height:min(10vw, 40px);
+    height: min(10vw, 40px);
     padding: min(2vw, 8px);
     border-radius: min(4vw, 16px);
     background: ${({ theme }) => theme.color.secondary};
@@ -103,14 +103,17 @@ const VectorSmall = styled.img`
 const CenterWrapper = styled.div`
     display: flex;
     justify-content: flex-start;
-    gap:3vw;
+    gap: 3vw;
     align-items: center;
     width: 100%;
 `;
 
-function PeriodicalDonationAdd() {
-    const [user, setUser] = useRecoilState(userState);
-    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(periodicalDonationState);
+const PeriodicalDonationAddHome = ({
+    setCenter,
+    center,
+    setPeriodicalDonation,
+    periodicalDonation,
+}) => {
 
     const [pd, setPd] = useState({
         periodical_donation_id: 0,
@@ -128,7 +131,7 @@ function PeriodicalDonationAdd() {
 
     //post로 값 올려야함
     const handleSave = () => {
-        setPeriodicalDonation((prev) => prev?[...prev, pd]:[pd]);
+        setPeriodicalDonation((prev) => (prev ? [...prev, pd] : [pd]));
         navigate(-1);
     };
 
@@ -153,7 +156,10 @@ function PeriodicalDonationAdd() {
         <Container>
             <HeaderBack />
             <InputField>
-                <CenterWrapper><Label>센터 선택</Label><VectorSmall src={Back} /></CenterWrapper>
+                <CenterWrapper onClick={()=>{setCenter(!center);}}>
+                    <Label>센터 선택</Label>
+                    <VectorSmall src={Back} />
+                </CenterWrapper>
                 <InputBoxWrapper>{pd.center_name}</InputBoxWrapper>
             </InputField>
             <InputField>
@@ -163,7 +169,9 @@ function PeriodicalDonationAdd() {
                         value={pd.amount ? `${formatNumber(pd.amount)}` : ""}
                         onChange={handleChangeAmount}
                         size={
-                            pd.amount <= 0 ? null : pd.amount.toString().length+1
+                            pd.amount <= 0
+                                ? null
+                                : pd.amount.toString().length + 1
                         }
                         style={{ width: pd.amount <= 0 ? "100%" : null }}
                     />
@@ -177,7 +185,9 @@ function PeriodicalDonationAdd() {
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? <InfoText>매달&nbsp;</InfoText> : null}
+                    {pd.donation_date > 0 ? (
+                        <InfoText>매달&nbsp;</InfoText>
+                    ) : null}
                     <InputBox
                         value={
                             pd.donation_date
@@ -202,6 +212,35 @@ function PeriodicalDonationAdd() {
                 <EditButton onClick={handleSave}>추가 완료</EditButton>
             </ButtonWrapper>
         </Container>
+    );
+};
+
+function PeriodicalDonationAdd() {
+    const [center, setCenter] = useState(false);
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
+        periodicalDonationState
+    );
+
+    return (
+        <>
+            {center ? (
+                <div
+                    onClick={() => {
+                        setCenter(!center);
+                    }}
+                >
+                    ddd
+                </div>
+            ) : (
+                <PeriodicalDonationAddHome
+                    setCenter={setCenter}
+                    center={center}
+                    setPeriodicalDonation={setPeriodicalDonation}
+                    periodicalDonation={periodicalDonation}
+
+                />
+            )}
+        </>
     );
 }
 

@@ -26,13 +26,13 @@ const LogoImage = styled.img`
     width: min(4vw, 35px);
 `;
 
-const HeaderSetting = () => {
+const HeaderSetting = ({periodical_donation_id}) => {
     let navigate = useNavigate();
 
     return (
         <HeaderWrapper>
             <LogoImage src={Back} onClick={() => {navigate(-1);}} />
-            <LogoWrapper onClick={ ()=>{navigate("/setting/periodicaldonation/edit");}}>수정</LogoWrapper>
+            <LogoWrapper onClick={ ()=>{navigate("/setting/periodicaldonation/edit", { state: { periodical_donation_id: periodical_donation_id } });}}>수정</LogoWrapper>
         </HeaderWrapper>
     );
 };

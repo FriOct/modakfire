@@ -115,7 +115,7 @@ function PeriodicalDonationDetail() {
 
     return (
         <Container>
-            <HeaderPeriodicalDonationDetail />
+            <HeaderPeriodicalDonationDetail periodical_donation_id={pd.periodical_donation_id}/>
             <InputField>
                 <Label fontSize={"true"}>{pd.center_name}</Label>
             </InputField>
@@ -138,7 +138,7 @@ function PeriodicalDonationDetail() {
                 </InputBoxWrapper>
             </InputField>
             <Separator />
-            <Exit onClick={() => {deletePeriodicalDonation(pd.periodical_donation_iddeletePeriodicalDonation)}}>
+            <Exit onClick={() => {deletePeriodicalDonation(pd.periodical_donation_id)}}>
                 <ExitText>정기 기부 해지하기</ExitText>
                 <VectorSmall src={Back} />
             </Exit>

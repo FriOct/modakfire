@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
-import { useNavigate } from "react-router-dom";
-import Header from "../../../../layouts/HeaderBack";
+import { useLocation, useNavigate } from "react-router-dom";
+import HeaderBack from "../../../../layouts/HeaderBack";
 import { useState } from "react";
 import Back from "../../../../assets/Back.svg";
 
@@ -46,7 +46,7 @@ const InputBoxWrapper = styled.div`
     justify-content: start;
     align-items: center;
     width: 100%;
-    height:min(10vw, 40px);
+    height: min(10vw, 40px);
     padding: min(2vw, 8px);
     border-radius: min(4vw, 16px);
     background: ${({ theme }) => theme.color.secondary};
@@ -103,23 +103,54 @@ const VectorSmall = styled.img`
 const CenterWrapper = styled.div`
     display: flex;
     justify-content: flex-start;
-    gap:3vw;
+    gap: 3vw;
     align-items: center;
     width: 100%;
 `;
 
 function PeriodicalDonationEdit() {
-    const [user, setUser] = useRecoilState(userState);
-    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(periodicalDonationState);
+    const [center, setCenter] = useState(false);
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
+        periodicalDonationState
+    );
+    const [user,setUser] = useRecoilState(userState);
 
-    const [pd, setPd] = useState({
-        periodical_donation_id: 0,
-        center_name: "센터",
-        start_date: null,
-        end_date: null,
-        donation_date: 0,
-        amount: 0,
-    });
+    return (
+        <>
+            {center ? (
+                <div
+                    onClick={() => {
+                        setCenter(!center);
+                    }}
+                >
+                    ddd
+                </div>
+            ) : (
+                <PeriodicalDonationEditHome
+                    setCenter={setCenter}
+                    center={center}
+                    setPeriodicalDonation={setPeriodicalDonation}
+                    periodicalDonation={periodicalDonation}
+
+                />
+            )}
+        </>
+    );
+}
+
+const PeriodicalDonationEditHome = ({
+    setCenter,
+    center,
+    setPeriodicalDonation,
+    periodicalDonation,
+}) => {
+
+    const location = useLocation();
+    const [pd, setPd] = useState(periodicalDonation.find(
+        (donation) =>
+            donation.periodical_donation_id ===
+            location.state?.periodical_donation_id
+    ));
     let navigate = useNavigate();
 
     const formatNumber = (number) => {
@@ -128,8 +159,8 @@ function PeriodicalDonationEdit() {
 
     //post로 값 올려야함
     const handleSave = () => {
-        setPeriodicalDonation((prev) => prev?[...prev, pd]:[pd]);
-        navigate(-1);
+        setPeriodicalDonation((prev) => (prev ? [...prev, pd] : [pd]));
+        navigate(-2);
     };
 
     const handleChangeAmount = (e) => {
@@ -153,7 +184,14 @@ function PeriodicalDonationEdit() {
         <Container>
             <HeaderBack />
             <InputField>
-                <CenterWrapper><Label>센터 선택</Label><VectorSmall src={Back} /></CenterWrapper>
+                <CenterWrapper
+                    onClick={() => {
+                        setCenter(!center);
+                    }}
+                >
+                    <Label>센터 선택</Label>
+                    <VectorSmall src={Back} />
+                </CenterWrapper>
                 <InputBoxWrapper>{pd.center_name}</InputBoxWrapper>
             </InputField>
             <InputField>
@@ -163,7 +201,9 @@ function PeriodicalDonationEdit() {
                         value={pd.amount ? `${formatNumber(pd.amount)}` : ""}
                         onChange={handleChangeAmount}
                         size={
-                            pd.amount <= 0 ? null : pd.amount.toString().length+1
+                            pd.amount <= 0
+                                ? null
+                                : pd.amount.toString().length + 1
                         }
                         style={{ width: pd.amount <= 0 ? "100%" : null }}
                     />
@@ -177,7 +217,9 @@ function PeriodicalDonationEdit() {
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? <InfoText>매달&nbsp;</InfoText> : null}
+                    {pd.donation_date > 0 ? (
+                        <InfoText>매달&nbsp;</InfoText>
+                    ) : null}
                     <InputBox
                         value={
                             pd.donation_date
@@ -199,10 +241,10 @@ function PeriodicalDonationEdit() {
                 ) : null}
             </InputField>
             <ButtonWrapper>
-                <EditButton onClick={handleSave}>추가 완료</EditButton>
+                <EditButton onClick={handleSave}>수정 완료</EditButton>
             </ButtonWrapper>
         </Container>
     );
-}
+};
 
 export default PeriodicalDonationEdit;
