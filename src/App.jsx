@@ -21,6 +21,7 @@ import ItemState from "./pages/ItemState"
 import User from "./pages/MyPage/SettingPage/UserPage/User"
 import UserEdit from "./pages/MyPage/SettingPage/UserPage/UserEdit"
 import PeriodicalDonationManage from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationManage"
+import History from "./pages/MyPage/SettingPage/History/History";
 import PeriodicalDonationAdd from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationAdd"
 import PeriodicalDonationDetail from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationDetail"
 import PeriodicalDonationEdit from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationEdit"
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/history" element={<History />} />
               <Route path="/payment" element={<Payment />} />
               <Route path="/center/:centerId/*" element={<CenterHome />} />
               <Route path="/setting" element={<Setting />} />
