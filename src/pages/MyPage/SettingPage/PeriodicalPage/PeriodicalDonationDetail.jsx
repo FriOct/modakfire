@@ -4,8 +4,8 @@ import { userState } from "../../../../recoil/atoms/userAtom";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonationDetail from "../../../../layouts/HeaderPeriodicalDonationDetail";
-import { useState } from "react";
 import Back from "../../../../assets/Back.svg";
+import Separator from "../../../../components/Separator";
 
 const Container = styled.div`
     display: flex;
@@ -28,25 +28,17 @@ const InputField = styled.div`
 const Label = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSize.medium};
+    font-size: ${({ theme,fontSize}) => fontSize?theme.fontSize.large:theme.fontSize.medium};
     color: ${({ theme }) => theme.fontColor.primary};
 `;
 
-const InputBox = styled.input`
-    background-color: transparent;
-    height: 100%;
-    border: none; /* 테두리 제거 */
-    outline: none; /* 클릭 시 생기는 기본 외곽선 제거 */
-    font-family: "Noto Sans KR, sans-serif";
-    font-size: ${({ theme }) => theme.fontSize.medium};
-    color: ${({ theme }) => theme.fontColor.primary};
-`;
+
 const InputBoxWrapper = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
     width: 100%;
-    height:min(10vw, 40px);
+    height: min(10vw, 40px);
     padding: min(2vw, 8px);
     border-radius: min(4vw, 16px);
     background: ${({ theme }) => theme.color.secondary};
@@ -56,37 +48,25 @@ const InputBoxWrapper = styled.div`
     color: ${({ theme }) => theme.fontColor.primary};
 `;
 
-const ButtonWrapper = styled.div`
+
+const Exit = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    padding: 2vh 7vw;
+    padding: ${({ theme }) => theme.padding.primary};
     width: 100%;
+    height: 6.67vh; /* 60px */
 `;
 
-const EditButton = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: min(2vw, 8px);
-    width: 100%;
-    background: ${({ theme }) => theme.color.primary};
-    border-radius: min(4vw, 16px);
-    border: none;
-    color: ${({ theme }) => theme.fontColor.white};
-    font-family: "Noto Sans KR";
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSize.medium};
-    cursor: pointer;
-`;
-
-const EditInfo = styled.div`
+const ExitText = styled.div`
+    width: auto;
+    height: 3.96vh; /* 23px */
     font-family: "Noto Sans KR";
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSize.base};
-    color: #ff0000;
-    padding: 0 7vw;
+    line-height: 3.96vh; /* 23px */
+    color: #000000;
 `;
 
 const InfoText = styled.div`
@@ -100,63 +80,69 @@ const VectorSmall = styled.img`
     transform: rotate(180deg);
 `;
 
-const CenterWrapper = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    gap:3vw;
-    align-items: center;
-    width: 100%;
-`;
 
 function PeriodicalDonationDetail() {
     const [user, setUser] = useRecoilState(userState);
-    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(periodicalDonationState);
-
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
+        periodicalDonationState
+    );
+    
+    let navigate = useNavigate();
     const location = useLocation();
 
-    const pd = periodicalDonation.find(donation => donation.periodical_donation_id === location.state?.periodical_donation_id);
+    const pd = periodicalDonation.find(
+        (donation) =>
+            donation.periodical_donation_id ===
+            location.state?.periodical_donation_id
+    );
 
-    console.log(pd);
+    const formatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+        const day = String(date.getDate()).padStart(2, '0');
+        
+        return `${year}년 ${month}월 ${day}일`;
+    }
+
+    const deletePeriodicalDonation = (id) =>{
+        console.log(id);
+        navigate(-1);
+    }
+
 
     return (
         <Container>
             <HeaderPeriodicalDonationDetail />
             <InputField>
-                <Label>센터</Label>
+                <Label fontSize={"true"}>{pd.center_name}</Label>
             </InputField>
             <InputField>
                 <Label>금액</Label>
                 <InputBoxWrapper>
-                     <InfoText>{pd.amount}원</InfoText>
+                    <InfoText>{formatNumber(pd.amount)}원</InfoText>
                 </InputBoxWrapper>
             </InputField>
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? <InfoText>매달&nbsp;</InfoText> : null}
-                    <InputBox
-                        value={
-                            pd.donation_date
-                                ? `${formatNumber(pd.donation_date)}`
-                                : ""
-                        }
-                        onChange={handleChangeDonationDate}
-                        size={
-                            pd.donation_date <= 0
-                                ? null
-                                : pd.donation_date.toString().length
-                        }
-                        style={{ width: pd.donation_date <= 0 ? "100%" : null }}
-                    />
-                    {pd.donation_date > 0 ? <InfoText>일</InfoText> : null}
+                    <InfoText>{pd.donation_date}일</InfoText>
                 </InputBoxWrapper>
-                {pd.donation_date > 30 ? (
-                    <EditInfo>최대 31일까지 설정할 수 있습니다.</EditInfo>
-                ) : null}
             </InputField>
-            <ButtonWrapper>
-                <EditButton onClick={handleSave}>추가 완료</EditButton>
-            </ButtonWrapper>
+            <InputField>
+                <Label>기부 시작일</Label>
+                <InputBoxWrapper>
+                    <InfoText>{formatDate(pd.start_date)}</InfoText>
+                </InputBoxWrapper>
+            </InputField>
+            <Separator />
+            <Exit onClick={() => {deletePeriodicalDonation(pd.periodical_donation_iddeletePeriodicalDonation)}}>
+                <ExitText>정기 기부 해지하기</ExitText>
+                <VectorSmall src={Back} />
+            </Exit>
+            <Separator />
         </Container>
     );
 }

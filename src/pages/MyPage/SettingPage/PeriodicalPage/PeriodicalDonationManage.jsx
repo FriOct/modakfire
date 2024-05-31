@@ -110,7 +110,7 @@ const PeriodicalDonationManage = () => {
             <DonationList>
                 {periodicalDonation
                     ? periodicalDonation.map((donation, index) => (
-                          <DonationCenter key={index} onClick={()=>{navigate("/setting/periodicaldonation/detail", { state: { key: donation.periodical_donation_id } });}}>
+                          <DonationCenter key={index} onClick={()=>{navigate("/setting/periodicaldonation/detail", { state: { periodical_donation_id: donation.periodical_donation_id } });}}>
                               <Info>
                                   <CenterName>
                                       {donation.center_name}
