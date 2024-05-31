@@ -71,14 +71,7 @@ function UserEdit() {
     const [user, setUser] = useRecoilState(userState);
 
     const updateUserInfo = (newName, newEmail) => {
-        setUser((prev) => ({
-            ...prev,
-            User: {
-                ...prev.User,
-                name: newName,
-                email: newEmail,
-            },
-        }));
+        setUser((prev) => ({...prev, name: newName, email: newEmail}));
     };
 
     const handleSave = () => {
