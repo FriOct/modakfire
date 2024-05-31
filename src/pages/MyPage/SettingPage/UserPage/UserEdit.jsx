@@ -71,14 +71,7 @@ function UserEdit() {
     const [user, setUser] = useRecoilState(userState);
 
     const updateUserInfo = (newName, newEmail) => {
-        setUser((prev) => ({
-            ...prev,
-            User: {
-                ...prev.User,
-                name: newName,
-                email: newEmail,
-            },
-        }));
+        setUser((prev) => ({...prev, name: newName, email: newEmail}));
     };
 
     const handleSave = () => {
@@ -101,11 +94,11 @@ function UserEdit() {
             <HeaderUserEdit />
             <InputField>
                 <Label>이름</Label>
-                <InputBox id="nameInput" defaultValue={user.User.name} />
+                <InputBox id="nameInput" defaultValue={user.name} />
             </InputField>
             <InputField>
                 <Label>이메일</Label>
-                <InputBox id="emailInput" defaultValue={user.User.email} />
+                <InputBox id="emailInput" defaultValue={user.email} />
             </InputField>
             <ButtonWrapper>
                 <EditButton onClick={handleSave}>수정 완료</EditButton>

@@ -21,8 +21,10 @@ import ItemState from "./pages/ItemState"
 import User from "./pages/MyPage/SettingPage/UserPage/User"
 import UserEdit from "./pages/MyPage/SettingPage/UserPage/UserEdit"
 import PeriodicalDonationManage from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationManage"
-import PeriodicalDonationAdd from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationAdd";
 import History from "./pages/MyPage/SettingPage/History/History";
+import PeriodicalDonationAdd from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationAdd"
+import PeriodicalDonationDetail from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationDetail"
+import PeriodicalDonationEdit from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationEdit"
 
 const App = () => {
   return (
@@ -46,6 +48,8 @@ const App = () => {
               <Route path="/setting/user/useredit" element={<UserEdit />} />
               <Route path="/setting/periodicaldonation" element={<PeriodicalDonationManage/>}/>
               <Route path="/setting/periodicaldonation/add" element={<PeriodicalDonationAdd/>}/>
+              <Route path="/setting/periodicaldonation/detail" element={<PeriodicalDonationDetail/>}/>
+              <Route path="/setting/periodicaldonation/edit" element={<PeriodicalDonationEdit/>}/>
             </Routes>
           </Main>
         <Footer />

@@ -52,3 +52,4 @@ export const updateUser = (userId, userData) => {
       });
   });
 };
+
