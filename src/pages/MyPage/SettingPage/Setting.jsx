@@ -147,7 +147,7 @@ const FooterText = styled.div`
 
 const Settings = () => {
 
-    const user = useRecoilValue(userState).User;
+    const user = useRecoilValue(userState);
 
     let navigate = useNavigate();
 
