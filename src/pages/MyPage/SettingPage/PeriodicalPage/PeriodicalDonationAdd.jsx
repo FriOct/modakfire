@@ -4,8 +4,9 @@ import { userState } from "../../../../recoil/atoms/userAtom";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderBack from "../../../../layouts/HeaderBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Back from "../../../../assets/Back.svg";
+import PeriodicalDonationCenterHome from "./PeriodicalDonationCenterHome";
 
 const Container = styled.div`
     display: flex;
@@ -113,16 +114,10 @@ const PeriodicalDonationAddHome = ({
     center,
     setPeriodicalDonation,
     periodicalDonation,
+    pd,
+    setPd,
 }) => {
-
-    const [pd, setPd] = useState({
-        periodical_donation_id: 0,
-        center_name: "센터",
-        start_date: null,
-        end_date: null,
-        donation_date: 0,
-        amount: 0,
-    });
+    
     let navigate = useNavigate();
 
     const formatNumber = (number) => {
@@ -156,7 +151,11 @@ const PeriodicalDonationAddHome = ({
         <Container>
             <HeaderBack />
             <InputField>
-                <CenterWrapper onClick={()=>{setCenter(!center);}}>
+                <CenterWrapper
+                    onClick={() => {
+                        setCenter(!center);
+                    }}
+                >
                     <Label>센터 선택</Label>
                     <VectorSmall src={Back} />
                 </CenterWrapper>
@@ -220,24 +219,40 @@ function PeriodicalDonationAdd() {
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
         periodicalDonationState
     );
+    const [pd, setPd] = useState({
+        periodical_donation_id: null,
+        center_name: null,
+        start_date: null,
+        end_date: null,
+        donation_date: null,
+        amount: null,
+        center_id: null,
+    });
+
+    useEffect(() => {
+        console.log(pd);
+    }, [pd]);
 
     return (
         <>
             {center ? (
-                <div
+                <PeriodicalDonationCenterHome
+                    setCenter={setCenter}
+                    center={center}
+                    setPd={setPd}
+                    pd={pd}
                     onClick={() => {
                         setCenter(!center);
                     }}
-                >
-                    ddd
-                </div>
+                />
             ) : (
                 <PeriodicalDonationAddHome
                     setCenter={setCenter}
                     center={center}
                     setPeriodicalDonation={setPeriodicalDonation}
                     periodicalDonation={periodicalDonation}
-
+                    setPd={setPd}
+                    pd={pd}
                 />
             )}
         </>

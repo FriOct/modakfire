@@ -10,6 +10,7 @@ export const periodicalDonationState = atom({
             end_date: new Date(),
             donation_date: 22,
             amount: 200000,
+            center_id: 0,
         },
         {
             periodical_donation_id: 3,
@@ -18,6 +19,7 @@ export const periodicalDonationState = atom({
             end_date: new Date(),
             donation_date: 12,
             amount: 200100,
+            center_id: 3,
         },
     ],
 });

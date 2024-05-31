@@ -4,8 +4,9 @@ import { userState } from "../../../../recoil/atoms/userAtom";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderBack from "../../../../layouts/HeaderBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Back from "../../../../assets/Back.svg";
+import PeriodicalDonationCenterHome from "./PeriodicalDonationCenterHome";
 
 const Container = styled.div`
     display: flex;
@@ -113,44 +114,45 @@ function PeriodicalDonationEdit() {
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
         periodicalDonationState
     );
-    const [user,setUser] = useRecoilState(userState);
+    const location = useLocation();
+    const [pd, setPd] = useState(
+        periodicalDonation.find(
+            (donation) =>
+                donation.periodical_donation_id ===
+                location.state?.periodical_donation_id
+        )
+    );
+    const [user, setUser] = useRecoilState(userState);
+
+    useEffect(() => {
+        console.log(pd);
+    }, [pd]);
 
     return (
         <>
             {center ? (
-                <div
+                <PeriodicalDonationCenterHome
+                    setCenter={setCenter}
+                    center={center}
+                    setPd={setPd}
+                    pd={pd}
                     onClick={() => {
                         setCenter(!center);
                     }}
-                >
-                    ddd
-                </div>
+                />
             ) : (
                 <PeriodicalDonationEditHome
                     setCenter={setCenter}
                     center={center}
-                    setPeriodicalDonation={setPeriodicalDonation}
-                    periodicalDonation={periodicalDonation}
-
+                    setPd={setPd}
+                    pd={pd}
                 />
             )}
         </>
     );
 }
 
-const PeriodicalDonationEditHome = ({
-    setCenter,
-    center,
-    setPeriodicalDonation,
-    periodicalDonation,
-}) => {
-
-    const location = useLocation();
-    const [pd, setPd] = useState(periodicalDonation.find(
-        (donation) =>
-            donation.periodical_donation_id ===
-            location.state?.periodical_donation_id
-    ));
+const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
     let navigate = useNavigate();
 
     const formatNumber = (number) => {
@@ -159,7 +161,7 @@ const PeriodicalDonationEditHome = ({
 
     //post로 값 올려야함
     const handleSave = () => {
-        setPeriodicalDonation((prev) => (prev ? [...prev, pd] : [pd]));
+        console.log(pd);
         navigate(-2);
     };
 
