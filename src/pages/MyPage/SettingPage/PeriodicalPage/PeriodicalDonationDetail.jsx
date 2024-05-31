@@ -64,7 +64,7 @@ const ExitText = styled.div`
     height: 3.96vh; /* 23px */
     font-family: "Noto Sans KR, sans-serif";
     font-weight: 400;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.medium};
     line-height: 3.96vh; /* 23px */
     color: #000000;
 `;

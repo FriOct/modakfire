@@ -10,7 +10,7 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: min(11vw, 55px);
     display: flex;
-    padding: 0 min(5vw, 25px);
+    padding: ${({theme}) => theme.padding.header};
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;

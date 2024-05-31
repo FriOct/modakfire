@@ -11,6 +11,7 @@ export const periodicalDonationState = atom({
             donation_date: 22,
             amount: 200000,
             center_id: 0,
+            location: "서울시 강남구",
         },
         {
             periodical_donation_id: 3,
@@ -20,6 +21,7 @@ export const periodicalDonationState = atom({
             donation_date: 12,
             amount: 200100,
             center_id: 3,
+            location: "서울시 강남구",
         },
     ],
 });

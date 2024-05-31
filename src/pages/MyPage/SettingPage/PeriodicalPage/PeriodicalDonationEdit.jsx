@@ -186,15 +186,14 @@ const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
         <Container>
             <HeaderBack />
             <InputField>
-                <CenterWrapper
+                <Label>센터</Label>
+                <InputBoxWrapper
                     onClick={() => {
                         setCenter(!center);
                     }}
                 >
-                    <Label>센터 선택</Label>
-                    <VectorSmall src={Back} />
-                </CenterWrapper>
-                <InputBoxWrapper>{pd.center_name}</InputBoxWrapper>
+                    {pd.center_name}
+                </InputBoxWrapper>
             </InputField>
             <InputField>
                 <Label>금액</Label>
