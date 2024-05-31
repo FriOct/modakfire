@@ -8,7 +8,7 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: flex-start;
     background-color: #ffffff;
-    padding: ${({ theme }) => theme.padding.small};
+    padding: ${({theme}) => theme.padding.header};
     gap: 2vw;
 `;
 
@@ -32,9 +32,9 @@ const Text = styled.div`
 `;
 
 const LogoImage = styled.img`
-    height: min(4vw, 35px);
-    width: min(4vw, 35px);
-`;
+height: min(4vw, 25px);
+width: min(6vw, 30px);
+`
 
 const HeaderBack = () => {
     let navigate = useNavigate();

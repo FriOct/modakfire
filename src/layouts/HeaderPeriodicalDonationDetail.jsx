@@ -10,7 +10,7 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: min(11vw, 55px);
     background-color: #ffffff;
-    padding: ${({ theme }) => theme.padding.primary};
+    padding: ${({theme}) => theme.padding.header};
 `;
 
 const LogoWrapper = styled.div`
@@ -22,9 +22,9 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoImage = styled.img`
-    height: min(4vw, 35px);
-    width: min(4vw, 35px);
-`;
+height: min(4vw, 25px);
+width: min(6vw, 30px);
+`
 
 const HeaderSetting = ({periodical_donation_id}) => {
     let navigate = useNavigate();

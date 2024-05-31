@@ -28,7 +28,7 @@ const color = {
 
 const padding = {
   primary: "2vh 7vw", //User page에서 쓸 각 요소의 padding값
-  small: "2vh 4vw",
+  header: "0 min(5vw, 25px)",
   large: "min(6vw, 30px)",
 };
 

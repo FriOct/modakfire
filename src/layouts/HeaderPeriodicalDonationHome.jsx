@@ -9,7 +9,7 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: flex-start; 
     background-color: #ffffff;
-    padding: 8px;
+    padding: ${({theme}) => theme.padding.header};
 `
 
 const LogoWrapper = styled.div`
@@ -22,8 +22,8 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled.img`
-    height: min(7vw, 24px);
-    width: min(7vw, 24px);
+height: min(4vw, 25px);
+width: min(6vw, 30px);
 `
 
 const HeaderBack = ({

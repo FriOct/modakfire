@@ -11,7 +11,7 @@ const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
     background-color: #ffffff;
     border-bottom: 1px solid #a9a9a9;
-    padding: 0 2vw;
+    padding: ${({theme}) => theme.padding.header};
 `;
 
 const LogoWrapper = styled.div`
@@ -23,9 +23,9 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoImage = styled.img`
-    height: min(5vw, 35px);
-    width: min(5vw, 35px);
-`;
+height: min(4vw, 25px);
+width: min(6vw, 30px);
+`
 
 const HeaderUserEdit = () => {
 

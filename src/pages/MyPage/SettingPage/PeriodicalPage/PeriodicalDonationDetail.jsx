@@ -62,7 +62,7 @@ const Exit = styled.div`
 const ExitText = styled.div`
     width: auto;
     height: 3.96vh; /* 23px */
-    font-family: "Noto Sans KR";
+    font-family: "Noto Sans KR, sans-serif";
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 3.96vh; /* 23px */
@@ -80,6 +80,14 @@ const VectorSmall = styled.img`
     transform: rotate(180deg);
 `;
 
+const InfoSection = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${({ theme }) => theme.padding.primary};
+    width: 100%;
+`;
 
 function PeriodicalDonationDetail() {
     const [user, setUser] = useRecoilState(userState);
@@ -119,24 +127,18 @@ function PeriodicalDonationDetail() {
             <InputField>
                 <Label fontSize={"true"}>{pd.center_name}</Label>
             </InputField>
-            <InputField>
-                <Label>금액</Label>
-                <InputBoxWrapper>
-                    <InfoText>{formatNumber(pd.amount)}원</InfoText>
-                </InputBoxWrapper>
-            </InputField>
-            <InputField>
-                <Label>정기 기부일</Label>
-                <InputBoxWrapper>
-                    <InfoText>{pd.donation_date}일</InfoText>
-                </InputBoxWrapper>
-            </InputField>
-            <InputField>
-                <Label>기부 시작일</Label>
-                <InputBoxWrapper>
-                    <InfoText>{formatDate(pd.start_date)}</InfoText>
-                </InputBoxWrapper>
-            </InputField>
+            <InfoSection>
+                <InfoText>금액</InfoText>
+                <InfoText>{formatNumber(pd.amount)}원</InfoText>
+            </InfoSection>
+            <InfoSection>
+                <InfoText>정기 기부일</InfoText>
+                <InfoText>{pd.donation_date}일</InfoText>
+            </InfoSection>
+            <InfoSection>
+                <InfoText>기부 시작일</InfoText>
+                <InfoText>{formatDate(pd.start_date)}</InfoText>
+            </InfoSection>
             <Separator />
             <Exit onClick={() => {deletePeriodicalDonation(pd.periodical_donation_id)}}>
                 <ExitText>정기 기부 해지하기</ExitText>
