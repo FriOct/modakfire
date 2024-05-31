@@ -9,7 +9,6 @@ import people from "../assets/icons/people.svg";
 import star from "../assets/icons/star.svg";
 import Seperator from "../components/Separator";
 import HighlightWrapper from "../components/Text/HighlightWrapper";
-import Title from "../components/Text/Title";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const BannerDataList = [

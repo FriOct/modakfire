@@ -3,7 +3,6 @@ import coins from "../assets/icons/coins.svg";
 import box from "../assets/icons/box.svg";
 import truck from "../assets/icons/truck.svg";
 import delivery from "../assets/icons/delivery.svg";
-import fire from "../assets/icons/fire.svg";
 import LightTitle from "../components/Text/LightTitle";
 import Title from "../components/Text/Title";
 import Seperator from "../components/Separator";
