@@ -1,16 +1,17 @@
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import SecondaryParagraph from "../components/Text/SecondaryParagraph";
 
 const FooterWrapper = styled.footer`
     display: flex;
-    padding: 2vh;
+    padding: min(5vw, 25px);
     color: ${({theme}) => theme.fontColor.secondary};
     border-top: 1px solid ${({theme}) => theme.color.lightgray};
 `
 
-const ignorePageRegexList = ["^/center/\\d+/item/\\d+$", "^/payment$", "^/paymentdetail/\\d$", "^/paymentfinish$", "^/setting$", "^/mypage$"];
-
+const ignorePageRegexList = ["^/center/\\d+/item/\\d+$", "^/payment.*$", "^/setting.*$", "^/mypage$", "^/login"];
 const Footer = () => {
-    const currentPath = window.location.pathname;
+    const currentPath = useLocation().pathname;
     let isIgnore = false;
     ignorePageRegexList.forEach(Regex => {
         if(currentPath.search(Regex) != -1)
@@ -22,7 +23,9 @@ const Footer = () => {
     else
         return( 
             <FooterWrapper>
-                모닥불: 이웃을 위한 작은 불씨
+                <SecondaryParagraph>
+                    모닥불: 이웃을 위한 작은 불씨
+                </SecondaryParagraph>
             </FooterWrapper>
         );
 }
