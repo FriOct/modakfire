@@ -111,17 +111,6 @@ const DonationHistory = styled.div`
     height: 10.94vh;
 `;
 
-const CenterPhoto = styled.img`
-    height: 100%;
-    filter: drop-shadow(0 0 0.94vh rgba(0, 0, 0, 0.25));
-    border-radius: 1.63vh;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    overflow: hidden;
-    object-fit: cover;
-`;
-
 const DonationInfo = styled.div`
     display: flex;
     flex-direction: column;
