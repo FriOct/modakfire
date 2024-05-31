@@ -20,7 +20,7 @@ const color = {
     black: "#000000",
     lightgray: "#D7D7D7",
     gray: "#B5B5B5",
-    drakgray: "#AAAAAA",
+    darkgray: "#AAAAAA",
     shadow: "#00000040",
     highlight: "#FF8B3D80",
     centerBoxBg: "#FF8A3D19"
