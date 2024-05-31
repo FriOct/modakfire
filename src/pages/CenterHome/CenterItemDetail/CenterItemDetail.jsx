@@ -263,7 +263,7 @@ const CenterItemDetail = ({match, location}) => {
     const itemId = parseInt(useParams().itemId);
     const exampleJson = itemJsonList[itemId-1];
 
-    const totalPercent = Math.ceil(exampleJson.raisedAmount/exampleJson.price*100);
+    const totalPercent = Math.floor(exampleJson.raisedAmount/exampleJson.price*100);
 
     // For Number Animation!
     const [percent, setPercent] = useState(0);
@@ -276,9 +276,9 @@ const CenterItemDetail = ({match, location}) => {
 
         const counter = setInterval(() => {
             actualPercent += totalPercent / frame * (-1.9 * (actualPercent/totalPercent) + 1.95);
-            setPercent(Math.ceil(actualPercent));
+            setPercent(Math.floor(actualPercent));
 
-            if (Math.ceil(actualPercent) >= totalPercent)
+            if (Math.floor(actualPercent) >= totalPercent)
                 clearInterval(counter);
         }, duration/frame);
         return () => {
