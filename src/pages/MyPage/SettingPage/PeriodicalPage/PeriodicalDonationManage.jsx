@@ -40,7 +40,7 @@ const DonationCenter = styled.div`
     width: 100vw;
     height: 10vh;
     ${(props) =>
-        props.isLast
+        props.islast
             ?`border-top: 1px solid ${props.theme.color.lightgray}`:null};
     border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
 `;
@@ -133,7 +133,7 @@ const PeriodicalDonationManage = () => {
                                       }
                                   );
                               }}
-                              isLast={index === 0}
+                              islast={index === 0?'true':'false'}
                           >
                               <Info>
                                   <CenterNameWrapper>

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonationDetail from "../../../../layouts/HeaderPeriodicalDonationDetail";
 import Back from "../../../../assets/Back.svg";
 import Separator from "../../../../components/Separator";
+import { useEffect } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -29,22 +30,6 @@ const Label = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 700;
     font-size: ${({ theme,fontSize}) => fontSize?theme.fontSize.large:theme.fontSize.medium};
-    color: ${({ theme }) => theme.fontColor.primary};
-`;
-
-
-const InputBoxWrapper = styled.div`
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    height: min(10vw, 40px);
-    padding: min(2vw, 8px);
-    border-radius: min(4vw, 16px);
-    background: ${({ theme }) => theme.color.secondary};
-    border: none;
-    font-family: "Noto Sans KR";
-    font-size: ${({ theme }) => theme.fontSize.medium};
     color: ${({ theme }) => theme.fontColor.primary};
 `;
 
@@ -94,6 +79,8 @@ function PeriodicalDonationDetail() {
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
         periodicalDonationState
     );
+
+    
     
     let navigate = useNavigate();
     const location = useLocation();
@@ -120,6 +107,10 @@ function PeriodicalDonationDetail() {
         navigate(-1);
     }
 
+
+    useEffect(() => {
+        console.log(pd);
+    }, [pd]);
 
     return (
         <Container>

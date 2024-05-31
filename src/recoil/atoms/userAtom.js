@@ -10,3 +10,8 @@ export const userState = atom({
     register_date: "더미",
   },
 });
+
+// export const userState = atom({
+//   key: "userState",
+//   default: null,
+// });
