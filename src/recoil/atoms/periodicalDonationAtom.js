@@ -12,6 +12,7 @@ export const periodicalDonationState = atom({
             amount: 200000,
             center_id: 0,
             location: "서울시 강남구",
+            image_id: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
         },
         {
             periodical_donation_id: 3,
@@ -21,7 +22,8 @@ export const periodicalDonationState = atom({
             donation_date: 12,
             amount: 200100,
             center_id: 3,
-            location: "서울시 강남구",
+            location: "서울시 도봉구",
+            image_id: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
         },
     ],
 });
