@@ -98,7 +98,7 @@ const FooterText = styled.div`
 
 const User = () => {
 
-    const user = useRecoilValue(userState).User;
+    const user = useRecoilValue(userState);
 
     return (
         <Container>
