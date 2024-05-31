@@ -109,7 +109,9 @@ const Login = () => {
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
 
-  return user != null ? (
+  useEffect(() => console.log(user), [user]);
+
+  return (user != null && user['email'] != null) ? (
     <FirstLoggedIn />
   ) : (
     <PageWrapper>

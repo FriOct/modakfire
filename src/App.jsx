@@ -26,6 +26,7 @@ import History from "./pages/MyPage/SettingPage/History/History";
 import PeriodicalDonationAdd from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationAdd"
 import PeriodicalDonationDetail from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationDetail"
 import PeriodicalDonationEdit from "./pages/MyPage/SettingPage/PeriodicalPage/PeriodicalDonationEdit"
+import NotFound from "./pages/NotFound"
 
 const ProtectedRoute = ({ isAuthenticated, path }) => {
   return isAuthenticated ? path : <Navigate to="/login" />;
@@ -71,7 +72,7 @@ const App = () => {
               <Route path="/setting/periodicaldonation/detail" element={<ProtectedRoute isAuthenticated={user} path={<PeriodicalDonationDetail />}/>}/>
               {/* <Route path="/setting/periodicaldonation/edit" element={<PeriodicalDonationEdit/>}/> */}
               <Route path="/setting/periodicaldonation/edit" element={<ProtectedRoute isAuthenticated={user} path={<PeriodicalDonationEdit />}/>}/>
-
+              <Route path="*" element={<NotFound/>} />
               
               
               
