@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Logo from '../assets/logo.png'
 import back from '../assets/Back.svg'
 import person from '../assets/icons/person.svg'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
@@ -38,13 +38,13 @@ const IconWrapper = styled.img`
     width: min(6vw, 30px);
 `
 
-const ignorePageRegexList = ["^/payment$", "^/paymentdetail/\\d$", "^/paymentfinish$", "^/setting$", "^/mypage$"];
+const ignorePageRegexList = ["^/payment.*$", "^/setting.*$", "^/mypage$", "^/login"];
 
 
 
 const Header = () => {
     const navigate = useNavigate();
-    const currentPath = window.location.pathname;
+    const currentPath = useLocation().pathname;
     let isIgnore = false;
     ignorePageRegexList.forEach(Regex => {
         if(currentPath.search(Regex) != -1)
@@ -57,8 +57,8 @@ const Header = () => {
         return (
             <HeaderWrapper>
                 <BackWrapper className="clickable" onClick={() => navigate(-1)} src={back}/>
-                <LogoWrapper>
-                    <LogoImage className="clickable" onClick={() => navigate("/")} src={Logo}/>
+                <LogoWrapper className="clickable" onClick={() => navigate("/")}>
+                    <LogoImage src={Logo}/>
                     모닥불
                 </LogoWrapper>
                 <IconWrapper className="clickable" onClick={() => navigate("/mypage")} src={person}/>

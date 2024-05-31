@@ -10,7 +10,6 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: min(11vw, 55px);
     background-color: #ffffff;
-    border-bottom: 1px solid #a9a9a9;
     padding: ${({theme}) => theme.padding.header};
 `;
 
@@ -27,24 +26,13 @@ height: min(4vw, 25px);
 width: min(6vw, 30px);
 `
 
-const HeaderSetting = ({ member_id }) => {
+const HeaderSetting = ({periodical_donation_id}) => {
     let navigate = useNavigate();
-
-    const navigateToBack = () => {
-        navigate(-1);
-    };
-
-    const navigateToUserEdit = () => {
-        navigate("/setting/user/useredit");
-    };
 
     return (
         <HeaderWrapper>
-            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()} />
-            <LogoWrapper>
-                {member_id ? `${member_id}님의 정보` : "로그인이 필요합니다"}
-            </LogoWrapper>
-            <LogoWrapper className="clickable" onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
+            <LogoImage className="clickable" src={Back} onClick={() => {navigate(-1);}} />
+            <LogoWrapper className="clickable" onClick={ ()=>{navigate("/setting/periodicaldonation/edit", { state: { periodical_donation_id: periodical_donation_id } });}}>수정</LogoWrapper>
         </HeaderWrapper>
     );
 };

@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import Back from '../assets/Back.svg';
 import { useNavigate } from "react-router-dom";
+import { set } from "firebase/database";
 
 const HeaderWrapper = styled.header`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
     height: min(11vw, 55px);
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; 
     background-color: #ffffff;
-    border-bottom: 1px solid #A9A9A9;
     padding: ${({theme}) => theme.padding.header};
 `
 
@@ -28,22 +26,23 @@ height: min(4vw, 25px);
 width: min(6vw, 30px);
 `
 
-const HeaderSetting = () => {
+const HeaderBack = ({
+    setCenter,
+    center,
+}) => {
 
     let navigate = useNavigate();
 
-    const navigateToBack = () => {
+    const goBack = () => {
         navigate(-1);
     };
 
     return (
         <HeaderWrapper>
-            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()}/>
-            <LogoWrapper>
-                설정
+            <LogoWrapper className="clickable" onClick={()=>{setCenter(!center)}}>
+                <LogoImage src={Back}/>
             </LogoWrapper>
-            <LogoImage className="clickable" style={{visibility:"hidden"}}/>
         </HeaderWrapper>
     );
 }
-export default HeaderSetting
+export default HeaderBack
