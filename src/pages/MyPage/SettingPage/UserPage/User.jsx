@@ -112,6 +112,24 @@ const User = () => {
         }
     }
 
+    function formatDate(dateString) {
+        // Date 객체 생성
+        const date = new Date(dateString);
+        
+        // 옵션 설정
+        const options = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+      
+        // 포맷터 생성 (한국어 기준)
+        const formatter = new Intl.DateTimeFormat('ko-KR', options);
+      
+        // 포맷된 날짜 반환
+        return formatter.format(date);
+      }
+
     return (
         <Container>
             <HearderUser name={user.name}/>
@@ -133,7 +151,7 @@ const User = () => {
             </InfoSection>
             <InfoSection>
                 <InfoText>가입일</InfoText>
-                <InfoValue>{user.register_date}</InfoValue>
+                <InfoValue>{formatDate(user.registerDate)}</InfoValue>
             </InfoSection>
             <Seperator />
             <Exit>

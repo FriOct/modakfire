@@ -3,6 +3,7 @@ import HeaderUserEdit from "../../../../layouts/HeaderUserEdit";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
+import { updateUser } from "../../../../api";
 
 
 const Container = styled.div`
@@ -78,6 +79,7 @@ function UserEdit() {
         const newName = document.getElementById("nameInput").value;
         const newEmail = document.getElementById("emailInput").value;
         updateUserInfo(newName, newEmail);
+        console.log(updateUser(user.id,user));
         console.log("Updated Data:", user);
         navigateToBack();
         // Here you would handle the API call or other actions to save the data
