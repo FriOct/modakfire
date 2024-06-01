@@ -83,7 +83,7 @@ const Item = ({data}) => {
     return (
         <ItemWrapper className="clickable" onClick={() => navigate(window.location.pathname + "/item/" + data.id)}>
             <ImageWrapper>
-                <img src={data.imageUrl}/>
+                <img src={"https://cdn.hkbs.co.kr/news/photo/202011/600575_349741_4654.jpg"}/>
             </ImageWrapper>
             <LightTitle><strong>{data.name}</strong></LightTitle>
             <SecondaryParagraph>{data.marketName}</SecondaryParagraph>

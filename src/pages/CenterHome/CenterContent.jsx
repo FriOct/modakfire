@@ -176,7 +176,7 @@ const CenterInfo = ({data}) => {
 const CenterContent = ({data}) => {
     return(
         <CenterContentWrapper>
-            <CenterImage src={data.imageUrl}/>
+            <CenterImage src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyY3DleSm428V5vY7nhregXiSdM2W6mWuBBQ&s"}/>
             <CenterInfo data={data} />
         </CenterContentWrapper>
     )

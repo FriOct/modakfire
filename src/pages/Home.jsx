@@ -256,13 +256,22 @@ const exampleCenterJSON = [{
 ]
 
 const typeEnumToStringTable = ["복지관", "장애인복지관", "보육원", "한부모 센터", "노숙인 시설", "정신건강센터", "재활원"];
-
+const stringtoint = {
+    "WHOLE": 0,
+    "WELFARE": 1,
+    "DISABLED": 2,
+    "CHILD":3,
+    "ONEPARENT":4,
+    "HOMELESS":5,
+    "MENTALCARE":6,
+    "REHABILITATION":7
+}
 const CenterWrapper = ({data}) => {
     const navigate = useNavigate();
-    const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]]
+    const hashtagList = [data.city, data.gu, typeEnumToStringTable[stringtoint[data.centerType]]]
     return (
     <CenterStyledWrapper className="clickable" onClick={() => navigate("/center/" + data.id)}>
-        <CenterImage src={data.imageUrl} />
+        <CenterImage src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyY3DleSm428V5vY7nhregXiSdM2W6mWuBBQ&s"} />
         <CenterInfowrapper>
             <LightTitle><strong>{data.name}</strong></LightTitle>
             <HashtagTable>
