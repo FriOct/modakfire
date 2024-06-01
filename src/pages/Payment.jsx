@@ -1,20 +1,18 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderBack from "../layouts/HeaderBack";
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    //align-items: center;
     padding: 0;
     position: relative;
     width: 100%;
     height: 100vh;
     background: #ffffff;
 `;
-
 
 const Middle = styled.div`
     display: flex;
@@ -33,6 +31,7 @@ const PaymentSubTitle = styled.div`
     color: ${(props) => (props.color ? props.color : "black")};
     width: 100%;
     padding-left: 30px;
+    margin-bottom: 1vh;
 `;
 
 const PaymentTitle = styled.div`
@@ -40,8 +39,8 @@ const PaymentTitle = styled.div`
     font-weight: 900;
     font-size: 32px;
     line-height: 46px;
-    text-decoration-line: ${(props) => (props.hasInput ? "none" : "underline")};
-    color: ${(props) => (props.hasInput ? "black" : "gray")};
+    text-decoration-line: ${(props) => (props.hasinput ? "none" : "underline")};
+    color: ${(props) => (props.hasinput ? "black" : "gray")};
     width: 100%;
     height: 54px;
     padding-left: 30px;
@@ -89,35 +88,36 @@ const Key = styled.div`
 `;
 
 function Payment() {
-    const [inputValue, setInputValue] = useState(0);
+    const [inputValue, setInputValue] = useState("");
     let navigate = useNavigate();
+    const location = useLocation();
 
-    const navigateToPaymentDetail = (inputValue) => {
-        navigate(`/paymentDetail/${inputValue}`);
-    };
+    let data = location.state?.data;
 
     const handleButtonClick = (value) => {
-        inputValue > 29999999
-            ? setInputValue(30000000)
-            : setInputValue(inputValue * 10 + value);
+        !inputValue && (value === "00" || value === "0")
+            ? null
+            : parseInt(inputValue) * 10 + value > 29999999
+            ? setInputValue("30000000")
+            : setInputValue(inputValue + value);
     };
 
     const handleDelete = () => {
-        setInputValue((prev) => Math.floor(prev / 10));
+        setInputValue((prev) => prev.slice(0, -1));
     };
 
-    const fromatNumber = (number) => {
-        return number.toLocaleString("ko-KR");
-    };
+    function formatStringNumber(str) {
+        return str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     return (
         <Container>
             <HeaderBack></HeaderBack>
             <Middle>
                 <PaymentSubTitle>기부할 금액을 입력해주세요</PaymentSubTitle>
-                <PaymentTitle hasInput={inputValue}>
+                <PaymentTitle hasinput={inputValue}>
                     {inputValue
-                        ? fromatNumber(inputValue) + "원"
+                        ? formatStringNumber(inputValue) + "원"
                         : "얼마를 기부 할까요?"}
                 </PaymentTitle>
                 {inputValue > 29999999 ? (
@@ -125,14 +125,24 @@ function Payment() {
                         최대 3천만원까지 가능합니다.
                     </PaymentSubTitle>
                 ) : null}
-                <PaymentButton onClick={() => navigateToPaymentDetail(inputValue)}>기부하기</PaymentButton>
-
+                <PaymentButton
+                    onClick={() =>
+                        navigate("/paymentDetail", {
+                            state: {
+                                amount: parseInt(inputValue),
+                                data: data,
+                            },
+                        })
+                    }
+                >
+                    기부하기
+                </PaymentButton>
 
                 <Keypad>
                     {Array.from({ length: 9 }, (_, i) => (
                         <Key
                             key={i + 1}
-                            onClick={() => handleButtonClick(i + 1)}
+                            onClick={() => handleButtonClick(`${i + 1}`)}
                         >
                             {i + 1}
                         </Key>

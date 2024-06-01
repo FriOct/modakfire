@@ -1,33 +1,32 @@
 import styled from "styled-components";
-import Back from '../assets/Back.svg';
+import Back from "../assets/Back.svg";
 import { useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
-    weight: 100%;
+
+    width: 100%;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     background-color: #ffffff;
-    padding: 8px;
-    border-bottom: 1px solid #A9A9A9;
-`
+    padding: ${({theme}) => theme.padding.header};
+`;
 
 const LogoWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: min(2vw, 10px);
     font-weight: bold;
-    font-size: ${({theme}) => theme.fontSize.large};
-    color: ${({theme}) => theme.fontColor.brown};
-`
+    font-size: ${({ theme }) => theme.fontSize.large};
+    color: ${({ theme }) => theme.fontColor.brown};
+`;
 
 const LogoImage = styled.img`
-    height: min(7vw, 24px);
-    width: min(7vw, 24px);
-`
+    height: min(4vw, 25px);
+    width: min(6vw, 30px);
+`;
 
 const HeaderBack = () => {
-
     let navigate = useNavigate();
 
     const goBack = () => {
@@ -36,10 +35,10 @@ const HeaderBack = () => {
 
     return (
         <HeaderWrapper>
-            <LogoWrapper onClick={goBack}>
-                <LogoImage src={Back}/>
+            <LogoWrapper className="clickable" onClick={goBack}>
+                <LogoImage src={Back} />
             </LogoWrapper>
         </HeaderWrapper>
     );
-}
-export default HeaderBack
+};
+export default HeaderBack;

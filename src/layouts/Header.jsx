@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import Logo from '../assets/logo.png'
+import back from '../assets/Back.svg'
+import person from '../assets/icons/person.svg'
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
     display: flex;
-    justify-content: center;
+    padding: 0 min(5vw, 25px);
+    align-items: center;
+    justify-content: space-between;
     background-color: #ffffff;
-    border-bottom: 1px solid #A9A9A9;
+    border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
 `
 
 const LogoWrapper = styled.div`
@@ -23,14 +28,41 @@ const LogoImage = styled.img`
     width: min(7vw, 35px);
 `
 
+const BackWrapper = styled.img`
+    height: min(4vw, 25px);
+    width: min(6vw, 30px);
+`
+
+const IconWrapper = styled.img`
+    height: min(6vw, 30px);
+    width: min(6vw, 30px);
+`
+
+const ignorePageRegexList = ["^/payment.*$", "^/setting.*$", "^/mypage$", "^/login"];
+
+
+
 const Header = () => {
-    return (
-        <HeaderWrapper>
-            <LogoWrapper>
-                <LogoImage src={Logo}/>
-                모닥불
-            </LogoWrapper>
-        </HeaderWrapper>
-    );
+    const navigate = useNavigate();
+    const currentPath = useLocation().pathname;
+    let isIgnore = false;
+    ignorePageRegexList.forEach(Regex => {
+        if(currentPath.search(Regex) != -1)
+            isIgnore = true;
+    });
+    if(isIgnore){
+        return null;
+    }
+    else
+        return (
+            <HeaderWrapper>
+                {currentPath != "/" ? <BackWrapper className="clickable" onClick={() => navigate(-1)} src={back}/> : <div style={{width:"min(6vw, 30px)"}}></div>}
+                <LogoWrapper className="clickable" onClick={() => navigate("/")}>
+                    <LogoImage src={Logo}/>
+                    모닥불
+                </LogoWrapper>
+                <IconWrapper className="clickable" onClick={() => navigate("/mypage")} src={person}/>
+            </HeaderWrapper>
+        );
 }
 export default Header

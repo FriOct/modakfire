@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate, useLocation } from "react-router-dom";
 import HeaderBack from "../layouts/HeaderBack";
 import Bill from "../layouts/Bill";
 
@@ -39,21 +39,21 @@ const PaymentButton = styled.div`
 `;
 
 const PaymentDetail = () => {
-    const { inputValue } = useParams();
-    let navigate = useNavigate();
+    const location = useLocation();
 
-    const navigateToPayfinish = () => {
-        navigate(`/payment/paymentfinish${inputValue}`);
-    };
+    let amount = location.state?.amount;
+    let data = location.state?.data;
+
+    let navigate = useNavigate();
 
     return (
         <Container>
             <HeaderBack></HeaderBack>
             <BillWrapper>
-                <Bill amount={inputValue}></Bill>
+                <Bill amount={amount}> data={data}</Bill>
             </BillWrapper>
-            <PaymentButton onClick={() => navigateToPayfinish()}>
-                기부하기
+            <PaymentButton onClick={() => navigate("/")}>
+                홈으로
             </PaymentButton>
         </Container>
     );
