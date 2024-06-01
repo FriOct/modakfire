@@ -196,7 +196,7 @@ const TotalAmount = styled.div`
 
     flex-grow: 1;
 `;
-
+// jobo
 const Bill = ({ amount, data }) => {
     const itemss = [
         {
