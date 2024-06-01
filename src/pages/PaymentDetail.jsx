@@ -42,6 +42,7 @@ const PaymentDetail = () => {
     const location = useLocation();
 
     let amount = location.state?.amount;
+    let data = location.state?.data;
 
     let navigate = useNavigate();
 
@@ -49,7 +50,7 @@ const PaymentDetail = () => {
         <Container>
             <HeaderBack></HeaderBack>
             <BillWrapper>
-                <Bill amount={amount}></Bill>
+                <Bill amount={amount}> data={data}</Bill>
             </BillWrapper>
             <PaymentButton onClick={() => navigate("/payment/paymentfinish")}>
                 기부하기
