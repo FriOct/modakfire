@@ -3,8 +3,10 @@ import CenterContent from "./CenterContent"
 import CenterIntroBox from "./CenterIntroBox"
 import Seperator from "../../components/Separator"
 import ItemList from "./ItemList"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useNavigate, useParams } from "react-router-dom"
 import CenterItemDetail from "./CenterItemDetail/CenterItemDetail"
+import { useEffect, useState } from "react"
+import { getCenterById } from "../../api"
 
 const exampleJSON = {
     center_id: 1,
@@ -25,7 +27,22 @@ const CenterWrapper = styled.div`
 `
 
 const CenterHome = () => {
+    const navigate = useNavigate();
+    const [exampleJSON, setJson] = useState({});
+    const itemId = parseInt(useParams().centerId);
+    const [isloaded, setloaded] = useState(false);
+    useEffect(() => {
+        getCenterById(itemId)
+        .then(
+            (json) => {setJson(json); console.log(json);}
+        )
+        .finally(
+            () => {setloaded(true);}
+        )
+    }, []);
+    
     return(
+        isloaded ? 
         <Routes>
             <Route path="/" element={
                 <CenterWrapper>
@@ -36,7 +53,8 @@ const CenterHome = () => {
                  </CenterWrapper>}/>
             <Route path="/item/:itemId" element={<CenterItemDetail />}/>
         </Routes>
-        
+        :
+        null
     )
 }
 
