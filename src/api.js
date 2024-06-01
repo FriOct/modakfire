@@ -219,7 +219,7 @@ export const deleteUser = (userId) => {
         if (!response.ok) {
           throw new Error("Failed to remove user");
         }
-        return response.json();
+        return response;
       })
       .then((data) => resolve(data))
       .catch((error) => {
