@@ -243,7 +243,6 @@ export const getCenter = (data) => {
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(data),
     })
     .then((response) => {
       if(!response.ok)
