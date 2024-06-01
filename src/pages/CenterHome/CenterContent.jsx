@@ -145,7 +145,7 @@ const LikeShare = (props) => {
 //     like_num: 4217
 // }
 
-const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원", "종합 센터", "커뮤니티"];
+const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원"];
 
 const CenterInfo = ({data}) => {
     const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]];
