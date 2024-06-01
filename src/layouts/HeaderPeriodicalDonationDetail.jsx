@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Back from '../assets/Back.svg';
+import Back from "../assets/Back.svg";
 import { useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
@@ -10,40 +10,30 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: min(11vw, 55px);
     background-color: #ffffff;
-    border-bottom: 1px solid #A9A9A9;
     padding: ${({theme}) => theme.padding.header};
-`
+`;
 
 const LogoWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: min(2vw, 10px);
     font-weight: bold;
-    font-size: ${({theme}) => theme.fontSize.large};
-    color: ${({theme}) => theme.fontColor.brown};
-`
+    font-size: ${({ theme }) => theme.fontSize.medium};
+`;
 
 const LogoImage = styled.img`
 height: min(4vw, 25px);
 width: min(6vw, 30px);
 `
 
-const HeaderSetting = () => {
-
+const HeaderSetting = ({periodical_donation_id}) => {
     let navigate = useNavigate();
-
-    const navigateToBack = () => {
-        navigate(-1);
-    };
 
     return (
         <HeaderWrapper>
-            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()}/>
-            <LogoWrapper>
-                설정
-            </LogoWrapper>
-            <LogoImage className="clickable" style={{visibility:"hidden"}}/>
+            <LogoImage className="clickable" src={Back} onClick={() => {navigate(-1);}} />
+            <LogoWrapper className="clickable" onClick={ ()=>{navigate("/setting/periodicaldonation/edit", { state: { periodical_donation_id: periodical_donation_id } });}}>수정</LogoWrapper>
         </HeaderWrapper>
     );
-}
-export default HeaderSetting
+};
+export default HeaderSetting;

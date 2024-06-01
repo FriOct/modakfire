@@ -147,7 +147,7 @@ const FooterText = styled.div`
 
 const Settings = () => {
 
-    const user = useRecoilValue(userState).User;
+    const user = useRecoilValue(userState);
 
     let navigate = useNavigate();
 
@@ -166,7 +166,7 @@ const Settings = () => {
                 <UserInfo >
                     <Avatar src={Person} />
                     <UserDetails>
-                        <UserId>{user.member_id}</UserId>
+                        <UserId>{user.name}</UserId>
                         <EditInfo>내 정보 수정하기</EditInfo>
                     </UserDetails>
                 </UserInfo>

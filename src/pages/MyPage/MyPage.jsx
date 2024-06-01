@@ -5,6 +5,10 @@ import delivery from "../../assets/delevery.svg";
 import donation from "../../assets/donation.svg";
 import HeaderMyPage from "../../layouts/HeaderMyPage";
 import Seperator from "../../components/Separator";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atoms/userAtom";
+import { periodicalDonationState } from "../../recoil/atoms/periodicalDonationAtom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
@@ -82,21 +86,20 @@ const Button = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 2.34vh;
     color: #000000;
-    padding:2vw;
+    padding: 2vw;
 `;
 
 const DonationHistoryList = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 0 2.34vh;
-    gap: 0.13vh;
+    justify-content: flex-start;
+    padding: 2vh 2.34vh;
+    gap: 2vh;
     width: 100%;
-    height: 36.56vh;
 `;
 
 const DonationHistory = styled.div`
@@ -108,19 +111,13 @@ const DonationHistory = styled.div`
     height: 10.94vh;
 `;
 
-const CenterPhoto = styled.img`
-    height: 100%;
-    filter: drop-shadow(0 0 0.94vh rgba(0, 0, 0, 0.25));
-    border-radius: 1.63vh;
-`;
-
 const DonationInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0;
-    width: 100%;
-    height: 8.76vh;
+    flex: 1;
+    height: 100%;
 `;
 
 const CenterName = styled.div`
@@ -139,9 +136,9 @@ const DateText = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 2.34vh;
-    color: ${({theme}) => theme.fontColor.secondary};
+    color: ${({ theme }) => theme.fontColor.secondary};
 `;
 
 const ItemName = styled.div`
@@ -150,9 +147,9 @@ const ItemName = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 2.34vh;
-    color: ${({theme}) => theme.fontColor.secondary};
+    color: ${({ theme }) => theme.fontColor.secondary};
 `;
 
 const DonationStateWrapper = styled.div`
@@ -176,8 +173,8 @@ const CenterNameDateWrapper = styled.div`
 `;
 
 const DonationStateIcon = styled.img`
-    width: ${({theme}) => theme.fontSize.medium};
-    height: ${({theme}) => theme.fontSize.medium};
+    width: ${({ theme }) => theme.fontSize.medium};
+    height: ${({ theme }) => theme.fontSize.medium};
 `;
 
 const DonationStateText = styled.div`
@@ -185,7 +182,7 @@ const DonationStateText = styled.div`
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 500;
-    font-size: ${({theme}) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.base};
     line-height: 2.34vh;
     color: #000000;
 `;
@@ -195,87 +192,90 @@ const RegularDonationText = styled.div`
     height: 2.34vh;
     font-family: "Noto Sans KR";
     font-style: normal;
-    font-size: ${({theme}) => theme.fontSize.base};
-    color: ${({theme}) => theme.fontColor.secondary};
+    font-size: ${({ theme }) => theme.fontSize.base};
+    color: ${({ theme }) => theme.fontColor.secondary};
     line-height: 2.34vh;
-    
 `;
 
 const RegularDonationWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0 2.34vh;
-    gap: 0.13vh;
+    gap: 2vh;
     width: 100%;
-    height: 36.56vh;
+    flex: 1;
 `;
+
+const CenterImageWrapper = styled.div`
+    display: block;
+    overflow: hidden;
+    width: min(25vw, 125px);
+    height: min(25vw, 125px);
+    border-radius: min(5vw, 25px);
+    box-shadow: 0px 0px 8px ${({theme}) => theme.color.shadow};
+    img {
+        width: min(25vw, 125px);
+        height: min(25vw, 125px);
+        object-fit: cover;
+    }
+`
 
 const MyPage = () => {
     const demoData = {
-        User:
-            {
-                member_id: "12345",
-                name: "심준성",
-                email : "modak@knu.ac.kr",
-                member_rank: "작은 불씨",
-                register_date: "2024-05-25",
-            },
         donationHistory: [
             {
                 centerName: "천광보육원",
                 date: "2024-05-25",
                 itemName: "대구산 더담은 우리쌀 10kg",
                 state: "모금중",
-                image: "./src/assets/centerPhoto.png",
+                image_id: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
             },
             {
                 centerName: "천광보육원",
                 date: "2024-05-25",
                 itemName: "대구산 더담은 우리쌀 10kg",
                 state: "전달 대기중",
-                image: "./src/assets/centerPhoto.png",
+                image_id: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
             },
             {
                 centerName: "천광보육원",
                 date: "2024-05-25",
                 itemName: "대구산 더담은 우리쌀 10kg",
                 state: "전달중",
-                image: "./src/assets/centerPhoto.png",
-            },
-        ],
-        regularDonation: [
-            {
-                centerName: "천광보육원",
-                date: "2024-05-25",
-                amount: "월 20,000원",
-                image: "./src/assets/centerPhoto.png",
-            },
-            {
-                centerName: "천광보육원",
-                date: "2024-05-25",
-                amount: "월 20,000원",
-                image: "./src/assets/centerPhoto.png",
-            },
-            {
-                centerName: "천광보육원",
-                date: "2024-05-25",
-                amount: "월 20,000원",
-                image: "./src/assets/centerPhoto.png",
+                image_id: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
             },
         ],
     };
 
-    const user = demoData.User;
+    const user = useRecoilValue(userState);
+    const periodicaldonation = useRecoilValue(periodicalDonationState);
+    let navigate = useNavigate();
+
+    const formatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
+
+    const formatRank = (rank) =>{
+        if(rank === 'EMBER'){
+            return '장작'
+        }
+        else if(rank === 'FIREWOOD'){
+            return '불씨'
+        }
+        else if(rank === 'BONFIRE'){
+            return '모닥불'
+        }
+    }
 
     return (
         <Container>
-            <HeaderMyPage member={user}/>
+            <HeaderMyPage member={user} />
             <GradeFrame>
                 <Grade>
                     {user.name}님은 현재{" "}
-                    <HighlightWrapper>{user.member_rank}</HighlightWrapper>{" "}
+                    <HighlightWrapper>{formatRank(user.memberRank)}</HighlightWrapper>{" "}
                     등급입니다.
                 </Grade>
             </GradeFrame>
@@ -289,7 +289,9 @@ const MyPage = () => {
             <DonationHistoryList>
                 {demoData.donationHistory.map((history, index) => (
                     <DonationHistory key={index}>
-                        <CenterPhoto src={history.image} />
+                        <CenterImageWrapper>
+                            <img src={history.image_id} />
+                        </CenterImageWrapper>
                         <DonationInfo>
                             <CenterNameDateWrapper>
                                 <CenterName>{history.centerName}</CenterName>
@@ -316,23 +318,29 @@ const MyPage = () => {
             </DonationHistoryList>
             <Seperator />
             <TitleButtonWrapper>
-                <Title>정기 후원</Title>
-                <ButtonWrapper>
+                <Title>정기 후원 내역</Title>
+                <ButtonWrapper onClick={()=>navigate('/setting/periodicaldonation')}>
                     <Button>더보기</Button>
                 </ButtonWrapper>
             </TitleButtonWrapper>
             <RegularDonationWrapper>
-                {demoData.regularDonation.map((donation, index) => (
+                {periodicaldonation.map((donation, index) => (
                     <DonationHistory key={index}>
-                        <CenterPhoto src={donation.image} />
+                        <CenterImageWrapper>
+                            <img src={donation.image_id} />
+                        </CenterImageWrapper>
                         <DonationInfo>
                             <CenterNameDateWrapper>
-                                <CenterName>{donation.centerName}</CenterName>
+                                <CenterName>{donation.center_name}</CenterName>
                                 <DateText>정기결제일</DateText>
                             </CenterNameDateWrapper>
                             <CenterNameDateWrapper>
-                                <RegularDonationText>{donation.amount}</RegularDonationText>
-                                <DateText>{donation.date}</DateText>
+                                <RegularDonationText>
+                                    {formatNumber(donation.amount)}원
+                                </RegularDonationText>
+                                <DateText>
+                                    매달 {donation.donation_date}일
+                                </DateText>
                             </CenterNameDateWrapper>
                         </DonationInfo>
                     </DonationHistory>

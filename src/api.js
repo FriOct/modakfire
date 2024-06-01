@@ -2,6 +2,7 @@ import { useSetRecoilState } from "recoil";
 import { userState } from "./recoil/atoms/userAtom";
 
 const baseURL = "https://port-0-modakfire-be-1272llwutmz86.sel5.cloudtype.app/api";
+
 /**
  * 정기 기부 데이터를 보내면 생성
  * @param {object} data 정기 기부 데이터
@@ -116,6 +117,7 @@ export const deletePeriodicalDonation = (periodicalDonationId) => {
       });
   });
 };
+
 export async function createUser({
   id: id,
   email: email,
@@ -199,6 +201,7 @@ export const updateUser = (userId, userData) => {
       });
   });
 };
+
 /**
  * 입력된 유저 아이디의 유저를 삭제
  * @param {int} userId 유저 아이디

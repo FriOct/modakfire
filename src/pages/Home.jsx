@@ -10,6 +10,8 @@ import star from "../assets/icons/star.svg";
 import Seperator from "../components/Separator";
 import HighlightWrapper from "../components/Text/HighlightWrapper";
 import { Navigate, useNavigate } from "react-router-dom";
+import SelectModal from "../components/SelectModal";
+import { useState } from "react";
 
 const BannerDataList = [
     {
@@ -37,52 +39,56 @@ const SearchSectionWrapper = styled.div`
 
 const SearchMenuWrapper = styled.div`
     display: flex;
+    justify-content: space-evenly;
+    flex: 1;
     padding: min(0.5vw, 2.5px) min(3vw, 15px);
+    margin: 0 min(3vw, 15px);
     border: 1px solid ${({theme}) => theme.color.gray};
     border-radius: 20px;
     gap: min(2vw, 10px);
     div {
-        width: min(17vw, 85px);
         display: flex;
         justify-content: space-between;
         gap: min(1vw, 5px);
         padding: 0 min(1vw, 5px);
         border-right: 1px solid ${({theme}) => theme.color.gray};
+        h1{
+            flex:1;
+        }
         img{
             width: min(4vw, 20px);
             background-size: cover;
         }
     }
     div:last-child {
-        width: min(20vw, 100px);
         border: none;
     }
 `
 
-const SearchSelector = (props) => {
+const SearchSelector = ({state}) => {
     return(
-        <div>
-            <LightTitle>{props.data}</LightTitle>
+        <div className="clickable" onClick={state.callbackOpen}>
+            <LightTitle>{state.indicator}</LightTitle>
             <img src={downLine}/>
         </div>
     )
 }
 
-const SearchMenu = () => {
+const SearchMenu = ({stateList}) => {
     return(
         <SearchMenuWrapper>
-            <SearchSelector data={"대구"}/>
-            <SearchSelector data={"북구"}/>
-            <SearchSelector data={"보육원"}/>
+            <SearchSelector state={stateList[0]}/>
+            <SearchSelector state={stateList[1]}/>
+            <SearchSelector state={stateList[2]}/>
         </SearchMenuWrapper>
     )
 }
 
-const SearchSection = () => {
+const SearchSection = ({stateList}) => {
     return(
         <SearchSectionWrapper>
             <LightTitle><strong>센터 검색</strong></LightTitle>
-            <SearchMenu />
+            <SearchMenu stateList={stateList}/>
         </SearchSectionWrapper>
     )
 }
@@ -240,7 +246,7 @@ const exampleCenterJSON = [{
 },
 ]
 
-const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원", "종합 센터", "커뮤니티"];
+const typeEnumToStringTable = ["복지관", "장애인복지관", "보육원", "한부모 센터", "노숙인 시설", "정신건강센터", "재활원", "종합 센터", "커뮤니티"];
 
 const CenterWrapper = ({data}) => {
     const navigate = useNavigate();
@@ -260,13 +266,75 @@ const CenterWrapper = ({data}) => {
     )
 }
 
+const cityTable = ["전국", "서울", "경기", "인천", "부산", "대구", "대전", "경남", "전남", "충남", "광주", "울산", "경북", "전북", "충북", "강원", "제주", "세종"];
+const daeguTable = ["전체", "중구", "동구", "서구", "남구", "북구", "수성구", " 달서구", "달성군", "군위군"];
+const typeTable = ["전체", ...typeEnumToStringTable];
+
+const detailCityTable = {
+    5: daeguTable
+}
 
 const Home = () => {
+    const [isVisible, setVisible] = useState([false, false, false]);
+    const toggleVisible = (index) => {
+        isVisible[index] = !isVisible[index];
+        setVisible([...isVisible]);
+    }
+    const [modalIndex, setmodalIndex] = useState([0, 0, 0]);
+    const setmodalItemIndex = (index, Itemindex) => {
+        modalIndex[index] = Itemindex
+        if(index == 0)
+            modalIndex[1] = 0;
+        setmodalIndex([...modalIndex]);
+    }
+
+    const modalState = [{
+        callbackClose: () => {toggleVisible(0)},
+        callbackSelector: (index) => {setmodalItemIndex(0, index)},
+        tableTitle: "지역 선택",
+        tableItems: cityTable,
+        currentIndex: modalIndex[0],
+        isVisible: isVisible[0]
+    },
+    {
+        callbackClose: () => {toggleVisible(1)},
+        callbackSelector: (index) => {setmodalItemIndex(1, index)},
+        tableTitle: "세부 지역 선택",
+        tableItems: detailCityTable[modalIndex[0]] ?? ["개발 예정"],
+        currentIndex: modalIndex[1],
+        isVisible: isVisible[1]
+    },
+    {
+        callbackClose: () => {toggleVisible(2)},
+        callbackSelector: (index) => {setmodalItemIndex(2, index)},
+        tableTitle: "센터 종류 선택",
+        tableItems: typeTable,
+        currentIndex: modalIndex[2],
+        isVisible: isVisible[2]
+    }]
+    const SearchSectionStateList = [
+        {
+            callbackOpen: () => {toggleVisible(0)},
+            indicator: cityTable[modalIndex[0]]
+        },
+        {
+            callbackOpen: () => {toggleVisible(1)},
+            indicator: detailCityTable[modalIndex[0]] ? detailCityTable[modalIndex[0]][modalIndex[1]] : ["전체"]
+        },
+        {
+            callbackOpen: () => {toggleVisible(2)},
+            indicator: typeTable[modalIndex[2]]
+        }
+    ]
+
 
     return(
         <HomeWrapper>
+            <SelectModal state={modalState[0]}/>
+            <SelectModal state={modalState[1]}/>
+            <SelectModal state={modalState[2]}/>
             <Carousel items={BannerDataList} />
-            <SearchSection />
+            <SearchSection stateList={SearchSectionStateList}/>
             <Seperator />
             <SearchResult count={exampleCenterJSON.length}/>
             {

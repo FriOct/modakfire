@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonation from "../../../../layouts/HeaderPeriodicalDonation";
 import Back from "../../../../assets/Back.svg";
+import { useState } from "react";
+import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
 
 const Container = styled.div`
     display: flex;
@@ -13,7 +14,6 @@ const Container = styled.div`
     height: 100vh;
     background: ${({ theme }) => theme.color.bg};
 `;
-
 
 const Seperator = styled.div`
     width: 100vw;
@@ -26,7 +26,7 @@ const DonationList = styled.div`
     flex-direction: column;
     align-items: flex-start;
     padding: 0;
-    width: 100100;
+    width: 100%;
     flex-grow: 1;
 `;
 
@@ -34,16 +34,22 @@ const DonationCenter = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: ${({ theme }) => theme.padding.primary};gap: 3vw;
+    justify-content: space-between;
+    padding: ${({ theme }) => theme.padding.primary};
+    gap: 3vw;
     width: 100vw;
     height: 10vh;
+    ${(props) =>
+        props.islast
+            ?`border-top: 1px solid ${props.theme.color.lightgray}`:null};
+    border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
 `;
 
 const Info = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
 `;
 
 const CenterName = styled.div`
@@ -59,7 +65,6 @@ const Amount = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSize.base};
-    color: #ffddc5;
 `;
 
 const ButtonWrapper = styled.div`
@@ -91,33 +96,79 @@ const EditButton = styled.button`
     cursor: pointer;
 `;
 
+const CenterNameWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: min(2vw, 5px);
+`;
+
 const PeriodicalDonationManage = () => {
-    const [user, setUser] = useRecoilState(userState);
+    const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
+        periodicalDonationState
+    );
 
     let navigate = useNavigate();
 
-    const fromatNumber = (number) => {
-      return number.toLocaleString("ko-KR");
-  };
+    const formatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
 
     return (
         <Container>
-            <HeaderPeriodicalDonation/>
-            <Seperator />
+            <HeaderPeriodicalDonation />
             <DonationList>
-                {user.PeriodicalDonation.map((donation, index) => (
-                    <DonationCenter key={index}>
-                        <Info>
-                            <CenterName>{donation.center_name}</CenterName>
-                            <Amount>₩{fromatNumber(donation.amount)}</Amount>
-                        </Info>
-                        <VectorSmall src={Back} />
-                    </DonationCenter>
-                ))}
+                {periodicalDonation
+                    ? periodicalDonation.map((donation, index) => (
+                          <DonationCenter
+                              key={index}
+                              onClick={() => {
+                                  navigate(
+                                      "/setting/periodicaldonation/detail",
+                                      {
+                                          state: {
+                                              periodical_donation_id:
+                                                  donation.periodical_donation_id,
+                                          },
+                                      }
+                                  );
+                              }}
+                              islast={index === 0?'true':'false'}
+                          >
+                              <Info>
+                                  <CenterNameWrapper>
+                                      <CenterName>
+                                          {donation.center_name}
+                                      </CenterName>
+                                      <VectorSmall src={Back} />
+                                  </CenterNameWrapper>
+                                  <Amount style={{ color: "#B5B5B5"}}>
+                                      {donation.location}
+                                  </Amount>
+                              </Info>
+                              <Info>
+                                  <Amount>
+                                      매달&nbsp;{donation.donation_date}
+                                      &nbsp;일
+                                  </Amount>
+                                  <Amount>
+                                      매달&nbsp;{formatNumber(donation.amount)}
+                                      &nbsp;원
+                                  </Amount>
+                              </Info>
+                          </DonationCenter>
+                      ))
+                    : null}
             </DonationList>
             <Seperator />
             <ButtonWrapper>
-                <EditButton onClick={() => {navigate('/setting/periodicaldonation/add');}}>정기기부 추가하기</EditButton>
+                <EditButton
+                    onClick={() => {
+                        navigate("/setting/periodicaldonation/add");
+                    }}
+                >
+                    정기기부 추가하기
+                </EditButton>
             </ButtonWrapper>
         </Container>
     );

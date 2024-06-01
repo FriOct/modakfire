@@ -11,7 +11,7 @@ const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
     background-color: #ffffff;
     border-bottom: 1px solid #a9a9a9;
-    padding: 0 2vw;
+    padding: ${({theme}) => theme.padding.header};
 `;
 
 const LogoWrapper = styled.div`
@@ -23,11 +23,11 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoImage = styled.img`
-    height: min(4vw, 35px);
-    width: min(4vw, 35px);
-`;
+height: min(4vw, 25px);
+width: min(6vw, 30px);
+`
 
-const HeaderSetting = ({ member_id }) => {
+const HeaderSetting = ({ name }) => {
     let navigate = useNavigate();
 
     const navigateToBack = () => {
@@ -40,11 +40,11 @@ const HeaderSetting = ({ member_id }) => {
 
     return (
         <HeaderWrapper>
-            <LogoImage src={Back} onClick={() => navigateToBack()} />
+            <LogoImage className="clickable" src={Back} onClick={() => navigateToBack()} />
             <LogoWrapper>
-                {member_id ? `${member_id}님의 정보` : "로그인이 필요합니다"}
+                {name ? `${name}님의 정보` : "로그인이 필요합니다"}
             </LogoWrapper>
-            <LogoWrapper onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
+            <LogoWrapper className="clickable" onClick={() => navigateToUserEdit()}>수정</LogoWrapper>
         </HeaderWrapper>
     );
 };

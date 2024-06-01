@@ -98,11 +98,23 @@ const FooterText = styled.div`
 
 const User = () => {
 
-    const user = useRecoilValue(userState).User;
+    const user = useRecoilValue(userState);
+
+    const formatRank = (rank) =>{
+        if(rank === 'EMBER'){
+            return '장작'
+        }
+        else if(rank === 'FIREWOOD'){
+            return '불씨'
+        }
+        else if(rank === 'BONFIRE'){
+            return '모닥불'
+        }
+    }
 
     return (
         <Container>
-            <HearderUser member_id={user.member_id}/>
+            <HearderUser name={user.name}/>
             <UserProfile>
                 <UserIcon src={Person}/>
             </UserProfile>
@@ -117,7 +129,7 @@ const User = () => {
             </InfoSection>
             <InfoSection>
                 <InfoText>등급</InfoText>
-                <InfoValue>{user.member_rank}</InfoValue>
+                <InfoValue>{formatRank(user.memberRank)}</InfoValue>
             </InfoSection>
             <InfoSection>
                 <InfoText>가입일</InfoText>

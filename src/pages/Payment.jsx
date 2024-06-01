@@ -91,10 +91,6 @@ function Payment() {
     const [inputValue, setInputValue] = useState(0);
     let navigate = useNavigate();
 
-    const navigateToPaymentDetail = (inputValue) => {
-        navigate(`/paymentDetail/${inputValue}`);
-    };
-
     const handleButtonClick = (value) => {
         inputValue > 29999999
             ? setInputValue(30000000)
@@ -124,7 +120,12 @@ function Payment() {
                         최대 3천만원까지 가능합니다.
                     </PaymentSubTitle>
                 ) : null}
-                <PaymentButton onClick={() => navigateToPaymentDetail(inputValue)}>기부하기</PaymentButton>
+                <PaymentButton onClick={() => navigate("/paymentDetail",{
+                                          state: {
+                                              amount:
+                                              inputValue,
+                                          },
+                                      })}>기부하기</PaymentButton>
 
 
                 <Keypad>
