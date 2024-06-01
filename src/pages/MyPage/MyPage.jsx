@@ -211,8 +211,8 @@ const RegularDonationWrapper = styled.div`
 const CenterImageWrapper = styled.div`
     display: block;
     overflow: hidden;
-    width: min(25vw, 125px);
-    height: min(25vw, 125px);
+    width: min(22vw, 125px);
+    height: min(22vw, 125px);
     border-radius: min(5vw, 25px);
     box-shadow: 0px 0px 8px ${({theme}) => theme.color.shadow};
     img {
@@ -282,7 +282,7 @@ const MyPage = () => {
             <Seperator />
             <TitleButtonWrapper>
                 <Title>최근 기부 내역</Title>
-                <ButtonWrapper>
+                <ButtonWrapper onClick={() => {navigate('/mypage/history')}}>
                     <Button>더보기</Button>
                 </ButtonWrapper>
             </TitleButtonWrapper>
