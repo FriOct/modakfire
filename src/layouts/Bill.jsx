@@ -199,40 +199,56 @@ const TotalAmount = styled.div`
     flex-grow: 1;
 `;
 
-const Bill = ({ amount }) => {
-    const content = {
-        items: [
-            {
-                title: "천광 보육원",
-                items: [
-                    { name: "대구산 더담은 우리쌀 10kg", amount: "₩15,000" },
-                    { name: "라면 5봉지", amount: "₩5,000" },
-                ],     
-            },
-            {
-                title: "천광 보육원",
-                items: [
-                    { name: "쌀 5kg", amount: "₩15,000" },
-                    { name: "라면 5봉지", amount: "₩5,000" },
-                ],     
-            },
-            {
-                title: "천 보육원",
-                items: [
-                    { name: "쌀 5kg", amount: "₩15,000" },
-                    { name: "라면 5봉지", amount: "₩5,000" },
-                ],
-            },
-            {
-                title: "천광 보원",
-                items: [
-                    { name: "쌀 5kg", amount: "₩15,000" },
-                    { name: "라면 5봉지", amount: "₩5,000" },
-                ],
-            },
-        ],
-        totalAmount: 60000,
-    };
+const Bill = ({ amount, data }) => {
+    const itemss = [
+        {
+            title: "천광 보육원",
+            items: [
+                { name: "대구산 더담은 우리쌀 10kg", amount: "₩15,000" },
+                { name: "라면 5봉지", amount: "₩5,000" },
+            ],
+        },
+        {
+            title: "천광 보육원",
+            items: [
+                { name: "쌀 5kg", amount: "₩15,000" },
+                { name: "라면 5봉지", amount: "₩5,000" },
+            ],
+        },
+        {
+            title: "천 보육원",
+            items: [
+                { name: "쌀 5kg", amount: "₩15,000" },
+                { name: "라면 5봉지", amount: "₩5,000" },
+            ],
+        },
+        {
+            title: "천광 보원",
+            items: [
+                { name: "쌀 5kg", amount: "₩15,000" },
+                { name: "라면 5봉지", amount: "₩5,000" },
+            ],
+        },
+    ];
+    const [items, setItems] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let result;
+                if (data.isFast) {
+                    result = await donationFastRequest(data.reqObj);
+                } else {
+                    result = await donationRequest(data.reqObj);
+                }
+                setItems(result);
+            } catch (error) {
+                console.error("Error updating user:", error);
+            }
+        };
+
+        fetchData();
+    }, [data]);
 
     const fromatNumber = (number) => {
         return number.toLocaleString("ko-KR");
