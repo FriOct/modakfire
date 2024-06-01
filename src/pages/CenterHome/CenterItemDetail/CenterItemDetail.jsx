@@ -297,11 +297,11 @@ const CenterItemDetail = ({match, location}) => {
             <ProgressBar percent={percent}/>
             <ProgressInfo now={exampleJson.raisedAmount} goal={exampleJson.price}/>
             <HowToUse sellorName={exampleJson.marketName}/>
-            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment", state={
+            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment", {state:{
                 isFast: false,
                 reqObj: {
                     itemId: itemId
-                }
+                }}
             })}>
                 <Title>기부하기</Title>
             </DonateButtonWrapper>
