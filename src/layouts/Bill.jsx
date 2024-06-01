@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { donationFastRequest, donationRequest } from "../api";
+import styled from "styled-components";
 
 const BillContainer = styled.div`
     display: flex;
@@ -28,6 +29,7 @@ const Title = styled.div`
     font-style: normal;
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.large};
+
     line-height: 29px;
     color: #000000;
     flex: none;

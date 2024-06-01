@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.header`
     height: min(11vw, 55px);
+
     width: 100%;
     display: flex;
     justify-content: flex-start;
