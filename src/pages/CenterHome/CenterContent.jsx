@@ -148,7 +148,8 @@ const LikeShare = (props) => {
 const typeEnumToStringTable = ["복지관", "장애인 복지관", "보육원", "한부모 센터", "노숙인 시설", "정신 건강 복지센터", "재활원"];
 
 const CenterInfo = ({data}) => {
-    const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]];
+    console.log(data);
+    const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.centerType]];
     return(
         <CenterInfoWrapper>
             <Title>{data.name}</Title>
@@ -156,8 +157,8 @@ const CenterInfo = ({data}) => {
             <HashtagTable>
                 {hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
             </HashtagTable>
-            <DonatorCount data={data.donor_num}/>
-            <LikeShare data={data.like_num}/>
+            <DonatorCount data={data.donorNum}/>
+            <LikeShare data={1}/>
         </CenterInfoWrapper>
        
     )

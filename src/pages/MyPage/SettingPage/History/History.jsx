@@ -11,8 +11,6 @@ import right from "../../../../assets/icons/right.svg"
 import SecondaryParagraph from "../../../../components/Text/SecondaryParagraph"
 import LightTitle from "../../../../components/Text/LightTitle"
 import { useNavigate } from "react-router-dom"
-import { useRecoilState } from "recoil"
-import { userState } from "../../../../recoil/atoms/userAtom"
 
 const HistoryWrapper = styled.div`
     display: flex;
@@ -224,11 +222,9 @@ const DonationJsonList = [{
 
 const History = () => {
     let latestDate = new window.Date("1970-01-01");
-    const [user, setUser] = useRecoilState(userState);
-    
     return (
         <HistoryWrapper>
-            <Title><HighlightWrapper>{user.name}</HighlightWrapper>님의 기부 내역</Title>
+            <Title><HighlightWrapper>심준성</HighlightWrapper>님의 기부 내역</Title>
             {
                 DonationJsonList.map((DonationJson, index) => {
                     const currentDate = new window.Date(DonationJson.date.substring(0, 10));

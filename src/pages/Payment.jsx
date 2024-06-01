@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HeaderBack from "../layouts/HeaderBack";
 
 const Container = styled.div`
@@ -13,6 +13,7 @@ const Container = styled.div`
     height: 100vh;
     background: #ffffff;
 `;
+
 
 const Middle = styled.div`
     display: flex;
@@ -90,16 +91,12 @@ const Key = styled.div`
 function Payment() {
     const [inputValue, setInputValue] = useState("");
     let navigate = useNavigate();
-    const location = useLocation();
-
-    let data = location.state?.data;
 
     const handleButtonClick = (value) => {
-        !inputValue && (value === "00" || value === "0")
-            ? null
-            : parseInt(inputValue) * 10 + value > 29999999
+        (!inputValue && (value==="00"||value==="0")) ?null:
+        parseInt(inputValue)*10+value > 29999999
             ? setInputValue("30000000")
-            : setInputValue(inputValue + value);
+            :setInputValue(inputValue + value);
     };
 
     const handleDelete = () => {
@@ -125,18 +122,13 @@ function Payment() {
                         최대 3천만원까지 가능합니다.
                     </PaymentSubTitle>
                 ) : null}
-                <PaymentButton
-                    onClick={() =>
-                        navigate("/paymentDetail", {
-                            state: {
-                                amount: parseInt(inputValue),
-                                data: data,
-                            },
-                        })
-                    }
-                >
-                    기부하기
-                </PaymentButton>
+                <PaymentButton onClick={() => navigate("/paymentDetail",{
+                                          state: {
+                                              amount:
+                                              parseInt(inputValue),
+                                          },
+                                      })}>기부하기</PaymentButton>
+
 
                 <Keypad>
                     {Array.from({ length: 9 }, (_, i) => (

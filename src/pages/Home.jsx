@@ -12,12 +12,11 @@ import handHeart from "../assets/icons/handHeart.svg"
 import HighlightWrapper from "../components/Text/HighlightWrapper";
 import { Navigate, useNavigate } from "react-router-dom";
 import SelectModal from "../components/SelectModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import banner1 from "../assets/banners/banner1.png"
 import banner2 from "../assets/banners/banner2.png"
 import banner3 from "../assets/banners/banner3.png"
-import { getCenter } from "../api";
 
 const BannerDataList = [
     {
@@ -117,7 +116,7 @@ const SearchResult = (props) => {
         <SearchResultWrapper>
             <img src={search}/>
             <HighlightWrapper>
-                <LightTitle>{props.isSearching ? <strong>검색중 입니다...</strong> : <>{props.count}개의 <strong>검색결과</strong></>}</LightTitle>
+                <LightTitle>{props.count}개의 <strong>검색 결과</strong></LightTitle>
             </HighlightWrapper>
         </SearchResultWrapper>
     )
@@ -261,15 +260,15 @@ const CenterWrapper = ({data}) => {
     const navigate = useNavigate();
     const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]]
     return (
-    <CenterStyledWrapper className="clickable" onClick={() => navigate("/center/" + data.id)}>
+    <CenterStyledWrapper className="clickable" onClick={() => navigate("/center/" + data.center_id)}>
         <CenterImage src={data.imageUrl} />
         <CenterInfowrapper>
             <LightTitle><strong>{data.name}</strong></LightTitle>
             <HashtagTable>
                 {hashtagList.map((hashtag, index) => <Hashtag key={index} data={hashtag}/>)}
             </HashtagTable>
-            <DonatorCount data={data.donorNum} />
-            <LikeCount data={data.likeNum} />
+            <DonatorCount data={data.donor_num} />
+            <LikeCount data={data.like_num} />
         </CenterInfowrapper>
     </CenterStyledWrapper>
     )
@@ -368,17 +367,7 @@ const Home = () => {
             indicator: typeTable[modalIndex[2]]
         }
     ]
-    const [isSearching, setisSearching] = useState(true);
-    const [CenterJsonList, setCenterJsonList] = useState([]);
-    useEffect(() => {
-        setisSearching(true);
-        getCenter({city:cityTable[modalIndex[0]], gu:detailCityTable[modalIndex[0]] ? detailCityTable[modalIndex[0]][modalIndex[1]] : ["전체"], centerType:modalIndex[2]})
-        .then(
-            (json) => {setCenterJsonList(json)})
-        .finally(() =>{
-            setisSearching(false);
-        })
-    }, [modalIndex[0], modalIndex[1], modalIndex[2]]);
+
 
     return(
         <HomeWrapper>
@@ -386,11 +375,11 @@ const Home = () => {
             <SelectModal state={modalState[1]}/>
             <SelectModal state={modalState[2]}/>
             <Carousel items={BannerDataList} />
-            <SearchSection  stateList={SearchSectionStateList}/>
+            <SearchSection stateList={SearchSectionStateList}/>
             <Seperator />
-            <SearchResult isSearching={isSearching} count={CenterJsonList.length}/>
+            <SearchResult count={exampleCenterJSON.length}/>
             {
-                CenterJsonList.map((props, index) => <CenterWrapper key={index} data={props} />)
+                exampleCenterJSON.map((props, index) => <CenterWrapper key={index} data={props} />)
             }
             <FastDonation />
         </HomeWrapper>

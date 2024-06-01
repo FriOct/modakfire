@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { donationFastRequest, donationRequest } from "../api";
 
 const BillContainer = styled.div`
     display: flex;
@@ -17,6 +15,7 @@ const BillContainer = styled.div`
     flex-grow: 0;
 `;
 
+
 const Title = styled.div`
     display: flex;
     justify-content: center;
@@ -27,7 +26,7 @@ const Title = styled.div`
     font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSize.large};
+    font-size: ${({theme}) => theme.fontSize.large};
     line-height: 29px;
     color: #000000;
     flex: none;
@@ -46,9 +45,10 @@ const BillList = styled.div`
     padding: 8px;
     gap: 48px;
     width: 100%;
-    height: 456px;
+    height:456px;
     flex: none;
     order: 1;
+
 `;
 
 const BillItem = styled.div`
@@ -168,7 +168,9 @@ const TotalAmountContainer = styled.div`
     border-top: 4px dashed #ffddc5;
     flex-grow: 1; /* 남는 공간을 채우도록 설정 */
     order: 2;
+
 `;
+
 
 const TotalItem = styled.div`
     font-family: "Inter", sans-serif;
@@ -196,7 +198,7 @@ const TotalAmount = styled.div`
 
     flex-grow: 1;
 `;
-// jobo
+
 const Bill = ({ amount, data }) => {
     const itemss = [
         {
@@ -254,9 +256,9 @@ const Bill = ({ amount, data }) => {
 
     return (
         <BillContainer>
-            <Title>기부 영수증</Title>
+                <Title>기부 영수증</Title>
             <BillList>
-                {items.map((bill, index) => (
+                {content.items.map((bill, index) => (
                     <BillItem key={index}>
                         <ItemHeader>
                             <ItemTitle>{bill.title}</ItemTitle>
@@ -273,8 +275,8 @@ const Bill = ({ amount, data }) => {
                 ))}
             </BillList>
             <TotalAmountContainer>
-                <TotalItem>총 기부금액</TotalItem>
-                <TotalAmount>{`₩ ${fromatNumber(amount)}`}</TotalAmount>
+                    <TotalItem>총 기부금액</TotalItem>
+                    <TotalAmount>{`₩ ${fromatNumber(amount)}`}</TotalAmount>
             </TotalAmountContainer>
         </BillContainer>
     );
