@@ -8,20 +8,25 @@ import sharp from "../assets/icons/sharp.svg";
 import people from "../assets/icons/people.svg";
 import star from "../assets/icons/star.svg";
 import Seperator from "../components/Separator";
+import handHeart from "../assets/icons/handHeart.svg"
 import HighlightWrapper from "../components/Text/HighlightWrapper";
 import { Navigate, useNavigate } from "react-router-dom";
 import SelectModal from "../components/SelectModal";
 import { useState } from "react";
 
+import banner1 from "../assets/banners/banner1.png"
+import banner2 from "../assets/banners/banner2.png"
+import banner3 from "../assets/banners/banner3.png"
+
 const BannerDataList = [
     {
-        src: "../src/assets/banners/banner1.png"
+        src: banner1
     },
     {
-        src: "../src/assets/banners/banner2.png"
+        src: banner2
     },
     {
-        src: "../src/assets/banners/banner3.png"
+        src: banner3
     }
 ]
 
@@ -45,10 +50,9 @@ const SearchMenuWrapper = styled.div`
     margin: 0 min(3vw, 15px);
     border: 1px solid ${({theme}) => theme.color.gray};
     border-radius: 20px;
-    gap: min(2vw, 10px);
+    gap: min(1vw, 5px);
     div {
         display: flex;
-        justify-content: space-between;
         gap: min(1vw, 5px);
         padding: 0 min(1vw, 5px);
         border-right: 1px solid ${({theme}) => theme.color.gray};
@@ -60,8 +64,12 @@ const SearchMenuWrapper = styled.div`
             background-size: cover;
         }
     }
+    div:first-child{
+        /* width: min(15vw, 75px); */
+    }
     div:last-child {
         border: none;
+        /* flex: 1; */
     }
 `
 
@@ -246,7 +254,7 @@ const exampleCenterJSON = [{
 },
 ]
 
-const typeEnumToStringTable = ["복지관", "장애인복지관", "보육원", "한부모 센터", "노숙인 시설", "정신건강센터", "재활원", "종합 센터", "커뮤니티"];
+const typeEnumToStringTable = ["복지관", "장애인복지관", "보육원", "한부모 센터", "노숙인 시설", "정신건강센터", "재활원"];
 
 const CenterWrapper = ({data}) => {
     const navigate = useNavigate();
@@ -263,6 +271,39 @@ const CenterWrapper = ({data}) => {
             <LikeCount data={data.like_num} />
         </CenterInfowrapper>
     </CenterStyledWrapper>
+    )
+}
+
+const FastDonationWrapper = styled.div`
+    position: fixed;
+    right: min(3vw, 15px);
+    bottom: min(3vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: min(4vw, 20px);
+    width: min(17vw, 85px);
+    height: min(17vw, 85px);
+    color: ${({theme}) => theme.color.bg};
+    border: 2px solid #e16511;
+    background-color: ${({theme}) => theme.color.primary};
+    box-shadow: 0px 0px 8px ${({theme}) => theme.color.shadow};
+    p{
+        font-weight: bold;
+    }
+    img{
+        width: min(10vw, 50px);
+        height: min(10vw, 50px);
+    }
+`
+
+const FastDonation = () => {
+    return (
+        <FastDonationWrapper>
+            <img src={handHeart} />
+            <Paragraph>간편기부</Paragraph>
+        </FastDonationWrapper>
     )
 }
 
@@ -290,7 +331,7 @@ const Home = () => {
 
     const modalState = [{
         callbackClose: () => {toggleVisible(0)},
-        callbackSelector: (index) => {setmodalItemIndex(0, index)},
+        callbackSelector: (index) => {setmodalItemIndex(0, index); toggleVisible(0)},
         tableTitle: "지역 선택",
         tableItems: cityTable,
         currentIndex: modalIndex[0],
@@ -298,7 +339,7 @@ const Home = () => {
     },
     {
         callbackClose: () => {toggleVisible(1)},
-        callbackSelector: (index) => {setmodalItemIndex(1, index)},
+        callbackSelector: (index) => {setmodalItemIndex(1, index); toggleVisible(1)},
         tableTitle: "세부 지역 선택",
         tableItems: detailCityTable[modalIndex[0]] ?? ["개발 예정"],
         currentIndex: modalIndex[1],
@@ -306,7 +347,7 @@ const Home = () => {
     },
     {
         callbackClose: () => {toggleVisible(2)},
-        callbackSelector: (index) => {setmodalItemIndex(2, index)},
+        callbackSelector: (index) => {setmodalItemIndex(2, index); toggleVisible(2)},
         tableTitle: "센터 종류 선택",
         tableItems: typeTable,
         currentIndex: modalIndex[2],
@@ -340,6 +381,7 @@ const Home = () => {
             {
                 exampleCenterJSON.map((props, index) => <CenterWrapper key={index} data={props} />)
             }
+            <FastDonation />
         </HomeWrapper>
     )
 }
