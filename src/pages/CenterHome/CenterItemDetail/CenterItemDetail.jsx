@@ -8,6 +8,7 @@ import Paragraph from "../../../components/Text/Paragraph";
 import lightbulb from "../../../assets/icons/lightbulb.svg"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { userState } from "../../../recoil/atoms/userAtom";
 
 const CenterItemDetailWrapper = styled.div`
     display: flex;
@@ -296,7 +297,12 @@ const CenterItemDetail = ({match, location}) => {
             <ProgressBar percent={percent}/>
             <ProgressInfo now={exampleJson.raisedAmount} goal={exampleJson.price}/>
             <HowToUse sellorName={exampleJson.marketName}/>
-            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment")}>
+            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment", state={
+                isFast: false,
+                reqObj: {
+                    itemId: itemId
+                }
+            })}>
                 <Title>기부하기</Title>
             </DonateButtonWrapper>
         </CenterItemDetailWrapper>
