@@ -3,6 +3,8 @@ import HeaderUserEdit from "../../../../layouts/HeaderUserEdit";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../../recoil/atoms/userAtom";
 import { useNavigate } from "react-router-dom";
+import { updateUser } from "../../../../api";
+import { useEffect, useState } from "react";
 
 
 const Container = styled.div`
@@ -69,25 +71,36 @@ const EditButton = styled.button`
 
 function UserEdit() {
     const [user, setUser] = useRecoilState(userState);
-
-    const updateUserInfo = (newName, newEmail) => {
-        setUser((prev) => ({...prev, name: newName, email: newEmail}));
-    };
-
+    const [updated, setUpdated] = useState(false);
+    let navigate = useNavigate();
+    
     const handleSave = () => {
         const newName = document.getElementById("nameInput").value;
         const newEmail = document.getElementById("emailInput").value;
-        updateUserInfo(newName, newEmail);
-        console.log("Updated Data:", user);
-        navigateToBack();
-        // Here you would handle the API call or other actions to save the data
+        setUser((prev) => ({...prev, name: newName, email: newEmail}));
+
+        //console.log("Updated Data:", user);
+        setUpdated(true);
+
     };
 
-    let navigate = useNavigate();
+    useEffect(() => {
+        if (updated) {
+          console.log("Updated Data:", user);
+          updateUser(user.id, user)
+            .then(() => {
+                navigate(-2);
+            })
+            .catch((error) => {
+              console.error("Error updating user:", error);
+            })
+            .finally(() => {
+              setUpdated(false);  // 상태 업데이트 완료 표시
+            });
+        }
+      }, [updated]);
 
-    const navigateToBack = () => {
-        navigate(-1);
-    };
+    
 
     return (
         <Container>

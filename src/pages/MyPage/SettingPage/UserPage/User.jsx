@@ -3,8 +3,11 @@ import HearderUser from "../../../../layouts/HeaderUser";
 import Seperator from "../../../../components/Separator";
 import Person from "../../../../assets/Person.svg";
 import Back from "../../../../assets/Back.svg";
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '../../../../recoil/atoms/userAtom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {deleteUser} from "../../../../api";
 
 const Container = styled.div`
     display: flex;
@@ -97,8 +100,37 @@ const FooterText = styled.div`
 `;
 
 const User = () => {
+    const [user, setUser] = useRecoilState(userState);
+    const [updated, setUpdated] = useState(false);
+    let navigate = useNavigate();
+    
+    
+    const handleSave = () => {
+        console.log("Delete User");
+        setUpdated(true);
 
-    const user = useRecoilValue(userState);
+    };
+
+    useEffect(() => {
+        if (updated) {
+          deleteUser(user.id)
+            .then(() => {
+                setUser(null);
+                navigate('/');
+                
+                
+            })
+            // .then(()=>{
+            //     setUser(null);
+            // })
+            .catch((error) => {
+              console.error("Error updating user:", error);
+            })
+            .finally(() => {
+              setUpdated(false);  // 상태 업데이트 완료 표시
+            });
+        }
+      }, [updated]);
 
     const formatRank = (rank) =>{
         if(rank === 'EMBER'){
@@ -111,6 +143,24 @@ const User = () => {
             return '모닥불'
         }
     }
+
+    function formatDate(dateString) {
+        // Date 객체 생성
+        const date = new Date(dateString);
+        
+        // 옵션 설정
+        const options = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+      
+        // 포맷터 생성 (한국어 기준)
+        const formatter = new Intl.DateTimeFormat('ko-KR', options);
+      
+        // 포맷된 날짜 반환
+        return formatter.format(date);
+      }
 
     return (
         <Container>
@@ -133,10 +183,10 @@ const User = () => {
             </InfoSection>
             <InfoSection>
                 <InfoText>가입일</InfoText>
-                <InfoValue>{user.register_date}</InfoValue>
+                <InfoValue>{formatDate(user.registerDate)}</InfoValue>
             </InfoSection>
             <Seperator />
-            <Exit>
+            <Exit onClick={handleSave}>
                 <ExitText>탈퇴하기</ExitText>
                 <VectorSmall src={Back} />
             </Exit>
