@@ -52,8 +52,8 @@ const PaymentDetail = () => {
             <BillWrapper>
                 <Bill amount={amount}> data={data}</Bill>
             </BillWrapper>
-            <PaymentButton onClick={() => navigate("/payment/paymentfinish")}>
-                기부하기
+            <PaymentButton onClick={() => navigate("/")}>
+                홈으로
             </PaymentButton>
         </Container>
     );

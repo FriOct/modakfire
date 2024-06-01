@@ -337,6 +337,11 @@ const detailCityTable = {
 };
 
 const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
+
+    // setPd({ ...pd, center_id: 0, center_name: "" })
+
+    
+
     const [isVisible, setVisible] = useState([false, false, false]);
     const toggleVisible = (index) => {
         isVisible[index] = !isVisible[index];
