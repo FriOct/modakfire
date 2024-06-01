@@ -96,7 +96,7 @@ const ItemList = () => {
     useEffect(() => {
         getItemInfoByCenterId(itemId)
         .then(
-            (json) => {setJson(json); console.log(json);}
+            (json) => {setJson(json);}
         )
         .finally(
             () => {setloaded(true);}
@@ -117,7 +117,7 @@ const ItemList = () => {
                 </div>
             </TitleWrapper>
             <ItemTable>
-                {itemJsonList.map((itemJson, index) => <Item key={index} data={itemJson}/>)}
+                {itemJson.map((itemJson, index) => <Item key={index} data={itemJson}/>)}
             </ItemTable>
         </StyledWrapper>
         :

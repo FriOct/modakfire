@@ -29,10 +29,10 @@ const InputField = styled.div`
 const Label = styled.div`
     font-family: "Noto Sans KR";
     font-weight: 700;
-    font-size: ${({ theme,fontSize}) => fontSize?theme.fontSize.large:theme.fontSize.medium};
+    font-size: ${({ theme, fontSize }) =>
+        fontSize ? theme.fontSize.large : theme.fontSize.medium};
     color: ${({ theme }) => theme.fontColor.primary};
 `;
-
 
 const Exit = styled.div`
     display: flex;
@@ -80,8 +80,6 @@ function PeriodicalDonationDetail() {
         periodicalDonationState
     );
 
-    
-    
     let navigate = useNavigate();
     const location = useLocation();
 
@@ -94,29 +92,41 @@ function PeriodicalDonationDetail() {
     const formatNumber = (number) => {
         return number.toLocaleString("ko-KR");
     };
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
-        const day = String(date.getDate()).padStart(2, '0');
-        
-        return `${year}년 ${month}월 ${day}일`;
-    }
 
-    const deletePeriodicalDonation = (id) =>{
+    const deletePeriodicalDonation = (id) => {
         console.log(id);
         navigate(-1);
-    }
-
+    };
 
     useEffect(() => {
         console.log(pd);
     }, [pd]);
 
+    function formatDate(dateString) {
+        // Date 객체 생성
+        const date = new Date(dateString);
+
+        // 옵션 설정
+        const options = {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        };
+
+        // 포맷터 생성 (한국어 기준)
+        const formatter = new Intl.DateTimeFormat("ko-KR", options);
+
+        // 포맷된 날짜 반환
+        return formatter.format(date);
+    }
+
+    
+
     return (
         <Container>
-            <HeaderPeriodicalDonationDetail periodical_donation_id={pd.periodical_donation_id}/>
+            <HeaderPeriodicalDonationDetail periodical_donation_id={pd.id} />
             <InputField>
-                <Label fontSize={"true"}>{pd.center_name}</Label>
+                <Label fontSize={"true"}>{pd.centerName}</Label>
             </InputField>
             <InfoSection>
                 <InfoText>금액</InfoText>
@@ -124,14 +134,19 @@ function PeriodicalDonationDetail() {
             </InfoSection>
             <InfoSection>
                 <InfoText>정기 기부일</InfoText>
-                <InfoText>{pd.donation_date}일</InfoText>
+                <InfoText>{pd.donationDate}일</InfoText>
             </InfoSection>
             <InfoSection>
                 <InfoText>기부 시작일</InfoText>
-                <InfoText>{formatDate(pd.start_date)}</InfoText>
+                <InfoText>{formatDate(pd.startDate)}</InfoText>
             </InfoSection>
             <Separator />
-            <Exit onClick={() => {deletePeriodicalDonation(pd.periodical_donation_id)}}>
+            <Exit
+                onClick={() => {
+                    deletePeriodicalDonation(pd.id);
+                    navigate(-1);
+                }}
+            >
                 <ExitText>정기 기부 해지하기</ExitText>
                 <VectorSmall src={Back} />
             </Exit>

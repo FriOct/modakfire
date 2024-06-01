@@ -143,7 +143,7 @@ const PeriodicalDonationAddHome = ({
         if (value > 31) value = 31;
         setPd({
             ...pd,
-            donation_date: value ? parseInt(value, 10) : null, // Convert to integer or set to 0
+            donationDate: value ? parseInt(value, 10) : null, // Convert to integer or set to 0
         });
     };
 
@@ -184,13 +184,13 @@ const PeriodicalDonationAddHome = ({
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? (
+                    {pd.donationDate > 0 ? (
                         <InfoText>매달&nbsp;</InfoText>
                     ) : null}
                     <InputBox
                         value={
-                            pd.donation_date
-                                ? `${formatNumber(pd.donation_date)}`
+                            pd.donationDate
+                                ? `${formatNumber(pd.donationDate)}`
                                 : ""
                         }
                         onChange={handleChangeDonationDate}
@@ -199,11 +199,11 @@ const PeriodicalDonationAddHome = ({
                                 ? null
                                 : pd.donation_date.toString().length
                         }
-                        style={{ width: pd.donation_date <= 0 ? "100%" : null }}
+                        style={{ width: pd.donationDate <= 0 ? "100%" : null }}
                     />
-                    {pd.donation_date > 0 ? <InfoText>일</InfoText> : null}
+                    {pd.donationDate > 0 ? <InfoText>일</InfoText> : null}
                 </InputBoxWrapper>
-                {pd.donation_date > 30 ? (
+                {pd.donationDate > 30 ? (
                     <EditInfo>최대 31일까지 설정할 수 있습니다.</EditInfo>
                 ) : null}
             </InputField>
@@ -219,15 +219,18 @@ function PeriodicalDonationAdd() {
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
         periodicalDonationState
     );
+    const [user,setUser] = useRecoilState(userState);
     const [pd, setPd] = useState({
-        periodical_donation_id: null,
-        center_name: null,
-        start_date: null,
-        end_date: null,
-        donation_date: null,
-        amount: null,
-        center_id: null,
+        amount: 0,
+        donationDate: 0,
+        memberId: "string",
+        centerId: 0
     });
+
+    setPd((prev)=>({...prev, memberId: user.id}));
+
+    
+
 
     useEffect(() => {
         console.log(pd);

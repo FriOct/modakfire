@@ -7,6 +7,7 @@ import HeaderBack from "../../../../layouts/HeaderBack";
 import { useEffect, useState } from "react";
 import Back from "../../../../assets/Back.svg";
 import PeriodicalDonationCenterHome from "./PeriodicalDonationCenterHome";
+import { updatePeriodicalDonation } from "../../../../api";
 
 const Container = styled.div`
     display: flex;
@@ -118,15 +119,11 @@ function PeriodicalDonationEdit() {
     const [pd, setPd] = useState(
         periodicalDonation.find(
             (donation) =>
-                donation.periodical_donation_id ===
+                donation.id ===
                 location.state?.periodical_donation_id
         )
     );
-    const [user, setUser] = useRecoilState(userState);
-
-    useEffect(() => {
-        console.log(pd);
-    }, [pd]);
+  
 
     return (
         <>
@@ -154,16 +151,48 @@ function PeriodicalDonationEdit() {
 
 const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
     let navigate = useNavigate();
+    const [user, setUser] = useRecoilState(userState);
+    const [updated, setUpdated] = useState(false);
+    
 
     const formatNumber = (number) => {
         return number.toLocaleString("ko-KR");
     };
 
-    //post로 값 올려야함
-    const handleSave = () => {
-        console.log(pd);
-        navigate(-2);
-    };
+    const transformData = (originalData) => {
+        // 제거할 키 목록
+        const keysToRemove = ['centerName', 'startDate','centerLocation','id'];
+    
+        // 새로 추가할 키와 값
+        const newKeysAndValues = { centerId: 0 };
+    
+        // 새로운 객체 생성
+        const newData = Object.keys(originalData)
+          .filter(key => !keysToRemove.includes(key)) // 제거할 키 제외
+          .reduce((acc, key) => {
+            acc[key] = originalData[key];
+            return acc;
+          }, {});
+    
+        // 새로운 키와 값을 추가
+        return { ...newData, ...newKeysAndValues };
+      };
+
+    useEffect(() => {
+        if (updated) {
+          console.log("Updated Data:", user);
+          updatePeriodicalDonation(pd.id, transformData(pd))
+            .then(() => {
+                navigate(-2);
+            })
+            .catch((error) => {
+              console.error("Error updating user:", error);
+            })
+            .finally(() => {
+              setUpdated(false);  // 상태 업데이트 완료 표시
+            });
+        }
+      }, [updated]);
 
     const handleChangeAmount = (e) => {
         let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
@@ -182,6 +211,7 @@ const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
         });
     };
 
+
     return (
         <Container>
             <HeaderBack />
@@ -192,7 +222,7 @@ const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
                         setCenter(!center);
                     }}
                 >
-                    {pd.center_name}
+                    {pd.centerName}
                 </InputBoxWrapper>
             </InputField>
             <InputField>
@@ -218,31 +248,31 @@ const PeriodicalDonationEditHome = ({ setCenter, center, setPd, pd }) => {
             <InputField>
                 <Label>정기 기부일</Label>
                 <InputBoxWrapper>
-                    {pd.donation_date > 0 ? (
+                    {pd.donationDate > 0 ? (
                         <InfoText>매달&nbsp;</InfoText>
                     ) : null}
                     <InputBox
                         value={
-                            pd.donation_date
-                                ? `${formatNumber(pd.donation_date)}`
+                            pd.donationDate
+                                ? `${formatNumber(pd.donationDate)}`
                                 : ""
                         }
                         onChange={handleChangeDonationDate}
                         size={
-                            pd.donation_date <= 0
+                            pd.donationDate <= 0
                                 ? null
-                                : pd.donation_date.toString().length
+                                : pd.donationDate.toString().length
                         }
-                        style={{ width: pd.donation_date <= 0 ? "100%" : null }}
+                        style={{ width: pd.donationDate <= 0 ? "100%" : null }}
                     />
-                    {pd.donation_date > 0 ? <InfoText>일</InfoText> : null}
+                    {pd.donationDate > 0 ? <InfoText>일</InfoText> : null}
                 </InputBoxWrapper>
-                {pd.donation_date > 30 ? (
+                {pd.donationDate > 30 ? (
                     <EditInfo>최대 31일까지 설정할 수 있습니다.</EditInfo>
                 ) : null}
             </InputField>
             <ButtonWrapper>
-                <EditButton onClick={handleSave}>수정 완료</EditButton>
+                <EditButton onClick={() => {setUpdated(true)}}>수정 완료</EditButton>
             </ButtonWrapper>
         </Container>
     );

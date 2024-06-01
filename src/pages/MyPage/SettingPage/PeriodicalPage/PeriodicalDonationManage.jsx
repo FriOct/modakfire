@@ -3,8 +3,10 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import HeaderPeriodicalDonation from "../../../../layouts/HeaderPeriodicalDonation";
 import Back from "../../../../assets/Back.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { periodicalDonationState } from "../../../../recoil/atoms/periodicalDonationAtom";
+import { userState } from "../../../../recoil/atoms/userAtom";
+import { readPeriodicalDonation } from "../../../../api";
 
 const Container = styled.div`
     display: flex;
@@ -41,8 +43,9 @@ const DonationCenter = styled.div`
     height: 10vh;
     ${(props) =>
         props.islast
-            ?`border-top: 1px solid ${props.theme.color.lightgray}`:null};
-    border-bottom: 1px solid ${({theme}) => theme.color.lightgray};
+            ? `border-top: 1px solid ${props.theme.color.lightgray}`
+            : null};
+    border-bottom: 1px solid ${({ theme }) => theme.color.lightgray};
 `;
 
 const Info = styled.div`
@@ -103,16 +106,36 @@ const CenterNameWrapper = styled.div`
     gap: min(2vw, 5px);
 `;
 
+
+
 const PeriodicalDonationManage = () => {
     const [periodicalDonation, setPeriodicalDonation] = useRecoilState(
         periodicalDonationState
     );
-
+    const [user, setUser] = useRecoilState(userState);
     let navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let result;
+                result = await readPeriodicalDonation(user.id);
+                setPeriodicalDonation(result);
+            } catch (error) {
+                console.error("Error updating user:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    
 
     const formatNumber = (number) => {
         return number.toLocaleString("ko-KR");
     };
+
+    
 
     return (
         <Container>
@@ -127,28 +150,28 @@ const PeriodicalDonationManage = () => {
                                       "/setting/periodicaldonation/detail",
                                       {
                                           state: {
-                                              periodical_donation_id:
-                                                  donation.periodical_donation_id,
+                                              id:
+                                                  donation.id,
                                           },
                                       }
                                   );
                               }}
-                              islast={index === 0?'true':'false'}
+                              islast={index === 0 ? "true" : "false"}
                           >
                               <Info>
                                   <CenterNameWrapper>
                                       <CenterName>
-                                          {donation.center_name}
+                                          {donation.centerName}
                                       </CenterName>
                                       <VectorSmall src={Back} />
                                   </CenterNameWrapper>
-                                  <Amount style={{ color: "#B5B5B5"}}>
-                                      {donation.location}
+                                  <Amount style={{ color: "#B5B5B5" }}>
+                                      {donation.centerLocation}
                                   </Amount>
                               </Info>
                               <Info>
                                   <Amount>
-                                      매달&nbsp;{donation.donation_date}
+                                      매달&nbsp;{donation.donationDate}
                                       &nbsp;일
                                   </Amount>
                                   <Amount>
