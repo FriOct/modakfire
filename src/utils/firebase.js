@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { createUser } from "../api";
 
 // Your web app's Firebase configuration
@@ -17,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
+const storage = getStorage();
 
 function getCurrentTime() {
   var now = new Date();
@@ -58,4 +60,28 @@ export function googleLogout() {
       return false;
     });
   return false;
+}
+
+export async function getImageFromStorage(imgId) {
+  imgId = "01.35342154.1.jpg";
+  let imgurl;
+
+  await getDownloadURL(ref(storage, imgId))
+    .then((url) => {
+      // const xhr = new XMLHttpRequest();
+      // xhr.responseType = "blob";
+      // xhr.onload = (event) => {
+      //   const blob = xhr.response;
+      // };
+      // xhr.open("GET", url);
+      // xhr.send();
+
+      // console.log(url);
+      imgurl = url;
+    })
+    .catch((error) => {
+      // Handle any errors
+      imgurl = "undefined";
+    });
+  return imgurl;
 }
