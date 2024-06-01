@@ -238,12 +238,11 @@ export const deleteUser = (userId) => {
  */
 export const getCenter = (data) => {
   return new Promise((resolve, reject) => {
-    fetch(`${baseURL}/centers/?city=전국&gu=전체&centerType=0`, {
+    fetch(`${baseURL}/centers?city=${data.city}&gu=${data.gu}&centerType=WHOLE`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(data),
     })
     .then((response) => {
       if(!response.ok)
