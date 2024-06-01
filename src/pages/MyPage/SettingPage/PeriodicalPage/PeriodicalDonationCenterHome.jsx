@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import HeaderPeriodicalDonationHome from "../../../../layouts/HeaderPeriodicalDonationHome";
+import Carousel from "../../../../components/Carousel";
 import Paragraph from "../../../../components/Text/Paragraph";
 import LightTitle from "../../../../components/Text/LightTitle";
 import downLine from "../../../../assets/icons/downLine.svg";
@@ -8,28 +8,33 @@ import sharp from "../../../../assets/icons/sharp.svg";
 import people from "../../../../assets/icons/people.svg";
 import star from "../../../../assets/icons/star.svg";
 import Seperator from "../../../../components/Separator";
+import handHeart from "../../../../assets/icons/handHeart.svg";
 import HighlightWrapper from "../../../../components/Text/HighlightWrapper";
 import { Navigate, useNavigate } from "react-router-dom";
 import SelectModal from "../../../../components/SelectModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import banner1 from "../../../../assets/banners/banner1.png";
+import banner2 from "../../../../assets/banners/banner2.png";
+import banner3 from "../../../../assets/banners/banner3.png";
+import { getCenter } from "../../../../api";
 
 const BannerDataList = [
     {
-        src: "../src/assets/banners/banner1.png",
+        src: banner1,
     },
     {
-        src: "../src/assets/banners/banner2.png",
+        src: banner2,
     },
     {
-        src: "../src/assets/banners/banner3.png",
+        src: banner3,
     },
 ];
 
 const HomeWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100vh;
+    width: min(100vw, 500px);
 `;
 const SearchSectionWrapper = styled.div`
     display: flex;
@@ -46,10 +51,9 @@ const SearchMenuWrapper = styled.div`
     margin: 0 min(3vw, 15px);
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 20px;
-    gap: min(2vw, 10px);
+    gap: min(1vw, 5px);
     div {
         display: flex;
-        justify-content: space-between;
         gap: min(1vw, 5px);
         padding: 0 min(1vw, 5px);
         border-right: 1px solid ${({ theme }) => theme.color.gray};
@@ -61,8 +65,12 @@ const SearchMenuWrapper = styled.div`
             background-size: cover;
         }
     }
+    div:first-child {
+        /* width: min(15vw, 75px); */
+    }
     div:last-child {
         border: none;
+        /* flex: 1; */
     }
 `;
 
@@ -111,7 +119,13 @@ const SearchResult = (props) => {
             <img src={search} />
             <HighlightWrapper>
                 <LightTitle>
-                    {props.count}개의 <strong>검색 결과</strong>
+                    {props.isSearching ? (
+                        <strong>검색중 입니다...</strong>
+                    ) : (
+                        <>
+                            {props.count}개의 <strong>검색결과</strong>
+                        </>
+                    )}
                 </LightTitle>
             </HighlightWrapper>
         </SearchResultWrapper>
@@ -266,20 +280,26 @@ const typeEnumToStringTable = [
     "노숙인 시설",
     "정신건강센터",
     "재활원",
-    "종합 센터",
-    "커뮤니티",
 ];
 
-const CenterWrapper = ({ data, setPd, pd, setCenter, center }) => {
-    const navigate = useNavigate();
+const CenterWrapper = ({ key,data,setCenter, center, setPd, pd }) => {
     const hashtagList = [data.city, data.gu, typeEnumToStringTable[data.type]];
+
+    const handlepd = () =>{
+        setPd((prev) => ({
+            ...prev, // 이전 상태를 복사
+            centerId: data.id, // 새로운 centerId 설정
+            centerName: data.name, // 새로운 centerName 설정
+          }));
+        setCenter(!center);
+        console.log(pd);
+        console.log(center);
+    }
+
     return (
         <CenterStyledWrapper
             className="clickable"
-            onClick={() => {
-                setPd({ ...pd, center_id: data.center_id, center_name: data.name });
-                setCenter(!center);
-            }}
+            onClick={() => handlepd()}
         >
             <CenterImage src={data.imageUrl} />
             <CenterInfowrapper>
@@ -291,10 +311,43 @@ const CenterWrapper = ({ data, setPd, pd, setCenter, center }) => {
                         <Hashtag key={index} data={hashtag} />
                     ))}
                 </HashtagTable>
-                <DonatorCount data={data.donor_num} />
-                <LikeCount data={data.like_num} />
+                <DonatorCount data={data.donorNum} />
+                <LikeCount data={data.likeNum} />
             </CenterInfowrapper>
         </CenterStyledWrapper>
+    );
+};
+
+const FastDonationWrapper = styled.div`
+    position: fixed;
+    right: min(3vw, 15px);
+    bottom: min(3vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: min(4vw, 20px);
+    width: min(17vw, 85px);
+    height: min(17vw, 85px);
+    color: ${({ theme }) => theme.color.bg};
+    border: 2px solid #e16511;
+    background-color: ${({ theme }) => theme.color.primary};
+    box-shadow: 0px 0px 8px ${({ theme }) => theme.color.shadow};
+    p {
+        font-weight: bold;
+    }
+    img {
+        width: min(10vw, 50px);
+        height: min(10vw, 50px);
+    }
+`;
+
+const FastDonation = () => {
+    return (
+        <FastDonationWrapper>
+            <img src={handHeart} />
+            <Paragraph>간편기부</Paragraph>
+        </FastDonationWrapper>
     );
 };
 
@@ -337,11 +390,6 @@ const detailCityTable = {
 };
 
 const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
-
-    // setPd({ ...pd, center_id: 0, center_name: "" })
-
-    
-
     const [isVisible, setVisible] = useState([false, false, false]);
     const toggleVisible = (index) => {
         isVisible[index] = !isVisible[index];
@@ -361,6 +409,7 @@ const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
             },
             callbackSelector: (index) => {
                 setmodalItemIndex(0, index);
+                toggleVisible(0);
             },
             tableTitle: "지역 선택",
             tableItems: cityTable,
@@ -373,6 +422,7 @@ const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
             },
             callbackSelector: (index) => {
                 setmodalItemIndex(1, index);
+                toggleVisible(1);
             },
             tableTitle: "세부 지역 선택",
             tableItems: detailCityTable[modalIndex[0]] ?? ["개발 예정"],
@@ -385,6 +435,7 @@ const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
             },
             callbackSelector: (index) => {
                 setmodalItemIndex(2, index);
+                toggleVisible(2);
             },
             tableTitle: "센터 종류 선택",
             tableItems: typeTable,
@@ -414,29 +465,47 @@ const PeriodicalDonationCenterHome = ({ setCenter, center, setPd, pd }) => {
             indicator: typeTable[modalIndex[2]],
         },
     ];
+    const [isSearching, setisSearching] = useState(true);
+    const [CenterJsonList, setCenterJsonList] = useState([]);
+    useEffect(() => {
+        setisSearching(true);
+        getCenter({
+            city: cityTable[modalIndex[0]],
+            gu: detailCityTable[modalIndex[0]]
+                ? detailCityTable[modalIndex[0]][modalIndex[1]]
+                : ["전체"],
+            centerType: modalIndex[2],
+        })
+            .then((json) => {
+                setCenterJsonList(json);
+            })
+            .finally(() => {
+                setisSearching(false);
+            });
+    }, [modalIndex[0], modalIndex[1], modalIndex[2]]);
 
     return (
         <HomeWrapper>
-            <HeaderPeriodicalDonationHome
-                setCenter={setCenter}
-                center={center}
-            />
             <SelectModal state={modalState[0]} />
             <SelectModal state={modalState[1]} />
             <SelectModal state={modalState[2]} />
             <SearchSection stateList={SearchSectionStateList} />
             <Seperator />
-            <SearchResult count={exampleCenterJSON.length} />
-            {exampleCenterJSON.map((props, index) => (
+            <SearchResult
+                isSearching={isSearching}
+                count={CenterJsonList.length}
+            />
+            {CenterJsonList.map((props, index) => (
                 <CenterWrapper
                     key={index}
                     data={props}
-                    setPd={setPd}
-                    pd={pd}
                     setCenter={setCenter}
                     center={center}
+                    setPd={setPd}
+                    pd={pd}
                 />
             ))}
+            <FastDonation />
         </HomeWrapper>
     );
 };

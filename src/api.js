@@ -238,7 +238,7 @@ export const deleteUser = (userId) => {
  */
 export const getCenter = (data) => {
   return new Promise((resolve, reject) => {
-    fetch(`${baseURL}/centers?city=${data.city}&gu=${data.gu}&centerType=WHOLE`, {
+    fetch(`${baseURL}/centers?city=${data.city}&gu=${data.gu}&centerType=${data.centerType}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
