@@ -305,7 +305,7 @@ const CenterItemDetail = ({match, location}) => {
     return (
         visible ?
         <CenterItemDetailWrapper>
-            <ItemImage src={exampleJson.imageUrl} />
+            <ItemImage src={"https://cdn.hkbs.co.kr/news/photo/202011/600575_349741_4654.jpg"} />
             <div>
                 <SemiTitle>{exampleJson.name}</SemiTitle>
                 <SecondaryParagraph>{exampleJson.marketName}</SecondaryParagraph>
@@ -313,12 +313,12 @@ const CenterItemDetail = ({match, location}) => {
             <ProgressBar percent={percent}/>
             <ProgressInfo now={exampleJson.raisedAmount} goal={exampleJson.price}/>
             <HowToUse sellorName={exampleJson.marketName}/>
-            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment", {state:{
-                isFast: false,
-                reqObj: {
-                    itemId: itemId
-                }}
-            })}>
+            <DonateButtonWrapper className="clickable" onClick={() => navigate("/payment",{
+                            state: {
+                                isFast: false,
+                                itemId: itemId
+                            },
+                        })}>
                 <Title>기부하기</Title>
             </DonateButtonWrapper>
         </CenterItemDetailWrapper>
