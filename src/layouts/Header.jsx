@@ -56,7 +56,7 @@ const Header = () => {
     else
         return (
             <HeaderWrapper>
-                <BackWrapper className="clickable" onClick={() => navigate(-1)} src={back}/>
+                {currentPath != "/" ? <BackWrapper className="clickable" onClick={() => navigate(-1)} src={back}/> : <div style={{width:"min(6vw, 30px)"}}></div>}
                 <LogoWrapper className="clickable" onClick={() => navigate("/")}>
                     <LogoImage src={Logo}/>
                     모닥불

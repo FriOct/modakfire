@@ -159,11 +159,12 @@ const addComma = (number) => {
 
 const WideInfoWrapper = styled.div`
     display: flex;
+    align-items: center;
     justify-content: space-between;
 `
 
 const ItemJson = {
-    step: 1,
+    step: 3,
     imageUrl: "https://www.kpnews7.co.kr/imgdata/kpnews7_co_kr/201401/1390815625_0.JPG",
     centerName: "천광보육원",
     itemName: "대구농산 강낭콩 3kg",
@@ -171,6 +172,8 @@ const ItemJson = {
     price: 13900,
     rasiedAmount: 10425,
     myRaisedAmount: 5000,
+    rasingFinishedTime: "2024-06-29 15:42:12",
+    totalFinishedTime: "2024-06-01 17:15:36"
 }
 
 const NoneReceiptWrapper = styled.div`
@@ -252,7 +255,11 @@ const ItemState = (props) => {
             </InfoWrapper>
             <Seperator />
             <InfoWrapper>
-                <SemiTitle><strong>모금 정보</strong></SemiTitle>
+                <WideInfoWrapper>
+                    <SemiTitle><strong>모금 정보</strong></SemiTitle>
+                    {ItemJson.step != 0 ? <LightTitle>{ItemJson.rasingFinishedTime}</LightTitle> : null}
+                </WideInfoWrapper>
+                
                 <WideInfoWrapper>
                     <LightTitle>목표 금액</LightTitle>
                     <LightTitle><strong>{addComma(ItemJson.price)}원</strong></LightTitle>
@@ -284,7 +291,17 @@ const ItemState = (props) => {
                 <WideInfoWrapper>
                     <LightTitle>구매 영수증</LightTitle>
                 </WideInfoWrapper>
-                <Receipt src={receipt}/>
+                <Receipt src={null}/>
+            </InfoWrapper>
+            <Seperator />
+            <InfoWrapper>
+                <WideInfoWrapper>
+                    <SemiTitle><strong>전달 정보</strong></SemiTitle>
+                    {ItemJson.step == 3 ? <LightTitle>{ItemJson.totalFinishedTime}</LightTitle> : null}
+                </WideInfoWrapper>
+                <LightTitle>
+                    {ItemJson.step != 3 ? "물품이 전달 대기중입니다.": "물품이 센터에 전달되었습니다."}
+                </LightTitle>
             </InfoWrapper>
         </ItemStateWrapper>
     )
