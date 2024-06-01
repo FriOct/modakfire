@@ -4,6 +4,9 @@ import HighlightWrapper from "../../components/Text/HighlightWrapper";
 import Paragraph from "../../components/Text/Paragraph";
 import SecondaryParagraph from "../../components/Text/SecondaryParagraph";
 import Item from "./Item";
+import { getItemInfoByCenterId } from "../../api";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const StyledWrapper = styled.div`
     display: flex;
@@ -86,7 +89,21 @@ const itemJsonList = [{
 ]
 
 const ItemList = () => {
+    const navigate = useNavigate();
+    const [itemJson, setJson] = useState();
+    const itemId = parseInt(useParams().centerId);
+    const [isloaded, setloaded] = useState(false);
+    useEffect(() => {
+        getItemInfoByCenterId(itemId)
+        .then(
+            (json) => {setJson(json); console.log(json);}
+        )
+        .finally(
+            () => {setloaded(true);}
+        )
+    }, []);
     return (
+        isloaded ? 
         <StyledWrapper>
             <TitleWrapper>
                 <LightTitle>
@@ -103,6 +120,8 @@ const ItemList = () => {
                 {itemJsonList.map((itemJson, index) => <Item key={index} data={itemJson}/>)}
             </ItemTable>
         </StyledWrapper>
+        :
+        null
     )
 }
 
