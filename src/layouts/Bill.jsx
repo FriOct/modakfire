@@ -234,6 +234,10 @@ const Bill = ({ amount }) => {
         totalAmount: 60000,
     };
 
+    const fromatNumber = (number) => {
+        return number.toLocaleString("ko-KR");
+    };
+
     return (
         <BillContainer>
                 <Title>기부 영수증</Title>
@@ -256,7 +260,7 @@ const Bill = ({ amount }) => {
             </BillList>
             <TotalAmountContainer>
                     <TotalItem>총 기부금액</TotalItem>
-                    <TotalAmount>{`₩${content.totalAmount}`}</TotalAmount>
+                    <TotalAmount>{`₩ ${fromatNumber(amount)}`}</TotalAmount>
             </TotalAmountContainer>
         </BillContainer>
     );

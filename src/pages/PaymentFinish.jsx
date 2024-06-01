@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Present from "../assets/Present.svg";
+import { useEffect } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -58,11 +59,21 @@ const PresentComment = styled.div`
 
 const PaymentFinish = () => {
     let navigate = useNavigate();
-
-    const navigateToHome = () => {
-        navigate(`/`);
-    };
-
+    
+    useEffect(() => {
+        const preventGoBack = () => {
+          // change start
+          history.pushState(null, '', location.href);
+          // change end
+          navigate('/');
+        };
+        
+        history.pushState(null, '', location.href);
+        window.addEventListener('popstate', preventGoBack);
+        
+        return () => window.removeEventListener('popstate', preventGoBack);
+      }, []);   
+      
     return (
         <Container>
             <CommentContainer>
@@ -70,7 +81,7 @@ const PaymentFinish = () => {
                 <PresentComment>기부 완료</PresentComment>
             </CommentContainer>
 
-            <HomeButton onClick={() => navigateToHome()}>홈으로</HomeButton>
+            <HomeButton onClick={() => {navigate('/')}}>홈으로</HomeButton>
         </Container>
     );
 };
