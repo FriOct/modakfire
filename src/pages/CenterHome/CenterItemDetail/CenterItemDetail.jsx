@@ -215,7 +215,7 @@ const DonateButtonWrapper = styled.div`
 `
 
 
-const itemJsonList = [{
+/* const itemJsonList = [{
     id: 1,
     imageUrl: "https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/ce838711-86c1-4eb7-8de1-996dfa55d6907310471040280954698.png",
     name: "대구농산 강낭콩 3kg",
@@ -256,44 +256,48 @@ const itemJsonList = [{
     marketName: "우일완구",
 }
 
-]
+] */
 
 
 const CenterItemDetail = ({match, location}) => {
     const navigate = useNavigate();
 
     const itemId = parseInt(useParams().itemId);
-    const exampleJson = itemJsonList[itemId-1];
 
-    const totalPercent = Math.floor(exampleJson.raisedAmount/exampleJson.price*100);
-
+    /* const totalPercent = Math.floor(exampleJson.raisedAmount/exampleJson.price*100); */
+    let totalPercent;
     // For Number Animation!
     const [percent, setPercent] = useState(0);
 
     const duration = 500;
     const frame = 50;
 
+
+    const [visible, setvisible] = useState(false);
+    const [exampleJson, setjson] = useState();
     useEffect(() => {
-        let actualPercent = 0;
+        if(visible){
+            let actualPercent = 0;
+            totalPercent = Math.floor(exampleJson.raisedAmount/exampleJson.price*100);
+            const counter = setInterval(() => {
+                actualPercent += totalPercent / frame * (-1.9 * (actualPercent/totalPercent) + 1.95);
+                setPercent(Math.floor(actualPercent));
 
-        const counter = setInterval(() => {
-            actualPercent += totalPercent / frame * (-1.9 * (actualPercent/totalPercent) + 1.95);
-            setPercent(Math.floor(actualPercent));
-
-            if (Math.floor(actualPercent) >= totalPercent)
-                clearInterval(counter);
-        }, duration/frame);
+                if (Math.floor(actualPercent) >= totalPercent)
+                    clearInterval(counter);
+            }, duration/frame);
+        
         return () => {
             clearInterval(counter);
         }
-    }, [totalPercent, frame, duration]);
+        }
+    }, [totalPercent, frame, duration, visible]);
 
 
-    const [visible, setvisible] = useState(false);
-    const [json, setjson] = useState({});
+    
     useEffect(() => {
         getItemInfoById(itemId)
-        .then((response) => console.log(response))
+        .then((response) => {setjson(response); console.log(response)})
         .finally(() => {setvisible(true)});
     }, [])
 
